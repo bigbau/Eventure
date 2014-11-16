@@ -1,0 +1,360 @@
+Phase: preprocessing1
+Input: Lookup 
+
+Rule: PreprocessAnimal
+(
+{Lookup.majorType==animal}
+):animal
+
+--> 
+:animal
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("animal");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	String temp = "";
+	try {
+		temp = doc.getContent().getContent(matchedAnns.firstNode().getOffset(),matchedAnns.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	newFeatures.put("string",temp);
+	newFeatures.put("rule","animal");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"Animal", newFeatures);
+  }
+  
+Rule: PreprocessBodyPart
+(
+{Lookup.majorType==bodypart}
+):bodypart
+
+--> 
+:bodypart
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("bodypart");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	String temp = "";
+	try {
+		temp = doc.getContent().getContent(matchedAnns.firstNode().getOffset(),matchedAnns.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	newFeatures.put("string",temp);
+	newFeatures.put("rule","bodypart");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"BodyPart", newFeatures);
+  }
+  
+Rule: PreprocessPosition
+(
+{Lookup.majorType==position}
+):position
+
+--> 
+:position
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("position");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	String temp = "";
+	try {
+		temp = doc.getContent().getContent(matchedAnns.firstNode().getOffset(),matchedAnns.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	newFeatures.put("string",temp);
+	newFeatures.put("rule","position");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"Position", newFeatures);
+  }
+  
+Rule: PreprocessObject
+(
+{Lookup.majorType==object}
+):object
+
+--> 
+:object
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("object");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	String temp = "";
+	try {
+		temp = doc.getContent().getContent(matchedAnns.firstNode().getOffset(),matchedAnns.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	newFeatures.put("string",temp);
+	newFeatures.put("rule","object");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"Object", newFeatures);
+  }
+
+Rule: PreprocessCapableOfInd
+(
+{Lookup.majorType==capableofindicator}
+):capableofindicator
+
+--> 
+:capableofindicator
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("capableofindicator");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	newFeatures.put("rule","PreprocessCapableOfInd");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"CapableOfInd", newFeatures);
+  }
+
+Rule: PreprocessCharacter
+(
+{Lookup.majorType==character}
+):character
+
+--> 
+:character
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("character");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	String temp = "";
+	try {
+		temp = doc.getContent().getContent(matchedAnns.firstNode().getOffset(),matchedAnns.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	newFeatures.put("string",temp);
+	newFeatures.put("rule","PreprocessCharacter");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"Character", newFeatures);
+  }
+
+Rule: PreprocessColours
+(
+{Lookup.majorType==colours}
+):colours
+
+--> 
+:colours
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("colours");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	String temp = "";
+	try {
+		temp = doc.getContent().getContent(matchedAnns.firstNode().getOffset(),matchedAnns.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	newFeatures.put("string",temp);
+	newFeatures.put("rule","PreprocessColours");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"Colour", newFeatures);
+  }
+
+Rule: PreprocessEmotion
+(
+{Lookup.majorType==emotion}
+):emotion
+
+--> 
+:emotion
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("emotion");
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	String temp = "";
+	try {
+		temp = doc.getContent().getContent(matchedAnns.firstNode().getOffset(),matchedAnns.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	newFeatures.put("string",temp);
+	newFeatures.put("rule","PreprocessEmotion");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"Emotion", newFeatures);
+  }
+  
+Rule: PreprocessIsAInd
+(
+{Lookup.majorType==isaindicator}
+):isaindicator
+
+--> 
+:isaindicator
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("isaindicator");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	newFeatures.put("rule","PreprocessIsAInd");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"IsAInd", newFeatures);
+  }
+
+Rule: PreprocessLocationOfInd
+(
+{Lookup.majorType==locationofindicator}
+):locationofindicator
+
+--> 
+:locationofindicator
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("locationofindicator");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	newFeatures.put("rule","PreprocessLocationOfInd");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"LocationOfInd", newFeatures);
+  }
+  
+Rule: PreprocessMadeOfInd
+(
+{Lookup.majorType==madeofindicator}
+):madeofindicator
+
+--> 
+:madeofindicator
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("madeofindicator");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	newFeatures.put("rule","PreprocessMadeOfInd");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"MadeOfInd", newFeatures);
+  }
+  
+Rule: PreprocessOftenNearInd
+(
+{Lookup.majorType==oftennearindicator}
+):oftennearindicator
+
+--> 
+:oftennearindicator
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("oftennearindicator");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	newFeatures.put("rule","PreprocessOftenNearInd");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"OftenNearInd", newFeatures);
+  }
+  
+Rule: PreprocessOwnsInd
+(
+{Lookup.majorType==ownsindicator}
+):ownsindicator
+
+--> 
+:ownsindicator
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("ownsindicator");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	newFeatures.put("rule","PreprocessOwnsInd");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"OwnsInd", newFeatures);
+  }
+  
+Rule: PreprocessPartOfInd
+(
+{Lookup.majorType==partofindicator}
+):partofindicator
+
+--> 
+:partofindicator
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("partofindicator");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	newFeatures.put("rule","PreprocessPartOfInd");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PartOfInd", newFeatures);
+  }
+  
+Rule: PreprocessStoryLoc
+(
+{Lookup.majorType==storyloc}
+):storyloc
+
+--> 
+:storyloc
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("storyloc");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	String temp = "";
+	try {
+		temp = doc.getContent().getContent(matchedAnns.firstNode().getOffset(),matchedAnns.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	newFeatures.put("string",temp);
+	newFeatures.put("rule","PreprocessStoryLoc");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"StoryLoc", newFeatures);
+  }
+  
+Rule: PreprocessUsedForInd
+(
+{Lookup.majorType==usedforindicator}
+):usedforindicator
+
+--> 
+:usedforindicator
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("usedforindicator");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	newFeatures.put("rule","PreprocessUsedForInd");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"UsedForInd", newFeatures);
+  }
+  
+Rule: PreprocessWorldState
+(
+{Lookup.majorType==worldstate}
+):worldstate
+
+--> 
+:worldstate
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("worldstate");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	String temp = "";
+	try {
+		temp = doc.getContent().getContent(matchedAnns.firstNode().getOffset(),matchedAnns.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	newFeatures.put("string",temp);
+	newFeatures.put("rule","PreprocessWorldState");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"WorldState", newFeatures);
+  }
+  
+Rule: PreprocessGoalIndicator
+(
+{Lookup.majorType==goalindicator}
+):goalindicator
+
+--> 
+:goalindicator
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("goalindicator");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	newFeatures.put("rule","PreprocessGoalIndicator");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"GoalInd", newFeatures);
+  }
+  
+Rule: PreprocessMotivationIndicator
+(
+{Lookup.majorType==motivationindicator}
+):motivationindicator
+
+--> 
+:motivationindicator
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("motivationindicator");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	newFeatures.put("rule","PreprocessMotivationIndicator");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"MotivationInd", newFeatures);
+  }
+  
+Rule: PreprocessCauseIndicator
+(
+{Lookup.majorType==causeindicator}
+):causeindicator
+
+--> 
+:causeindicator
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("causeindicator");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	newFeatures.put("rule","PreprocessCauseIndicator");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"CauseInd", newFeatures);
+  }
+
+Rule: PreprocessEffectIndicator
+(
+{Lookup.majorType==effectindicator}
+):effectindicator
+
+--> 
+:effectindicator
+  {
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("effectindicator");	
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	newFeatures.put("rule","PreprocessEffectIndicator");
+	annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"EffectInd", newFeatures);
+  }
+  

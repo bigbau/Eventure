@@ -1,0 +1,49 @@
+Phase: eventForGoalState
+Input: Token Lookup MotivationInd GoalState Event
+Options: control = appelt
+
+Rule: EventForGoalState1
+(
+	({GoalState}):state
+	({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", !Event})*
+	({Token.chunk == O})[1]
+	({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", !Event})*
+	({Event}):event
+):EventForGoalState1
+-->
+:EventForGoalState1
+  {
+    gate.AnnotationSet matchedGoal=(gate.AnnotationSet) bindings.get("state");
+    Annotation state=matchedGoal.iterator().next();
+	gate.AnnotationSet matchedEvent=(gate.AnnotationSet) bindings.get("event");
+    Annotation event=matchedEvent.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EventForGoalState1");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Event",event.getFeatures().get("Entity1"));
+	newFeatures.put("GoalState",state.getFeatures().get("Entity1"));
+    newFeatures.put("rule","EventForGoalState1");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"EventForGoalState", newFeatures);
+  }
+  
+Rule: EventForGoalState2
+(
+	({Event}):event
+	({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", !GoalState})*
+	({MotivationInd})[0,1]
+	({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", !GoalState})*
+	({GoalState}):state
+):EventForGoalState2
+-->
+:EventForGoalState2
+  {
+    gate.AnnotationSet matchedGoal=(gate.AnnotationSet) bindings.get("state");
+    Annotation state=matchedGoal.iterator().next();
+	gate.AnnotationSet matchedEvent=(gate.AnnotationSet) bindings.get("event");
+    Annotation event=matchedEvent.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EventForGoalState2");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Event",event.getFeatures().get("Entity1"));
+	newFeatures.put("GoalState",state.getFeatures().get("Entity1"));
+    newFeatures.put("rule","EventForGoalState2");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"EventForGoalState", newFeatures);
+  }

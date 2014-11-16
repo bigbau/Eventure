@@ -1,0 +1,418 @@
+Phase: partOfRelation
+Input: Token Lookup Person Character FirstPerson Location StoryLoc PartOfInd BodyPart Animal
+Options: control = appelt
+
+Rule: PartOfRelation1
+(
+
+(
+	{Token.category == NN, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNPS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NPS, !Person, !FirstPerson, !Character} | 
+	{StoryLoc}
+):entity1
+({PartOfInd, Token.string != "has"}):partofind
+({Token.string != ".", Token.string != "?", Token.string != "!"})*
+(
+	{Token.category == NN, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNPS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NPS, !Person, !FirstPerson, !Character}
+):entity2
+({Token.string == "."} | {Token.string == "?"} | {Token.string == "!"})
+
+):PartOfRelation1
+-->
+:PartOfRelation1
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("PartOfRelation1");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",entity2.getFeatures().get("string"));
+    newFeatures.put("rule","PartOfRelation1");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PartOfRelation", newFeatures);
+  }
+  
+Rule: PartOfRelation15
+(
+
+({Location}):entity1
+({PartOfInd, Token.string != "has"}):partofind
+({Token.string != ".", Token.string != "?", Token.string != "!"})*
+(
+	{Token.category == NN, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNPS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NPS, !Person, !FirstPerson, !Character}
+):entity2
+({Token.string == "."} | {Token.string == "?"} | {Token.string == "!"})
+
+):PartOfRelation15
+-->
+:PartOfRelation15
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("PartOfRelation15");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	
+	String temp = "";
+	try {
+		temp = doc.getContent().getContent(matchedEntities.firstNode().getOffset(),matchedEntities.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	
+    newFeatures.put("Entity1",temp);
+    newFeatures.put("Entity2",entity2.getFeatures().get("string"));
+    newFeatures.put("rule","PartOfRelation15");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PartOfRelation", newFeatures);
+  }
+  
+Rule: PartOfRelation2
+(
+
+(
+	{Token.category == NN, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNPS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NPS, !Person, !FirstPerson, !Character} | 
+	{StoryLoc}
+):entity2
+({PartOfInd, Token.string == "has"}):partofind
+({Token.string != ".", Token.string != "?", Token.string != "!"})*
+(
+	{Token.category == NN, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNPS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NPS, !Person, !FirstPerson, !Character}
+):entity1
+({Token.string == "."} | {Token.string == "?"} | {Token.string == "!"})
+
+):PartOfRelation2
+-->
+:PartOfRelation2
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("PartOfRelation2");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",entity2.getFeatures().get("string"));
+    newFeatures.put("rule","PartOfRelation2");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PartOfRelation", newFeatures);
+  }
+  
+Rule: PartOfRelation25
+(
+
+({Location}):entity2
+({PartOfInd, Token.string == "has"}):partofind
+({Token.string != ".", Token.string != "?", Token.string != "!"})*
+(
+	{Token.category == NN, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNPS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NPS, !Person, !FirstPerson, !Character}
+):entity1
+({Token.string == "."} | {Token.string == "?"} | {Token.string == "!"})
+
+):PartOfRelation25
+-->
+:PartOfRelation25
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("PartOfRelation25");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	
+	String temp = "";
+	try {
+		temp = doc.getContent().getContent(matchedEntities2.firstNode().getOffset(),matchedEntities2.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",temp);
+    newFeatures.put("rule","PartOfRelation25");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PartOfRelation", newFeatures);
+  }
+  
+Rule: PartOfRelation3
+(
+
+(
+	{Token.category == NN, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNPS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NPS, !Person, !FirstPerson, !Character} | 
+	{StoryLoc}
+):entity2
+({Token.string == "'s"})
+({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!"})*
+(
+	{Token.category == NN, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNPS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NPS, !Person, !FirstPerson, !Character}
+):entity1
+({Token.string == "."} | {Token.string == "?"} | {Token.string == "!"})
+
+):PartOfRelation3
+-->
+:PartOfRelation3
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("PartOfRelation3");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",entity2.getFeatures().get("string"));
+    newFeatures.put("rule","PartOfRelation3");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PartOfRelation", newFeatures);
+  }
+  
+Rule: PartOfRelation35
+(
+
+({Location}):entity2
+({Token.string == "'s"})
+({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!"})*
+(
+	{Token.category == NN, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNPS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NNS, !Person, !FirstPerson, !Character} | 
+	{Token.category == NP, !Person, !FirstPerson, !Character} | 
+	{Token.category == NPS, !Person, !FirstPerson, !Character}
+):entity1
+({Token.string == "."} | {Token.string == "?"} | {Token.string == "!"})
+
+):PartOfRelation35
+-->
+:PartOfRelation35
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("PartOfRelation35");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	
+	String temp = "";
+	try {
+		temp = doc.getContent().getContent(matchedEntities2.firstNode().getOffset(),matchedEntities2.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",temp);
+    newFeatures.put("rule","PartOfRelation35");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PartOfRelation", newFeatures);
+  }
+  
+Rule: PartOfRelation4
+(
+
+(
+	{Token.category == NNP, Person} | {Token.category == NNP, Character} | {Token.category == NNP, Animal} |
+	{Token.category == NNPS, Person} | {Token.category == NNPS, Character} | {Token.category == NNPS, Animal} |
+	{Token.category == NP, Person} | {Token.category == NP, Character} | {Token.category == NP, Animal}
+):entity2
+({Token.string == "'s"})
+({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!"})*
+({BodyPart}):entity1
+({Token.string == "."} | {Token.string == "?"} | {Token.string == "!"})
+
+):PartOfRelation4
+-->
+:PartOfRelation4
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("PartOfRelation4");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",entity2.getFeatures().get("string"));
+    newFeatures.put("rule","PartOfRelation4");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PartOfRelation", newFeatures);
+  }
+  
+Rule: PartOfRelation5
+(
+
+(
+	{Token.category == NNP, Person} | {Token.category == NNP, Character} | {Token.category == NNP, Animal} |
+	{Token.category == NNPS, Person} | {Token.category == NNPS, Character} | {Token.category == NNPS, Animal} |
+	{Token.category == NP, Person} | {Token.category == NP, Character} | {Token.category == NP, Animal}
+):entity2
+({PartOfInd, Token.string == "has"}):partofind
+({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!"})*
+({BodyPart}):entity1
+({Token.string == "."} | {Token.string == "?"} | {Token.string == "!"})
+
+):PartOfRelation5
+-->
+:PartOfRelation5
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("PartOfRelation5");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",entity2.getFeatures().get("string"));
+    newFeatures.put("rule","PartOfRelation5");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PartOfRelation", newFeatures);
+  }
+  
+Rule: PartOfRelation55
+(
+
+({Person}):entity2
+({PartOfInd, Token.string == "has"}):partofind
+({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!"})*
+({BodyPart}):entity1
+({Token.string == "."} | {Token.string == "?"} | {Token.string == "!"})
+
+):PartOfRelation55
+-->
+:PartOfRelation55
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("PartOfRelation55");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	
+	long start = 0;
+	AnnotationSet persons = inputAS.getContained(start, matchedEntities.firstNode().getOffset()).get("Person");
+	
+	String text = "";
+	try {
+		text = doc.getContent().getContent(matchedEntities2.firstNode().getOffset(),matchedEntities2.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	
+	if(persons.size() > 0)
+	{
+		ArrayList personsList = new ArrayList(persons);
+		Collections.sort(personsList, new OffsetComparator());
+		Iterator personIter = personsList.iterator();
+		Annotation temp;
+		while(personIter.hasNext())
+		{
+			temp = (Annotation) personIter.next();
+			if((ArrayList<Integer>)entity2.getFeatures().get("matches") != null && (ArrayList<Integer>)temp.getFeatures().get("matches") != null)
+			{
+				if(((ArrayList<Integer>)entity2.getFeatures().get("matches")).containsAll(((ArrayList<Integer>)temp.getFeatures().get("matches"))) && (String) temp.getFeatures().get("gender") != null)
+				{
+					try{
+						text = doc.getContent().getContent(temp.getStartNode().getOffset(),temp.getEndNode().getOffset()).toString();
+					} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+					}
+				}
+			}
+		}
+	}
+	
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",text);
+    newFeatures.put("rule","PartOfRelation55");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PartOfRelation", newFeatures);
+  }
+  
+Rule: PartOfRelation6
+(
+
+({Person}):entity2
+({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!"})*
+({BodyPart}):entity1
+({Token.string == "."} | {Token.string == "?"} | {Token.string == "!"})
+
+):PartOfRelation6
+-->
+:PartOfRelation6
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("PartOfRelation6");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	
+	long start = 0;
+	AnnotationSet persons = inputAS.getContained(start, matchedEntities.firstNode().getOffset()).get("Person");
+	
+	String text = "";
+	try {
+		text = doc.getContent().getContent(matchedEntities2.firstNode().getOffset(),matchedEntities2.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	
+	if(persons.size() > 0)
+	{
+		ArrayList personsList = new ArrayList(persons);
+		Collections.sort(personsList, new OffsetComparator());
+		Iterator personIter = personsList.iterator();
+		Annotation temp;
+		while(personIter.hasNext())
+		{
+			temp = (Annotation) personIter.next();
+			if((ArrayList<Integer>)entity2.getFeatures().get("matches") != null && (ArrayList<Integer>)temp.getFeatures().get("matches") != null)
+			{
+				if(((ArrayList<Integer>)entity2.getFeatures().get("matches")).containsAll(((ArrayList<Integer>)temp.getFeatures().get("matches"))) && (String) temp.getFeatures().get("gender") != null)
+				{
+					try{
+						text = doc.getContent().getContent(temp.getStartNode().getOffset(),temp.getEndNode().getOffset()).toString();
+					} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+					}
+				}
+			}
+		}
+	}
+	
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",text);
+    newFeatures.put("rule","PartOfRelation6");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PartOfRelation", newFeatures);
+  }

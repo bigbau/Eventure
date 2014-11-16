@@ -1,0 +1,285 @@
+Phase: ownsRelation
+Input: Token Lookup Animal Person FirstPerson Character Object OwnsInd BodyPart
+Options: control = appelt
+
+Rule: OwnsRelation1
+(
+
+(
+	{Token.category == NNP} | {Token.category == NNP, Character} | {Token.category == NNP, Animal} |
+	{Token.category == NNPS} | {Token.category == NNPS, Character} | {Token.category == NNPS, Animal} |
+	{Token.category == NP} | {Token.category == NP, Character} | {Token.category == NP, Animal}
+):entity1
+({OwnsInd}):ownsind
+({Token.chunk != O, Token.chunk != B-VP, Token.chunk != B-SBAR, Token.chunk != B-PP, Token.chunk != B-ADVP})*
+(
+	{Token.category == NN, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNP, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNPS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NP, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NPS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Animal} | 
+	{Object}
+):entity2
+
+):OwnsRelation1
+-->
+:OwnsRelation1
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("OwnsRelation1");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",entity2.getFeatures().get("string"));
+    newFeatures.put("rule","OwnsRelation1");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"OwnsRelation", newFeatures);
+  }
+  
+Rule: OwnsRelation15
+(
+
+({Person}):entity1
+({OwnsInd}):ownsind
+({Token.chunk != O, Token.chunk != B-VP, Token.chunk != B-SBAR, Token.chunk != B-PP, Token.chunk != B-ADVP})*
+(
+	{Token.category == NN, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNP, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNPS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NP, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NPS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Animal} | 
+	{Object}
+):entity2
+
+):OwnsRelation15
+-->
+:OwnsRelation15
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("OwnsRelation15");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	
+	long start = 0;
+	AnnotationSet persons = inputAS.getContained(start, matchedEntities.firstNode().getOffset()).get("Person");
+	
+	String text = "";
+	try {
+		text = doc.getContent().getContent(matchedEntities.firstNode().getOffset(),matchedEntities.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	
+	if(persons.size() > 0)
+	{
+		ArrayList personsList = new ArrayList(persons);
+		Collections.sort(personsList, new OffsetComparator());
+		Iterator personIter = personsList.iterator();
+		Annotation temp;
+		while(personIter.hasNext())
+		{
+			temp = (Annotation) personIter.next();
+			if((ArrayList<Integer>)entity1.getFeatures().get("matches") != null && (ArrayList<Integer>)temp.getFeatures().get("matches") != null)
+			{
+				if(((ArrayList<Integer>)entity1.getFeatures().get("matches")).containsAll(((ArrayList<Integer>)temp.getFeatures().get("matches"))) && (String) temp.getFeatures().get("gender") != null)
+				{
+					try{
+						text = doc.getContent().getContent(temp.getStartNode().getOffset(),temp.getEndNode().getOffset()).toString();
+					} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+					}
+				}
+			}
+		}
+	}
+	
+    newFeatures.put("Entity1",text);
+    newFeatures.put("Entity2",entity2.getFeatures().get("string"));
+    newFeatures.put("rule","OwnsRelation15");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"OwnsRelation", newFeatures);
+  }
+  
+Rule: OwnsRelation2
+(
+
+(	
+	{Token.category == NNP} | {Token.category == NNP, Character} | {Token.category == NNP, Animal} |
+	{Token.category == NNPS} | {Token.category == NNPS, Character} | {Token.category == NNPS, Animal} |
+	{Token.category == NP} | {Token.category == NP, Character} | {Token.category == NP, Animal}
+):entity1
+({Token.string == "'s"})
+({Token.chunk != O, Token.chunk != B-VP, Token.chunk != B-SBAR, Token.chunk != B-PP, Token.chunk != B-ADVP})*
+(
+	{Token.category == NN, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNP, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNPS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NP, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NPS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Animal} | 
+	{Object}
+):entity2
+
+):OwnsRelation2
+-->
+:OwnsRelation2
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("OwnsRelation2");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",entity2.getFeatures().get("string"));
+    newFeatures.put("rule","OwnsRelation2");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"OwnsRelation", newFeatures);
+  }
+  
+Rule: OwnsRelation25
+(
+
+({Person}):entity1
+({Token.string == "'s"})
+({Token.chunk != O, Token.chunk != B-VP, Token.chunk != B-SBAR, Token.chunk != B-PP, Token.chunk != B-ADVP})*
+(
+	{Token.category == NN, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNP, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNPS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NP, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NPS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Animal} | 
+	{Object}
+):entity2
+
+):OwnsRelation25
+-->
+:OwnsRelation25
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("OwnsRelation25");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	
+	long start = 0;
+	AnnotationSet persons = inputAS.getContained(start, matchedEntities.firstNode().getOffset()).get("Person");
+	
+	String text = "";
+	try {
+		text = doc.getContent().getContent(matchedEntities.firstNode().getOffset(),matchedEntities.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	
+	if(persons.size() > 0)
+	{
+		ArrayList personsList = new ArrayList(persons);
+		Collections.sort(personsList, new OffsetComparator());
+		Iterator personIter = personsList.iterator();
+		Annotation temp;
+		while(personIter.hasNext())
+		{
+			temp = (Annotation) personIter.next();
+			if((ArrayList<Integer>)entity1.getFeatures().get("matches") != null && (ArrayList<Integer>)temp.getFeatures().get("matches") != null)
+			{
+				if(((ArrayList<Integer>)entity1.getFeatures().get("matches")).containsAll(((ArrayList<Integer>)temp.getFeatures().get("matches"))) && (String) temp.getFeatures().get("gender") != null)
+				{
+					try{
+						text = doc.getContent().getContent(temp.getStartNode().getOffset(),temp.getEndNode().getOffset()).toString();
+					} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+					}
+				}
+			}
+		}
+	}
+	
+    newFeatures.put("Entity1",text);
+    newFeatures.put("Entity2",entity2.getFeatures().get("string"));
+    newFeatures.put("rule","OwnsRelation25");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"OwnsRelation", newFeatures);
+  }
+  
+Rule: OwnsRelation3
+(
+
+({Token.category == "PRP$"}):entity1
+({Token.string != ".", Token.string != "?", Token.string != "!", Token.chunk != B-VP, Token.chunk != B-SBAR, Token.chunk != B-PP, Token.chunk != B-ADVP})*
+(
+	{Token.category == NN, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNP, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNPS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NNS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NP, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Token.category == NPS, !Person, !FirstPerson, !Character, !BodyPart} | 
+	{Animal} | 
+	{Object}):entity2
+
+):OwnsRelation3
+-->
+:OwnsRelation3
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("OwnsRelation3");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	
+	AnnotationSet personToken = inputAS.getContained(matchedEntities.firstNode().getOffset(), matchedEntities.lastNode().getOffset()).get("Person");
+	if(personToken.size() > 0)
+	{
+		ArrayList tokenList = new ArrayList(personToken);
+		Collections.sort(tokenList, new OffsetComparator());
+		Iterator personTokIter = tokenList.iterator();
+		entity1 = (Annotation) personTokIter.next();
+	}
+	
+	long start = 0;
+	AnnotationSet persons = inputAS.getContained(start, matchedEntities.firstNode().getOffset()).get("Person");
+	
+	String text = "";
+	try {
+		text = doc.getContent().getContent(matchedEntities.firstNode().getOffset(),matchedEntities.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	
+	if(persons.size() > 0)
+	{
+		ArrayList personsList = new ArrayList(persons);
+		Collections.sort(personsList, new OffsetComparator());
+		Iterator personIter = personsList.iterator();
+		Annotation temp;
+		while(personIter.hasNext())
+		{
+			temp = (Annotation) personIter.next();
+			if((ArrayList<Integer>)entity1.getFeatures().get("matches") != null && (ArrayList<Integer>)temp.getFeatures().get("matches") != null)
+			{
+				if(((ArrayList<Integer>)entity1.getFeatures().get("matches")).containsAll(((ArrayList<Integer>)temp.getFeatures().get("matches"))) && (String) temp.getFeatures().get("gender") != null)
+				{
+					try{
+						text = doc.getContent().getContent(temp.getStartNode().getOffset(),temp.getEndNode().getOffset()).toString();
+					} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+					}
+				}
+			}
+		}
+	}
+	
+    newFeatures.put("Entity1",text);
+    newFeatures.put("Entity2",entity2.getFeatures().get("string"));
+    newFeatures.put("rule","OwnsRelation3");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"OwnsRelation", newFeatures);
+  }

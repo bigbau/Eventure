@@ -1,0 +1,91 @@
+Phase: capableOfRelation
+Input: Token Lookup Character Person FirstPerson CapableOfInd
+Options: control = all
+
+Rule: CapableOfRelation1
+(
+
+({Token.category == NN} | {Token.category == NNP} | {Token.category == NNPS} | {Token.category == NNS} | {Token.category == NP} | {Token.category == NPS}):entity1
+({CapableOfInd})?
+(
+	{Token.category == VB, Token.string != "be", Token.string != "been", Token.string != "is", Token.string != "was", Token.string != "has", Token.string != "are", Token.string != "were", Token.string != "have", Token.string != "had", Token.string != "is", Token.category != MD} | 
+	{Token.category == VBZ, Token.string != "be", Token.string != "been", Token.string != "is", Token.string != "was", Token.string != "has", Token.string != "are", Token.string != "were", Token.string != "have", Token.string != "had", Token.string != "is", Token.category != MD} | 
+	{Token.category == VBD, Token.string != "be", Token.string != "been", Token.string != "is", Token.string != "was", Token.string != "has", Token.string != "are", Token.string != "were", Token.string != "have", Token.string != "had", Token.string != "is", Token.category != MD}
+):entity2
+
+):CapableOfRelation1
+-->
+:CapableOfRelation1
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("CapableOfRelation1");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",entity2.getFeatures().get("root"));
+    newFeatures.put("rule","CapableOfRelation1");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"CapableOfRelation", newFeatures);
+  }
+  
+Rule: CapableOfRelation15
+(
+
+({Person}):entity1
+({CapableOfInd})?
+(
+	{Token.category == VB, Token.string != "be", Token.string != "been", Token.string != "is", Token.string != "was", Token.string != "has", Token.string != "are", Token.string != "were", Token.string != "have", Token.string != "had", Token.string != "is", Token.category != MD} | 
+	{Token.category == VBZ, Token.string != "be", Token.string != "been", Token.string != "is", Token.string != "was", Token.string != "has", Token.string != "are", Token.string != "were", Token.string != "have", Token.string != "had", Token.string != "is", Token.category != MD} | 
+	{Token.category == VBD, Token.string != "be", Token.string != "been", Token.string != "is", Token.string != "was", Token.string != "has", Token.string != "are", Token.string != "were", Token.string != "have", Token.string != "had", Token.string != "is", Token.category != MD}
+):entity2
+
+):CapableOfRelation15
+-->
+:CapableOfRelation15
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("CapableOfRelation15");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	
+	long start = 0;
+	AnnotationSet persons = inputAS.getContained(start, matchedEntities.firstNode().getOffset()).get("Person");
+	
+	String text = "";
+	try {
+		text = doc.getContent().getContent(matchedEntities.firstNode().getOffset(),matchedEntities.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	
+	if(persons.size() > 0)
+	{
+		ArrayList personsList = new ArrayList(persons);
+		Collections.sort(personsList, new OffsetComparator());
+		Iterator personIter = personsList.iterator();
+		Annotation temp;
+		while(personIter.hasNext())
+		{
+			temp = (Annotation) personIter.next();
+			if((ArrayList<Integer>)entity1.getFeatures().get("matches") != null && (ArrayList<Integer>)temp.getFeatures().get("matches") != null)
+			{
+				if(((ArrayList<Integer>)entity1.getFeatures().get("matches")).containsAll(((ArrayList<Integer>)temp.getFeatures().get("matches"))) && (String) temp.getFeatures().get("gender") != null)
+				{
+					try{
+						text = doc.getContent().getContent(temp.getStartNode().getOffset(),temp.getEndNode().getOffset()).toString();
+					} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+					}
+				}
+			}
+		}
+	}
+	
+    newFeatures.put("Entity1",text);
+    newFeatures.put("Entity2",entity2.getFeatures().get("root"));
+    newFeatures.put("rule","CapableOfRelation15");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"CapableOfRelation", newFeatures);
+  }
