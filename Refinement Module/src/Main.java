@@ -11,7 +11,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        wordnet.WordnetProcessor.printGeneralizations("dog","wolf", POS.NOUN);
+        wordnet.WordnetProcessor.printGeneralizations("screw","fuck", POS.VERB);
         
     }
     

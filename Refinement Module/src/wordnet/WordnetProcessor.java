@@ -16,8 +16,10 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,17 +31,17 @@ public abstract class WordnetProcessor {
     private final static String path = "dict";
     private static IDictionary dict = null;
     public static void printGeneralizations(String word1, String word2, POS pos){
-        ArrayList<String> generalizations = getGeneralizations(word1, word2, pos);
-        System.out.println("printing generalizations for "+word1+" and "+word2+"...");
+        Set<String> generalizations = getGeneralizations(word1, word2, pos);
+        System.out.println("printing "+generalizations.size()+" generalizations for "+word1+" and "+word2+"...");
         for(String g: generalizations){
             System.out.println(g);
         }
     }
-    public static ArrayList<String> getGeneralizations(String word1, String word2, POS pos){
-        ArrayList<String> generalizations = new ArrayList<String>();
-        if (pos == POS.NOUN) {
-            ArrayList<String> word1Hypernyms = getHypernyms(word1);
-            ArrayList<String> word2Hypernyms = getHypernyms(word2);
+    public static Set<String> getGeneralizations(String word1, String word2, POS pos){
+        Set<String> generalizations = new HashSet<String>();
+        if (pos == POS.NOUN||pos==POS.VERB) {
+            Set<String> word1Hypernyms = getHypernyms(word1, pos);
+            Set<String> word2Hypernyms = getHypernyms(word2, pos);
             for (String s1 : word1Hypernyms) {
                 for (String s2 : word2Hypernyms) {
                     if (s1.equals(s2)) {
@@ -50,31 +52,39 @@ public abstract class WordnetProcessor {
         }
         return generalizations;
     }
-    public static void printHypernyms(String word){
-        ArrayList<String> hypernyms = getHypernyms(word);
+    public static void printHypernyms(String word, POS pos){
+        Set<String> hypernyms = getHypernyms(word, pos);
         System.out.println("Printing hypernyms for word \""+word+"\"...");
         for(String h: hypernyms){
             System.out.println(h);
         }
     }
-    public static ArrayList<String> getHypernyms(String word){
+    public static Set<String> getHypernyms(ISynset synset, Set<String> hypernyms, int hNum){
+        //get hypernyms
+        List<ISynsetID> hypernymList = synset.getRelatedSynsets(Pointer.HYPERNYM);
+        List<IWord> words;
+        if(hNum>1){//depth limit
+            return hypernyms;
+        }
+        for (ISynsetID sid : hypernymList) {
+            words = dict.getSynset(sid).getWords();
+            for (Iterator<IWord> it = words.iterator(); it.hasNext();) {
+                hypernyms.add(it.next().getLemma());
+            }
+            hypernyms = getHypernyms(dict.getSynset(sid), hypernyms, hNum+1);
+        }
+        return hypernyms;
+    }
+    public static Set<String> getHypernyms(String word, POS pos){
         openDictionary();
-        IIndexWord idxWord = dict .getIndexWord (word, POS.NOUN);
-        ArrayList<String> hypernyms = new ArrayList<String>();
+        IIndexWord idxWord = dict .getIndexWord (word, pos);
+        Set<String> hypernyms = new HashSet<String>() {};
         for (int i = 0; i < idxWord.getWordIDs().size(); i++) {
             IWordID wordID = idxWord.getWordIDs().get(i); // curr meaning
             IWord wnWord = dict.getWord(wordID);
             ISynset synset = wnWord.getSynset();
             
-            //get hypernyms
-            List<ISynsetID> hypernymList = synset.getRelatedSynsets(Pointer.HYPERNYM);
-            List<IWord> words;
-            for (ISynsetID sid : hypernymList) {
-                words = dict.getSynset(sid).getWords();
-                for (Iterator<IWord> it = words.iterator(); it.hasNext();) {
-                    hypernyms.add(it.next().getLemma());
-                }
-            }
+            hypernyms = getHypernyms(synset, hypernyms, 0);
         }
         return hypernyms;
     }
