@@ -28,6 +28,14 @@ public class Eventure {
 	private static CorpusController application;
 	private static MainWindow eventure = new MainWindow();
 
+	private static List EffectOf = new ArrayList();
+	private static List EffectOfIsState = new ArrayList();
+	private static List CauseOfIsState = new ArrayList();
+	private static List HappensRelation = new ArrayList();
+	private static List EventForGoalEvent = new ArrayList();
+	private static List EventForGoalState = new ArrayList();
+
+
 	public static void main(String[] args){
 		eventure.initialize();
 		eventure.addBtnRunActionListener(new ActionListener(){
@@ -79,7 +87,7 @@ public class Eventure {
 		// we only extract annotations from the default (unnamed) AnnotationSet
 		// in this example
 		AnnotationSet defaultAnnots = testDocu.getAnnotations();
-
+		testDocu.getFeatures();
 		Iterator annotTypesIt =  annotTypesToWrite.iterator();
 
 		while(annotTypesIt.hasNext()) {
@@ -91,15 +99,11 @@ public class Eventure {
 			}
 		}
 
-		// create the XML string using these annotations
 		//eventure.setMessageArea(annotationsToWrite.toString());
-		extractedAnnotations = new ArrayList(annotationsToWrite);
-		
-		for(int i = 0; i<extractedAnnotations.size();i++)
-			eventure.addMessageArea(extractedAnnotations.get(i)+"\n");
+		addRelationsToLists(annotationsToWrite);
 
 	}
-	public static String stringToFile(){
+	private static String stringToFile(){
 
 		String content = "";
 		try {
@@ -111,5 +115,13 @@ public class Eventure {
 		return content;
 	}
 
+	private static void addRelationsToLists(Set annotationsToWrite){
 
+		Iterator nodes = annotationsToWrite.iterator();
+		while(nodes.hasNext()) {
+			String node = nodes.next().toString();
+			if(node.contains("HappensRelation"))
+				eventure.addMessageArea("happens: "+node+"\n");
+		}
+	}
 }
