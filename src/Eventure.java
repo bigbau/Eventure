@@ -19,6 +19,7 @@ import gate.gui.MainFrame;
 import gate.persist.PersistenceException;
 import gate.util.GateException;
 import gate.util.persistence.PersistenceManager;
+import gui.MainWindow;
 
 
 public class Eventure {
@@ -28,12 +29,12 @@ public class Eventure {
 	private static CorpusController application;
 	private static MainWindow eventure = new MainWindow();
 
-	private static List EffectOf = new ArrayList();
-	private static List EffectOfIsState = new ArrayList();
-	private static List CauseOfIsState = new ArrayList();
-	private static List HappensRelation = new ArrayList();
-	private static List EventForGoalEvent = new ArrayList();
-	private static List EventForGoalState = new ArrayList();
+	private static List effectOf = new ArrayList();
+	private static List effectOfIsState = new ArrayList();
+	private static List causeOfIsState = new ArrayList();
+	private static List eventForGoalEvent = new ArrayList();
+	private static List eventForGoalState = new ArrayList();
+	private static List happensRelation = new ArrayList();
 
 
 	public static void main(String[] args){
