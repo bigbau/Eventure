@@ -12,7 +12,11 @@ import edu.mit.jwi.item.Pointer;
 import edu.mit.jwi.morph.IStemmer;
 import edu.mit.jwi.morph.SimpleStemmer;
 import edu.mit.jwi.morph.WordnetStemmer;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,7 +33,50 @@ import java.util.logging.Logger;
  */
 public abstract class WordnetProcessor {
     private final static String path = "dict";
+    private final static String stopwordsPath = "stopwords.txt";
     private static IDictionary dict = null;
+    //commented below is the code for getting the most general words
+    public static void printHyponyms(String word, POS pos){
+        Set<String> hyponyms = getHyponyms(word, pos, 2);
+        System.out.println("Printing hyponyms for word \""+word+"\"...");
+        for(String h: hyponyms){
+            System.out.println(h);
+        }
+    }
+    public static Set<String> getHyponyms(ISynset synset, Set<String> hyponyms, int hNum, int depth){
+        //get hypornyms
+        String t = "";
+        List<ISynsetID> hyponymList = synset.getRelatedSynsets(Pointer.HYPONYM);
+        List<IWord> words;
+        /*for(int i=0;i<hNum;i++){
+            t+="\t";
+        }*/
+        if(hNum>depth){//depth limit
+            return hyponyms;
+        }
+        for (ISynsetID sid : hyponymList) {
+            words = dict.getSynset(sid).getWords();
+            for (Iterator<IWord> it = words.iterator(); it.hasNext();) {
+                hyponyms.add(t+it.next().getLemma());
+            }
+            hyponyms = getHyponyms(dict.getSynset(sid), hyponyms, hNum+1, depth);
+        }
+        return hyponyms;
+    }
+    public static Set<String> getHyponyms(String word, POS pos, int depth){
+        openDictionary();
+        IIndexWord idxWord = dict .getIndexWord (word, pos);
+        Set<String> hyponyms = new HashSet<String>() {};
+        for (int i = 0; i < idxWord.getWordIDs().size(); i++) {
+            IWordID wordID = idxWord.getWordIDs().get(i); // curr meaning
+            IWord wnWord = dict.getWord(wordID);
+            ISynset synset = wnWord.getSynset();
+            
+            hyponyms = getHyponyms(synset, hyponyms, 0, depth);
+        }
+        return hyponyms;
+        
+    }
     public static void printGeneralizations(String word1, String word2, POS pos){
         Set<String> generalizations = getGeneralizations(word1, word2, pos);
         System.out.println("printing "+generalizations.size()+" generalizations for "+word1+" and "+word2+"...");
@@ -39,18 +86,41 @@ public abstract class WordnetProcessor {
     }
     public static Set<String> getGeneralizations(String word1, String word2, POS pos){
         Set<String> generalizations = new HashSet<String>();
+        Set<String> stopwords = getHyponyms("entity",POS.NOUN,2);
+        stopwords.add("entity");
         if (pos == POS.NOUN||pos==POS.VERB) {
             Set<String> word1Hypernyms = getHypernyms(word1, pos);
             Set<String> word2Hypernyms = getHypernyms(word2, pos);
             for (String s1 : word1Hypernyms) {
                 for (String s2 : word2Hypernyms) {
-                    if (s1.equals(s2)) {
+                    if (s1.equals(s2)&&!stopwords.contains(s1)) {
                         generalizations.add(s1);
                     }
                 }
             }
         }
         return generalizations;
+    }
+    public static Set<String> getStopwords(){
+        Set<String> stopwords = new HashSet<String>();
+        try {
+            // Open the file that is the first 
+            // command line parameter
+            FileInputStream fstream = new FileInputStream(stopwordsPath);
+            // Get the object of DataInputStream
+            DataInputStream in = new DataInputStream(fstream);
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            String strLine;
+            //Read File Line By Line
+            while ((strLine = br.readLine()) != null) {
+                stopwords.add(strLine);
+            }
+            //Close the input stream
+            in.close();
+        } catch (Exception e) {//Catch exception if any
+            System.err.println("Error: " + e.getMessage());
+        }
+        return stopwords;
     }
     public static void printHypernyms(String word, POS pos){
         Set<String> hypernyms = getHypernyms(word, pos);
@@ -63,7 +133,7 @@ public abstract class WordnetProcessor {
         //get hypernyms
         List<ISynsetID> hypernymList = synset.getRelatedSynsets(Pointer.HYPERNYM);
         List<IWord> words;
-        if(hNum>1){//depth limit
+        if(hypernymList.isEmpty()){//depth limit
             return hypernyms;
         }
         for (ISynsetID sid : hypernymList) {
@@ -87,6 +157,7 @@ public abstract class WordnetProcessor {
             hypernyms = getHypernyms(synset, hypernyms, 0);
         }
         return hypernyms;
+        
     }
     public static boolean areSynonyms(String word1, String word2, POS pos){
         ArrayList<String> synonyms = getSynonyms(word1, pos);
