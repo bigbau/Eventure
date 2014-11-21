@@ -24,7 +24,7 @@ import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 
 
-public class MainWindow extends JFrame {
+public class EventureWindow extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField inputLocation;
@@ -42,7 +42,7 @@ public class MainWindow extends JFrame {
 		this.setVisible(true);
 	}
 	
-	public MainWindow() {
+	public EventureWindow() {
 		setResizable(false);
 		setFont(new Font("Arial", Font.PLAIN, 12));
 		setTitle("Eventure Build 1.2");

@@ -1,70 +1,55 @@
+package model;
 import java.util.List;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 
-import gate.*;
-import gate.creole.ResourceInstantiationException;
-import gate.gui.MainFrame;
-import gate.persist.PersistenceException;
+import gate.AnnotationSet;
+import gate.Corpus;
+import gate.CorpusController;
+import gate.Document;
+import gate.Factory;
+import gate.Gate;
 import gate.util.GateException;
 import gate.util.persistence.PersistenceManager;
-import gui.MainWindow;
 
 
-public class Eventure {
+import objects.CauseOfIsState;
+import objects.EffectOf;
+import objects.EffectOfIsState;
+import objects.EventForGoalEvent;
+import objects.EventForGoalState;
+import objects.HappensRelation;
 
 
-	private static List extractedAnnotations;
-	private static CorpusController application;
-	private static MainWindow eventure = new MainWindow();
-
-	private static List effectOf = new ArrayList();
-	private static List effectOfIsState = new ArrayList();
-	private static List causeOfIsState = new ArrayList();
-	private static List eventForGoalEvent = new ArrayList();
-	private static List eventForGoalState = new ArrayList();
-	private static List happensRelation = new ArrayList();
+public class EventureModel {
 
 
-	public static void main(String[] args){
-		eventure.initialize();
-		eventure.addBtnRunActionListener(new ActionListener(){
+	private List extractedAnnotations;
+	private CorpusController application;
+	private String resultsSummary;
+//	private List<EffectOf> effectOf = new ArrayList<EffectOf>();
+//	private List<EffectOfIsState> effectOfIsState = new ArrayList<EffectOfIsState>();
+//	private List<CauseOfIsState> causeOfIsState = new ArrayList<CauseOfIsState>();
+//	private List<EventForGoalEvent>  eventForGoalEvent = new ArrayList<EventForGoalEvent>();
+//	private List<EventForGoalState>  eventForGoalState = new ArrayList<EventForGoalState>();
+//	private List<HappensRelation>  happensRelation = new ArrayList<HappensRelation>();
 
-			public void actionPerformed(ActionEvent e)
-			{
-				try {
-					run();
-				} catch (GateException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 
-			}
-		});
-
-	}
-
-	public static void run() throws GateException{
+	public Set runPipeline(String inputFile) throws GateException{
 		Gate.init();
-		//MainFrame.getInstance().setVisible(true);
 		try {
 			application = (CorpusController)PersistenceManager.loadObjectFromFile(new File("src/Eventure.gapp"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Document testDocu = Factory.newDocument(stringToFile());
+		Document testDocu = Factory.newDocument(inputFile);
 		Corpus testCorpus = Factory.newCorpus("Eventure Corpus");
 		testCorpus.add(testDocu);
 		application.setCorpus(testCorpus);
@@ -100,29 +85,33 @@ public class Eventure {
 			}
 		}
 
-		//eventure.setMessageArea(annotationsToWrite.toString());
-		addRelationsToLists(annotationsToWrite);
+		return annotationsToWrite;
 
 	}
-	private static String stringToFile(){
+	public String stringFromFile(String location) throws FileNotFoundException{
 
 		String content = "";
-		try {
-			content = new Scanner(new File("src/sample story.txt")).useDelimiter("\\Z").next();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			
+		content = new Scanner(new File(location)).useDelimiter("\\Z").next();
+		
 		return content;
 	}
 
-	private static void addRelationsToLists(Set annotationsToWrite){
-
+	public void addRelationsToLists(Set annotationsToWrite){
+		StringBuilder temp = new StringBuilder();
 		Iterator nodes = annotationsToWrite.iterator();
 		while(nodes.hasNext()) {
 			String node = nodes.next().toString();
-			if(node.contains("HappensRelation"))
-				eventure.addMessageArea("happens: "+node+"\n");
+			temp.append(node);
+				//eventure.addMessageArea(node+"\n");
 		}
+		resultsSummary = temp.toString();
+		
 	}
+	
+	public String getResultsSummary() {
+		return resultsSummary;
+	}
+	
+	
 }
