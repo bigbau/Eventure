@@ -1,8 +1,10 @@
 package objects;
 
-public class EventForGoalState extends Annotation {
-	private String event, goalState, goalStateObject, goalStateObjectAdjective, goalStateAdverb, eventVerb, eventObject, eventObjectAdjective, eventAdverb;
+import java.util.List;
 
+public class EventForGoalState extends Annotation {
+	private String event, goalState, goalStateObject, eventVerb, eventObject;
+	private List<String> goalStateObjectAdjective, goalStateAdverb, eventObjectAdjective, eventAdverb;
 	public EventForGoalState(long startNode, String event, String goalState,
 			String goalStateObject, String goalStateObjectAdjective,
 			String goalStateAdverb, String eventVerb, String eventObject,
@@ -11,12 +13,12 @@ public class EventForGoalState extends Annotation {
 		this.event = event;
 		this.goalState = goalState;
 		this.goalStateObject = goalStateObject;
-		this.goalStateObjectAdjective = goalStateObjectAdjective;
-		this.goalStateAdverb = goalStateAdverb;
+		this.goalStateObjectAdjective = separateValues(goalStateObjectAdjective);
+		this.goalStateAdverb = separateValues(goalStateAdverb);
 		this.eventVerb = eventVerb;
 		this.eventObject = eventObject;
-		this.eventObjectAdjective = eventObjectAdjective;
-		this.eventAdverb = eventAdverb;
+		this.eventObjectAdjective = separateValues(eventObjectAdjective);
+		this.eventAdverb = separateValues(eventAdverb);
 	}
 
 	public String getEvent() {
@@ -31,11 +33,11 @@ public class EventForGoalState extends Annotation {
 		return goalStateObject;
 	}
 
-	public String getGoalStateObjectAdjective() {
+	public List<String> getGoalStateObjectAdjective() {
 		return goalStateObjectAdjective;
 	}
 
-	public String getGoalStateAdverb() {
+	public List<String> getGoalStateAdverb() {
 		return goalStateAdverb;
 	}
 
@@ -47,11 +49,11 @@ public class EventForGoalState extends Annotation {
 		return eventObject;
 	}
 
-	public String getEventObjectAdjective() {
+	public List<String> getEventObjectAdjective() {
 		return eventObjectAdjective;
 	}
 
-	public String getEventAdverb() {
+	public List<String> getEventAdverb() {
 		return eventAdverb;
 	}
 	

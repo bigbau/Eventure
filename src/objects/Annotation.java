@@ -1,5 +1,9 @@
 package objects;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Annotation {
 	private long startNode;
 
@@ -10,6 +14,11 @@ public class Annotation {
 	}
 
 
+	
+	protected List<String> separateValues(String values){
+		return new ArrayList<String>(Arrays.asList(values.split(";")));
+	}
+	
 
 	public long getStartNode() {
 		return startNode;

@@ -1,8 +1,10 @@
 package objects;
 
+import java.util.List;
+
 public class EffectOf extends Annotation{
-	private String causeEvent, effectEvent, causeVerb, causeObject, causeObjectAdjective, causeAdverb, effectVerb, effectObject, effectObjectAdjective, effectAdverb;
-	
+	private String causeEvent, effectEvent, causeVerb, causeObject, effectVerb, effectObject;
+private List<String> causeObjectAdjective, causeAdverb, effectObjectAdjective, effectAdverb;
 	public EffectOf(long startNode, String causeEvent, String effectEvent,
 			String causeVerb, String causeObject, String causeObjectAdjective,
 			String causeAdverb, String effectVerb, String effectObject,
@@ -12,12 +14,12 @@ public class EffectOf extends Annotation{
 		this.effectEvent = effectEvent;
 		this.causeVerb = causeVerb;
 		this.causeObject = causeObject;
-		this.causeObjectAdjective = causeObjectAdjective;
-		this.causeAdverb = causeAdverb;
+		this.causeObjectAdjective = separateValues(causeObjectAdjective);
+		this.causeAdverb = separateValues(causeAdverb);
 		this.effectVerb = effectVerb;
 		this.effectObject = effectObject;
-		this.effectObjectAdjective = effectObjectAdjective;
-		this.effectAdverb = effectAdverb;
+		this.effectObjectAdjective = separateValues(effectObjectAdjective);
+		this.effectAdverb = separateValues(effectAdverb);
 	}
 
 	public String getCauseEvent() {
@@ -36,11 +38,11 @@ public class EffectOf extends Annotation{
 		return causeObject;
 	}
 
-	public String getCauseObjectAdjective() {
+	public List<String> getCauseObjectAdjective() {
 		return causeObjectAdjective;
 	}
 
-	public String getCauseAdverb() {
+	public List<String> getCauseAdverb() {
 		return causeAdverb;
 	}
 
@@ -52,11 +54,11 @@ public class EffectOf extends Annotation{
 		return effectObject;
 	}
 
-	public String getEffectObjectAdjective() {
+	public List<String> getEffectObjectAdjective() {
 		return effectObjectAdjective;
 	}
 
-	public String getEffectAdverb() {
+	public List<String> getEffectAdverb() {
 		return effectAdverb;
 	}
 	

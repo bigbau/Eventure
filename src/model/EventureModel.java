@@ -119,7 +119,7 @@ public class EventureModel {
 		}
 		
 		if(effectOfIsState.size()>0){
-			results.append("EffectOf Relations:\n");
+			results.append("EffectOfIsState Relations:\n");
 			Iterator temp = effectOfIsState.iterator();
 			int id = 0;
 			while(temp.hasNext()){
@@ -131,7 +131,7 @@ public class EventureModel {
 		}
 		
 		if(causeOfIsState.size()>0){
-			results.append("EffectOf Relations:\n");
+			results.append("CauseOfIsState Relations:\n");
 			Iterator temp = causeOfIsState.iterator();
 			int id = 0;
 			while(temp.hasNext()){
@@ -143,7 +143,7 @@ public class EventureModel {
 		}
 		
 		if(eventForGoalEvent.size()>0){
-			results.append("EffectOf Relations:\n");
+			results.append("EventForGoalEvent Relations:\n");
 			Iterator temp = eventForGoalEvent.iterator();
 			int id = 0;
 			while(temp.hasNext()){
@@ -153,14 +153,25 @@ public class EventureModel {
 				results.append("\n");
 			}
 		}
-		
+
 		if(eventForGoalState.size()>0){
-			results.append("EffectOf Relations:\n");
+			results.append("EventForGoalState Relations:\n");
 			Iterator temp = eventForGoalState.iterator();
 			int id = 0;
 			while(temp.hasNext()){
 				id++;
 				EventForGoalState holder = (EventForGoalState)temp.next();
+				results.append("ID: "+id+" ,");
+				results.append("\n");
+			}
+		}
+		if(happensRelation.size()>0){
+			results.append("HappensRelation Relations:\n");
+			Iterator temp = happensRelation.iterator();
+			int id = 0;
+			while(temp.hasNext()){
+				id++;
+				HappensRelation holder = (HappensRelation)temp.next();
 				results.append("ID: "+id+" ,");
 				results.append("\n");
 			}

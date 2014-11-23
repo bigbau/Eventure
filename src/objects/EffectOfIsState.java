@@ -1,8 +1,10 @@
 package objects;
 
+import java.util.List;
+
 public class EffectOfIsState extends Annotation{
-	private String effectState, causeEvent, causeVerb, causeObject, causeObjectAdjective, causeAdverb, effectObject, effectObjectAdjective, effectAdverb;
-	
+	private String effectState, causeEvent, causeVerb, causeObject, effectObject;
+	private List<String> causeObjectAdjective, causeAdverb, effectObjectAdjective, effectAdverb;
 	public EffectOfIsState(long startNode, String effectState,
 			String causeEvent, String causeVerb, String causeObject,
 			String causeObjectAdjective, String causeAdverb,
@@ -13,11 +15,11 @@ public class EffectOfIsState extends Annotation{
 		this.causeEvent = causeEvent;
 		this.causeVerb = causeVerb;
 		this.causeObject = causeObject;
-		this.causeObjectAdjective = causeObjectAdjective;
-		this.causeAdverb = causeAdverb;
+		this.causeObjectAdjective = separateValues(causeObjectAdjective);
+		this.causeAdverb = separateValues(causeAdverb);
 		this.effectObject = effectObject;
-		this.effectObjectAdjective = effectObjectAdjective;
-		this.effectAdverb = effectAdverb;
+		this.effectObjectAdjective = separateValues(effectObjectAdjective);
+		this.effectAdverb = separateValues(effectAdverb);
 	}
 
 	public String getEffectState() {
@@ -36,11 +38,11 @@ public class EffectOfIsState extends Annotation{
 		return causeObject;
 	}
 
-	public String getCauseObjectAdjective() {
+	public List<String> getCauseObjectAdjective() {
 		return causeObjectAdjective;
 	}
 
-	public String getCauseAdverb() {
+	public List<String> getCauseAdverb() {
 		return causeAdverb;
 	}
 
@@ -48,11 +50,11 @@ public class EffectOfIsState extends Annotation{
 		return effectObject;
 	}
 
-	public String getEffectObjectAdjective() {
+	public List<String> getEffectObjectAdjective() {
 		return effectObjectAdjective;
 	}
 
-	public String getEffectAdverb() {
+	public List<String> getEffectAdverb() {
 		return effectAdverb;
 	}
 	
