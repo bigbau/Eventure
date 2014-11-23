@@ -13,7 +13,7 @@ Rule: EffectOfIsState1
 -->
 :EffectOfIsState1
   {
-	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
@@ -122,14 +122,6 @@ Rule: EffectOfIsState1
 		{	
 			timeAnnot = (Annotation) lookupIter.next();
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
-			{
-				try{
-					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
-				} catch(InvalidOffsetException e) {
-					throw new GateRuntimeException(e);
-				}
-			}
 			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
 				determiner = true;
 			}
@@ -201,7 +193,6 @@ Rule: EffectOfIsState1
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
-	newFeatures.put("EffectVerb",effectVerb);
     newFeatures.put("rule","EffectOfIsState1");
     annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
   }
@@ -215,7 +206,7 @@ Rule: EffectOfIsState4
 -->
 :EffectOfIsState4
   {
-	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
@@ -324,14 +315,6 @@ Rule: EffectOfIsState4
 		{	
 			timeAnnot = (Annotation) lookupIter.next();
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
-			{
-				try{
-					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
-				} catch(InvalidOffsetException e) {
-					throw new GateRuntimeException(e);
-				}
-			}
 			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
 				determiner = true;
 			}
@@ -403,7 +386,6 @@ Rule: EffectOfIsState4
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("string"));
-	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
@@ -420,7 +402,7 @@ Rule: EffectOfIsState45
 -->
 :EffectOfIsState45
   {
-	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
@@ -529,14 +511,7 @@ Rule: EffectOfIsState45
 		{	
 			timeAnnot = (Annotation) lookupIter.next();
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
-			{
-				try{
-					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
-				} catch(InvalidOffsetException e) {
-					throw new GateRuntimeException(e);
-				}
-			}
+			
 			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
 				determiner = true;
 			}
@@ -608,7 +583,6 @@ Rule: EffectOfIsState45
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("string"));
-	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
@@ -625,7 +599,7 @@ Rule: EffectOfIsState5
 -->
 :EffectOfIsState5
   {
-	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
@@ -734,14 +708,6 @@ Rule: EffectOfIsState5
 		{	
 			timeAnnot = (Annotation) lookupIter.next();
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
-			{
-				try{
-					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
-				} catch(InvalidOffsetException e) {
-					throw new GateRuntimeException(e);
-				}
-			}
 			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
 				determiner = true;
 			}
@@ -813,7 +779,6 @@ Rule: EffectOfIsState5
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
-	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
@@ -830,7 +795,7 @@ Rule: EffectOfIsState55
 -->
 :EffectOfIsState55
   {
-	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
@@ -939,14 +904,6 @@ Rule: EffectOfIsState55
 		{	
 			timeAnnot = (Annotation) lookupIter.next();
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
-			{
-				try{
-					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
-				} catch(InvalidOffsetException e) {
-					throw new GateRuntimeException(e);
-				}
-			}
 			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
 				determiner = true;
 			}
@@ -1018,7 +975,6 @@ Rule: EffectOfIsState55
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
-	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
@@ -1038,7 +994,7 @@ Rule: EffectOfIsState2
 :EffectOfIsState2
   {
   
-	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
@@ -1147,14 +1103,6 @@ Rule: EffectOfIsState2
 		{	
 			timeAnnot = (Annotation) lookupIter.next();
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
-			{
-				try{
-					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
-				} catch(InvalidOffsetException e) {
-					throw new GateRuntimeException(e);
-				}
-			}
 			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
 				determiner = true;
 			}
@@ -1226,7 +1174,6 @@ Rule: EffectOfIsState2
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
-	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
@@ -1244,7 +1191,7 @@ Rule: EffectOfIsState6
 :EffectOfIsState6
   {
   
-	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
@@ -1353,14 +1300,6 @@ Rule: EffectOfIsState6
 		{	
 			timeAnnot = (Annotation) lookupIter.next();
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
-			{
-				try{
-					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
-				} catch(InvalidOffsetException e) {
-					throw new GateRuntimeException(e);
-				}
-			}
 			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
 				determiner = true;
 			}
@@ -1432,7 +1371,6 @@ Rule: EffectOfIsState6
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
-	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
@@ -1450,7 +1388,7 @@ Rule: EffectOfIsState3
 :EffectOfIsState3
   {
   
-	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
@@ -1559,14 +1497,6 @@ Rule: EffectOfIsState3
 		{	
 			timeAnnot = (Annotation) lookupIter.next();
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
-			{
-				try{
-					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
-				} catch(InvalidOffsetException e) {
-					throw new GateRuntimeException(e);
-				}
-			}
 			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
 				determiner = true;
 			}
@@ -1638,7 +1568,6 @@ Rule: EffectOfIsState3
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("string"));
-	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);

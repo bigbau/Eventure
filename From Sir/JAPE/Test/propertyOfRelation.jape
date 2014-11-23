@@ -1,0 +1,125 @@
+Phase: propertyOfRelation
+Input: Token Lookup Person Character FirstPerson Location StoryLoc Split GoalState
+Options: control = all
+
+Rule: PropertyOfRelation1
+(
+
+(
+	{Token.category == NNP} | 
+	{Token.category == NNPS} | 
+	{Token.category == NP} | 
+	{Token.category == NN} | {Token.category == NNS} | 
+	{Token.category == NPS} | 
+	{Character} |
+	{StoryLoc}
+):entity2
+({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", Token.string != "not"})*
+({Token.category == JJ, !GoalState} | {Token.category == JJS, !GoalState} | {Token.category == JJR, !GoalState}):entity1
+
+):PropertyOfRelation1
+-->
+:PropertyOfRelation1
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("PropertyOfRelation1");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",entity2.getFeatures().get("string"));
+    newFeatures.put("rule","PropertyOfRelation1");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PropertyOfRelation", newFeatures);
+  }
+  
+Rule: PropertyOfRelation15
+(
+
+({Location}):entity2
+({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", Token.string != "not"})*
+({Token.category == JJ, !GoalState} | {Token.category == JJS, !GoalState} | {Token.category == JJR, !GoalState}):entity1
+
+):PropertyOfRelation15
+-->
+:PropertyOfRelation15
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("PropertyOfRelation15");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	
+	String temp = "";
+	try {
+		temp = doc.getContent().getContent(matchedEntities2.firstNode().getOffset(),matchedEntities2.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",temp);
+    newFeatures.put("rule","PropertyOfRelation15");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PropertyOfRelation", newFeatures);
+  }
+  
+Rule: PropertyOfRelation2
+(
+
+({Token.category == JJ, !GoalState} | {Token.category == JJS, !GoalState} | {Token.category == JJR, !GoalState}):entity1
+({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!"})*
+(
+	{Token.category == NNP} | 
+	{Token.category == NNPS} | 
+	{Token.category == NP} | 
+	{Token.category == NN} | {Token.category == NNS} | 
+	{Token.category == NPS} | 
+	{Character} |
+	{StoryLoc}
+):entity2
+
+):PropertyOfRelation2
+-->
+:PropertyOfRelation2
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    Annotation entity2=matchedEntities2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("PropertyOfRelation2");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",entity2.getFeatures().get("string"));
+    newFeatures.put("rule","PropertyOfRelation2");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PropertyOfRelation", newFeatures);
+  }
+  
+Rule: PropertyOfRelation25
+(
+
+({Token.category == JJ, !GoalState} | {Token.category == JJS, !GoalState} | {Token.category == JJR, !GoalState}):entity1
+({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!"})*
+({Location}):entity2
+
+):PropertyOfRelation25
+-->
+:PropertyOfRelation25
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedEntities2=(gate.AnnotationSet) bindings.get("entity2");
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("PropertyOfRelation25");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	
+	String temp = "";
+	try {
+		temp = doc.getContent().getContent(matchedEntities2.firstNode().getOffset(),matchedEntities2.lastNode().getOffset()).toString();
+	} catch(InvalidOffsetException e) {
+		throw new GateRuntimeException(e);
+	}
+	
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
+    newFeatures.put("Entity2",temp);
+    newFeatures.put("rule","PropertyOfRelation25");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"PropertyOfRelation", newFeatures);
+  }
