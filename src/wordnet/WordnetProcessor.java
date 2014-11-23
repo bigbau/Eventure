@@ -96,23 +96,6 @@ public abstract class WordnetProcessor {
         }
         return hyponyms;
     }
-    public static void printGeneralizations(Set<String> rootWords1, Set<String> rootWords2, POS pos){
-        Set<String> generalizations = getGeneralizations(rootWords1, rootWords2, pos);
-        System.out.println("printing "+generalizations.size()+" generalizations for "+rootWords1+" and "+rootWords2+"...");
-        for(String g: generalizations){
-            System.out.println(g);
-        }
-    }
-    public static Set<String> getGeneralizations(Set<String> rootWords1, Set<String> rootWords2, POS pos){
-        Set<String> generalizations = new HashSet<String>();
-        for(String word1: rootWords1){
-            for(String word2: rootWords2){
-                Set<String> curr = getGeneralizations(word1, word2, pos);
-                generalizations.addAll(curr);
-            }
-        }
-        return generalizations;
-    }
     public static void printGeneralizations(String word1, String word2, POS pos){
         Set<String> generalizations = getGeneralizations(word1, word2, pos);
         System.out.println("printing "+generalizations.size()+" generalizations for "+word1+" and "+word2+"...");
@@ -147,14 +130,17 @@ public abstract class WordnetProcessor {
     }
     public static Set<String> getHypernyms(String word, POS pos){
         openDictionary();
-        IIndexWord idxWord = dict .getIndexWord (word, pos);
+        Set<String> rootWords = findRootWords(word,pos);
         Set<String> hypernyms = new HashSet<String>() {};
-        for (int i = 0; i < idxWord.getWordIDs().size(); i++) {
-            IWordID wordID = idxWord.getWordIDs().get(i); // curr meaning
-            IWord wnWord = dict.getWord(wordID);
-            ISynset synset = wnWord.getSynset();
-            
-            hypernyms = getHypernyms(synset, hypernyms, 0);
+        for(String s:rootWords){
+            IIndexWord idxWord = dict .getIndexWord (s, pos);
+	        for (int i = 0; i < idxWord.getWordIDs().size(); i++) {
+	            IWordID wordID = idxWord.getWordIDs().get(i); // curr meaning
+	            IWord wnWord = dict.getWord(wordID);
+	            ISynset synset = wnWord.getSynset();
+	            
+	            hypernyms = getHypernyms(synset, hypernyms, 0);
+	        }
         }
         return hypernyms;
         
@@ -209,17 +195,20 @@ public abstract class WordnetProcessor {
     public static Set<String> getSynonyms(String word, POS pos) {
         openDictionary();
         // look up first sense of the word "dog "
-        IIndexWord idxWord = dict.getIndexWord(word, pos);
+        Set<String> rootWords = findRootWords(word, pos);
         Set<String> synonyms = new HashSet<String>();
-        for (int i = 0; i < idxWord.getWordIDs().size(); i++) {
-            IWordID wordID = idxWord.getWordIDs().get(i); // curr meaning
-            IWord wnWord = dict.getWord(wordID);
-            ISynset synset = wnWord.getSynset();
-            
-            // iterate over words associated with the synset
-            for (IWord w : synset.getWords()) {
-                synonyms.add(w.getLemma());
-            }
+        for(String s:rootWords){
+	        IIndexWord idxWord = dict.getIndexWord(s, pos);
+	        for (int i = 0; i < idxWord.getWordIDs().size(); i++) {
+	            IWordID wordID = idxWord.getWordIDs().get(i); // curr meaning
+	            IWord wnWord = dict.getWord(wordID);
+	            ISynset synset = wnWord.getSynset();
+	            
+	            // iterate over words associated with the synset
+	            for (IWord w : synset.getWords()) {
+	                synonyms.add(w.getLemma());
+	            }
+	        }
         }
         return synonyms;
     }
