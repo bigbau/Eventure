@@ -1,0 +1,175 @@
+Phase: effectOfIsState
+Input: Token Lookup Cause EffectState Event GoalInd GoalEvent Person
+Options: control = appelt
+
+Rule: EffectOfIsState1
+(
+	({Cause}):cause
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
+	({Token.chunk == O})[1]
+	({Token.string != ".", Token.string != "?", Token.string != "!"})*
+	({EffectState}):effect
+):EffectOfIsState1
+-->
+:EffectOfIsState1
+  {
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
+    Annotation effect=matchedEffect.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState1");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+    newFeatures.put("rule","EffectOfIsState1");
+    annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
+  }
+  
+Rule: EffectOfIsState4
+(
+	({Cause}):cause
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
+	({Token.category == JJ} | {Token.category == VBD} | {Token.category == VBN}):effect
+):EffectOfIsState4
+-->
+:EffectOfIsState4
+  {
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
+    Annotation effect=matchedEffect.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState4");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	newFeatures.put("Effect",effect.getFeatures().get("string"));
+    newFeatures.put("rule","EffectOfIsState4");
+    annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
+  }
+  
+Rule: EffectOfIsState45
+(
+	({Token.category == JJ} | {Token.category == VBD} | {Token.category == VBN}):effect
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
+	({Cause}):cause
+):EffectOfIsState45
+-->
+:EffectOfIsState45
+  {
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
+    Annotation effect=matchedEffect.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState45");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	newFeatures.put("Effect",effect.getFeatures().get("string"));
+    newFeatures.put("rule","EffectOfIsState45");
+    annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
+  }
+  
+Rule: EffectOfIsState5
+(
+	({Cause}):cause
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
+	({EffectState}):effect
+):EffectOfIsState5
+-->
+:EffectOfIsState5
+  {
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
+    Annotation effect=matchedEffect.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState5");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+    newFeatures.put("rule","EffectOfIsState5");
+    annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
+  }
+  
+Rule: EffectOfIsState55
+(
+	({EffectState}):effect
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
+	({Cause}):cause
+):EffectOfIsState55
+-->
+:EffectOfIsState55
+  {
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
+    Annotation effect=matchedEffect.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState55");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+    newFeatures.put("rule","EffectOfIsState55");
+    annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
+  }
+  
+Rule: EffectOfIsState2
+(
+	({Event}):cause
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
+	({Token.chunk == O})[1]
+	({Token.string != ".", Token.string != "?", Token.string != "!"})*
+	({EffectState}):effect
+):EffectOfIsState2
+-->
+:EffectOfIsState2
+  {
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
+    Annotation effect=matchedEffect.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState2");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+    newFeatures.put("rule","EffectOfIsState2");
+    annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
+  }
+  
+Rule: EffectOfIsState6
+(
+	({Event}):cause
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
+	({EffectState}):effect
+):EffectOfIsState6
+-->
+:EffectOfIsState6
+  {
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
+    Annotation effect=matchedEffect.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState6");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+    newFeatures.put("rule","EffectOfIsState6");
+    annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
+  }
+  
+Rule: EffectOfIsState3
+(
+	({Event}):cause
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
+	({Token.category == JJ} | {Token.category == VBD} | {Token.category == VBN}):effect
+):EffectOfIsState3
+-->
+:EffectOfIsState3
+  {
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
+    Annotation effect=matchedEffect.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState3");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("Effect",effect.getFeatures().get("string"));
+    newFeatures.put("rule","EffectOfIsState3");
+    annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
+  }

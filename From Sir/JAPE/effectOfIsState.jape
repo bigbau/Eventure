@@ -13,14 +13,195 @@ Rule: EffectOfIsState1
 -->
 :EffectOfIsState1
   {
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
     Annotation effect=matchedEffect.iterator().next();
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState1");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
-    newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	
+	AnnotationSet tokens = inputAS.getContained(matchedCause.firstNode().getOffset(), matchedCause.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					causeVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		causeObjectAdjective = adjectives.toString();
+		causeAdverb = adverbs.toString();
+	}
+	
+	tokens = inputAS.getContained(matchedEffect.firstNode().getOffset(), matchedEffect.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		effectObjectAdjective = adjectives.toString();
+		effectAdverb = adverbs.toString();
+		
+	}
+	
+	
+	newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	newFeatures.put("CauseVerb",causeVerb);
+	newFeatures.put("CauseObject",causeObject);
+	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
+	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+	newFeatures.put("EffectVerb",effectVerb);
     newFeatures.put("rule","EffectOfIsState1");
     annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
   }
@@ -34,14 +215,198 @@ Rule: EffectOfIsState4
 -->
 :EffectOfIsState4
   {
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
     Annotation effect=matchedEffect.iterator().next();
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState4");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
-    newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	
+	AnnotationSet tokens = inputAS.getContained(matchedCause.firstNode().getOffset(), matchedCause.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					causeVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		causeObjectAdjective = adjectives.toString();
+		causeAdverb = adverbs.toString();
+	}
+	
+	tokens = inputAS.getContained(matchedEffect.firstNode().getOffset(), matchedEffect.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		effectObjectAdjective = adjectives.toString();
+		effectAdverb = adverbs.toString();
+		
+	}
+	
+	
+	newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("CauseVerb",causeVerb);
+	newFeatures.put("CauseObject",causeObject);
+	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
+	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("string"));
+	newFeatures.put("EffectVerb",effectVerb);
+	newFeatures.put("EffectObject",effectObject);
+	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
+	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","EffectOfIsState4");
     annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
   }
@@ -55,14 +420,198 @@ Rule: EffectOfIsState45
 -->
 :EffectOfIsState45
   {
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
     Annotation effect=matchedEffect.iterator().next();
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState45");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
-    newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	
+	AnnotationSet tokens = inputAS.getContained(matchedCause.firstNode().getOffset(), matchedCause.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					causeVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		causeObjectAdjective = adjectives.toString();
+		causeAdverb = adverbs.toString();
+	}
+	
+	tokens = inputAS.getContained(matchedEffect.firstNode().getOffset(), matchedEffect.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		effectObjectAdjective = adjectives.toString();
+		effectAdverb = adverbs.toString();
+		
+	}
+	
+	
+	newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("CauseVerb",causeVerb);
+	newFeatures.put("CauseObject",causeObject);
+	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
+	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("string"));
+	newFeatures.put("EffectVerb",effectVerb);
+	newFeatures.put("EffectObject",effectObject);
+	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
+	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","EffectOfIsState45");
     annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
   }
@@ -76,14 +625,198 @@ Rule: EffectOfIsState5
 -->
 :EffectOfIsState5
   {
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
     Annotation effect=matchedEffect.iterator().next();
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState5");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
-    newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	
+	AnnotationSet tokens = inputAS.getContained(matchedCause.firstNode().getOffset(), matchedCause.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					causeVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		causeObjectAdjective = adjectives.toString();
+		causeAdverb = adverbs.toString();
+	}
+	
+	tokens = inputAS.getContained(matchedEffect.firstNode().getOffset(), matchedEffect.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		effectObjectAdjective = adjectives.toString();
+		effectAdverb = adverbs.toString();
+		
+	}
+	
+	
+	newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	newFeatures.put("CauseVerb",causeVerb);
+	newFeatures.put("CauseObject",causeObject);
+	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
+	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+	newFeatures.put("EffectVerb",effectVerb);
+	newFeatures.put("EffectObject",effectObject);
+	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
+	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","EffectOfIsState5");
     annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
   }
@@ -97,14 +830,198 @@ Rule: EffectOfIsState55
 -->
 :EffectOfIsState55
   {
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
     Annotation effect=matchedEffect.iterator().next();
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState55");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
-    newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	
+	AnnotationSet tokens = inputAS.getContained(matchedCause.firstNode().getOffset(), matchedCause.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					causeVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		causeObjectAdjective = adjectives.toString();
+		causeAdverb = adverbs.toString();
+	}
+	
+	tokens = inputAS.getContained(matchedEffect.firstNode().getOffset(), matchedEffect.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		effectObjectAdjective = adjectives.toString();
+		effectAdverb = adverbs.toString();
+		
+	}
+	
+	
+	newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	newFeatures.put("CauseVerb",causeVerb);
+	newFeatures.put("CauseObject",causeObject);
+	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
+	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+	newFeatures.put("EffectVerb",effectVerb);
+	newFeatures.put("EffectObject",effectObject);
+	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
+	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","EffectOfIsState55");
     annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
   }
@@ -120,14 +1037,199 @@ Rule: EffectOfIsState2
 -->
 :EffectOfIsState2
   {
+  
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
     Annotation effect=matchedEffect.iterator().next();
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState2");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
-    newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	
+	AnnotationSet tokens = inputAS.getContained(matchedCause.firstNode().getOffset(), matchedCause.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					causeVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		causeObjectAdjective = adjectives.toString();
+		causeAdverb = adverbs.toString();
+	}
+	
+	tokens = inputAS.getContained(matchedEffect.firstNode().getOffset(), matchedEffect.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		effectObjectAdjective = adjectives.toString();
+		effectAdverb = adverbs.toString();
+		
+	}
+	
+	
+	newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("CauseVerb",causeVerb);
+	newFeatures.put("CauseObject",causeObject);
+	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
+	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+	newFeatures.put("EffectVerb",effectVerb);
+	newFeatures.put("EffectObject",effectObject);
+	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
+	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","EffectOfIsState2");
     annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
   }
@@ -141,14 +1243,199 @@ Rule: EffectOfIsState6
 -->
 :EffectOfIsState6
   {
+  
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
     Annotation effect=matchedEffect.iterator().next();
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState6");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
-    newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	
+	AnnotationSet tokens = inputAS.getContained(matchedCause.firstNode().getOffset(), matchedCause.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					causeVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		causeObjectAdjective = adjectives.toString();
+		causeAdverb = adverbs.toString();
+	}
+	
+	tokens = inputAS.getContained(matchedEffect.firstNode().getOffset(), matchedEffect.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		effectObjectAdjective = adjectives.toString();
+		effectAdverb = adverbs.toString();
+		
+	}
+	
+	
+	newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("CauseVerb",causeVerb);
+	newFeatures.put("CauseObject",causeObject);
+	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
+	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+	newFeatures.put("EffectVerb",effectVerb);
+	newFeatures.put("EffectObject",effectObject);
+	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
+	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","EffectOfIsState6");
     annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
   }
@@ -162,14 +1449,199 @@ Rule: EffectOfIsState3
 -->
 :EffectOfIsState3
   {
+  
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
     Annotation effect=matchedEffect.iterator().next();
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOfIsState3");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
-    newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	
+	AnnotationSet tokens = inputAS.getContained(matchedCause.firstNode().getOffset(), matchedCause.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					causeVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		causeObjectAdjective = adjectives.toString();
+		causeAdverb = adverbs.toString();
+	}
+	
+	tokens = inputAS.getContained(matchedEffect.firstNode().getOffset(), matchedEffect.lastNode().getOffset()).get("Token");
+	if(tokens.size() > 0)
+	{
+		ArrayList tokensList = new ArrayList(tokens);
+		Collections.sort(tokensList, new OffsetComparator());
+		Iterator lookupIter = tokensList.iterator();
+		Annotation timeAnnot;
+		StringBuilder adjectives = new StringBuilder();
+		StringBuilder adverbs = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0;
+		boolean determiner = false, prepPhrase = false;
+		while(lookupIter.hasNext())
+		{	
+			timeAnnot = (Annotation) lookupIter.next();
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			{
+				try{
+					effectVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
+				determiner = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-PP")){
+				prepPhrase = true;
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			{
+				if(!prepPhrase){
+					if(determiner){
+						try{
+							effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						} catch(InvalidOffsetException e) {
+							throw new GateRuntimeException(e);
+						}
+						determiner = false;
+					}else{
+						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
+							try{
+								effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							} catch(InvalidOffsetException e) {
+								throw new GateRuntimeException(e);
+							}						
+						}
+					}
+					prepPhrase = false;
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			{
+				try{
+				 if(noAdjectives>0){
+					adjectives.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adjectives.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdjectives++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+			
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			{
+				try{
+				 if(noAdverbs>0){
+					adverbs.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+				}else{
+					adverbs.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+					noAdverbs++;
+				}
+				} catch(InvalidOffsetException e) {
+					throw new GateRuntimeException(e);
+				}
+			}
+		}
+		effectObjectAdjective = adjectives.toString();
+		effectAdverb = adverbs.toString();
+		
+	}
+	
+	
+	newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("CauseVerb",causeVerb);
+	newFeatures.put("CauseObject",causeObject);
+	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
+	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("string"));
+	newFeatures.put("EffectVerb",effectVerb);
+	newFeatures.put("EffectObject",effectObject);
+	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
+	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","EffectOfIsState3");
     annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
   }

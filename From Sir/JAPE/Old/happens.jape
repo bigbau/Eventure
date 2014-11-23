@@ -20,38 +20,15 @@ Rule: Happens1
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("Happens1");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
 	
-	String temp = "", time = "";
+	String temp = "";
 	try {
 		temp = doc.getContent().getContent(matchedEntity2.firstNode().getOffset(),matchedEntity2.lastNode().getOffset()).toString();
 	} catch(InvalidOffsetException e) {
 		throw new GateRuntimeException(e);
 	}
-	AnnotationSet lookups = inputAS.getContained(matchedEntity2.firstNode().getOffset(), matchedEntity2.lastNode().getOffset()).get("Lookup");
-	if(lookups.size() > 0)
-	{
-		ArrayList lookupsList = new ArrayList(lookups);
-		Collections.sort(lookupsList, new OffsetComparator());
-		Iterator lookupIter = lookupsList.iterator();
-		Annotation timeAnnot;
-		while(lookupIter.hasNext())
-		{
-			timeAnnot = (Annotation) lookupIter.next();
-			
-			if(((String)timeAnnot.getFeatures().get("majorType")).equals("times")|((String)timeAnnot.getFeatures().get("majorType")).equals("date_key"))
-			{
-				try{
-					time = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
-				} catch(InvalidOffsetException e) {
-					throw new GateRuntimeException(e);
-				}
-			}
-			
-		}
-	}
 	
     newFeatures.put("Entity1",entity.getFeatures().get("Entity1"));
 	newFeatures.put("Entity2",temp);
-	newFeatures.put("Entity3",time);
     newFeatures.put("rule","Happens1");
     annotations.add(matchedEntity.firstNode(),matchedEntity.lastNode(),"HappensRelation", newFeatures);
   }
@@ -68,7 +45,7 @@ Rule: Happens2
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("Happens2");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
 	
-	String text = "", text2 = "";
+	String text = "";
 	String textEvent = (String) entity.getFeatures().get("Entity1");
 	AnnotationSet lookups = inputAS.getContained(matchedEntity.firstNode().getOffset(), matchedEntity.lastNode().getOffset()).get("Lookup");
 	if(lookups.size() > 0)
@@ -89,21 +66,11 @@ Rule: Happens2
 				throw new GateRuntimeException(e);
 				}
 			}
-			if(((String)temp.getFeatures().get("majorType")).equals("times")|((String)temp.getFeatures().get("majorType")).equals("date_key"))
-			{
-				try{
-					text2 = doc.getContent().getContent(temp.getStartNode().getOffset(),temp.getEndNode().getOffset()).toString();
-				} catch(InvalidOffsetException e) {
-					throw new GateRuntimeException(e);
-				}
-			}
-			
 		}
 	}
 	
     newFeatures.put("Entity1",textEvent.trim());
 	newFeatures.put("Entity2",text);
-	newFeatures.put("Entity3",text2);
     newFeatures.put("rule","Happens2");
     annotations.add(matchedEntity.firstNode(),matchedEntity.lastNode(),"HappensRelation", newFeatures);
   }

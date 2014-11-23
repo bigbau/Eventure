@@ -1,0 +1,38 @@
+Phase: goalEvent
+Input: Token Lookup GoalInd Person Character FirstPerson Emotion
+Options: control = appelt
+
+Rule: GoalEvent1
+(
+
+({GoalInd})
+({Token.string != "be", Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", !GoalInd})*
+(
+	({Token.category == VBD, Token.string != "be", Token.string != "been", Token.string != "is", Token.string != "was", Token.string != "has", Token.string != "are", Token.string != "were", Token.string != "have", Token.string != "had", Token.string != "is", Token.category != MD, !GoalInd} | 
+	{Token.category == VBG, Token.string != "be", Token.string != "been", Token.string != "is", Token.string != "was", Token.string != "has", Token.string != "are", Token.string != "were", Token.string != "have", Token.string != "had", Token.string != "is", Token.category != MD, !GoalInd} | 
+	{Token.category == VBN, Token.string != "be", Token.string != "been", Token.string != "is", Token.string != "was", Token.string != "has", Token.string != "are", Token.string != "were", Token.string != "have", Token.string != "had", Token.string != "is", Token.category != MD, !GoalInd} | 
+	{Token.category == VBP, Token.string != "be", Token.string != "been", Token.string != "is", Token.string != "was", Token.string != "has", Token.string != "are", Token.string != "were", Token.string != "have", Token.string != "had", Token.string != "is", Token.category != MD, !GoalInd} | 
+	{Token.category == VB, Token.string != "be", Token.string != "been", Token.string != "is", Token.string != "was", Token.string != "has", Token.string != "are", Token.string != "were", Token.string != "have", Token.string != "had", Token.string != "is", Token.category != MD, !GoalInd} | 
+	{Token.category == VBZ, Token.string != "be", Token.string != "been", Token.string != "is", Token.string != "was", Token.string != "has", Token.string != "are", Token.string != "were", Token.string != "have", Token.string != "had", Token.string != "is", Token.category != MD, !GoalInd})
+	({Token.chunk != O, Token.chunk != B-VP, Token.chunk != B-SBAR})*
+): entity1
+
+):GoalEvent1
+-->
+:GoalEvent1
+  {
+    gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");
+	ArrayList tokens = new ArrayList(matchedEntities);
+	Collections.sort(tokens, new OffsetComparator());
+	String text = "";
+	Iterator tokIter = tokens.iterator();
+	while(tokIter.hasNext())
+		text += (String)((Annotation)tokIter.next()).getFeatures().get("string") + " ";
+	
+    Annotation entity1=matchedEntities.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("GoalEvent1");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Entity1",text);
+    newFeatures.put("rule","GoalEvent1");
+    annotations.add(matchedEntities.firstNode(),matchedEntities.lastNode(),"GoalEvent", newFeatures);
+  }

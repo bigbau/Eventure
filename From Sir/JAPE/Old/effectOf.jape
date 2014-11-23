@@ -1,0 +1,126 @@
+Phase: effectOf
+Input: Token Lookup Cause Effect Event GoalInd GoalEvent Person
+Options: control = appelt
+
+Rule: EffectOf1
+(
+	({Cause}):cause
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
+	({Event, !GoalEvent}):effect
+):EffectOf1
+-->
+:EffectOf1
+  {
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
+    Annotation effect=matchedEffect.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOf1");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
+    newFeatures.put("rule","EffectOf1");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"EffectOf", newFeatures);
+  }
+  
+Rule: EffectOf15
+(
+	({Event, !GoalEvent}):effect
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
+	({Cause}):cause
+):EffectOf15
+-->
+:EffectOf15
+  {
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
+    Annotation effect=matchedEffect.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOf15");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Cause",cause.getFeatures().get("Cause"));
+	newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
+    newFeatures.put("rule","EffectOf15");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"EffectOf", newFeatures);
+  }
+  
+Rule: EffectOf2
+(
+	({Event, !GoalEvent}):cause
+	({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", !Effect, !Event})*
+	({Effect}):effect
+):EffectOf2
+-->
+:EffectOf2
+  {
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
+    Annotation effect=matchedEffect.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOf2");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+    newFeatures.put("rule","EffectOf2");
+    annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"EffectOf", newFeatures);
+  }
+  
+Rule: EffectOf3
+(
+	({Person}):person1
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event, !GoalEvent})*
+	({Event, !GoalEvent}):cause
+	({Token.chunk == O})[1]
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event, !GoalEvent, !Person})*
+	({Person}):person2
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event, !GoalEvent, !Cause})*
+	({Event, !GoalEvent}):effect
+):EffectOf3
+-->
+:EffectOf3
+  {
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
+    Annotation effect=matchedEffect.iterator().next();
+	gate.AnnotationSet matchedPerson1=(gate.AnnotationSet) bindings.get("person1");
+    Annotation person1=matchedPerson1.iterator().next();
+	gate.AnnotationSet matchedPerson2=(gate.AnnotationSet) bindings.get("person2");
+    Annotation person2=matchedPerson2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOf3");  
+	
+	if((ArrayList<Integer>)person1.getFeatures().get("matches") != null && (ArrayList<Integer>)person2.getFeatures().get("matches") != null)
+	{
+		if(((ArrayList<Integer>) person1.getFeatures().get("matches")).containsAll(((ArrayList<Integer>) person2.getFeatures().get("matches"))))
+		{
+			gate.FeatureMap newFeatures= Factory.newFeatureMap();
+			newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+			newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
+			newFeatures.put("rule","EffectOf3");
+			annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOf", newFeatures);
+		}
+	}
+  }
+  
+Rule: EffectOf4
+(
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event, !GoalEvent})*
+	({Event, !GoalEvent}):cause
+	({Token.chunk == O})[1]
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event, !GoalEvent, !Cause})*
+	({Event, !GoalEvent}):effect
+):EffectOf4
+-->
+:EffectOf4
+  {
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
+    Annotation effect=matchedEffect.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOf4");
+	gate.FeatureMap newFeatures= Factory.newFeatureMap();
+	newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
+	newFeatures.put("rule","EffectOf4");
+	annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOf", newFeatures);
+  }
