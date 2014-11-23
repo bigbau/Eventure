@@ -3,7 +3,7 @@ package objects;
 public class EffectOf extends Annotation{
 	private String causeEvent, effectEvent, causeVerb, causeObject, causeObjectAdjective, causeAdverb, effectVerb, effectObject, effectObjectAdjective, effectAdverb;
 	
-	public EffectOf(int startNode, String causeEvent, String effectEvent,
+	public EffectOf(long startNode, String causeEvent, String effectEvent,
 			String causeVerb, String causeObject, String causeObjectAdjective,
 			String causeAdverb, String effectVerb, String effectObject,
 			String effectObjectAdjective, String effectAdverb) {

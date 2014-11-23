@@ -3,7 +3,7 @@ package objects;
 public class EffectOfIsState extends Annotation{
 	private String effectState, causeEvent, causeVerb, causeObject, causeObjectAdjective, causeAdverb, effectObject, effectObjectAdjective, effectAdverb;
 	
-	public EffectOfIsState(int startNode, String effectState,
+	public EffectOfIsState(long startNode, String effectState,
 			String causeEvent, String causeVerb, String causeObject,
 			String causeObjectAdjective, String causeAdverb,
 			String effectObject, String effectObjectAdjective,

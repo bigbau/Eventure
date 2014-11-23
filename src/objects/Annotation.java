@@ -1,17 +1,17 @@
 package objects;
 
 public class Annotation {
-	private int startNode;
+	private long startNode;
 
 	
 	
-	public Annotation(int startNode) {
+	public Annotation(long startNode) {
 		this.startNode = startNode;
 	}
 
 
 
-	public int getStartNode() {
+	public long getStartNode() {
 		return startNode;
 	}
 	 

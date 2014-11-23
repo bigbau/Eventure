@@ -18,35 +18,26 @@ public class EventureController {
 	private static EventureModel eventureModel = new EventureModel();
 	private static String inputFile = "";
 	private static Set results = null;
-	
+
 	public static void main(String[] args){
 		eventureWindow.initialize();
-		
+
 		try {
 			inputFile = eventureModel.stringFromFile("src/sample story.txt");
 		} catch (FileNotFoundException e2) {
 			// TODO Auto-generated catch block
 			eventureWindow.setMessageArea("File not found!");
 		}
-		
+
 		eventureWindow.addBtnRunActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e)
 			{
 				try {
-//					results = eventureModel.runPipeline(inputFile);
-//					eventureModel.addRelationsToLists(results);
-//					eventureWindow.setMessageArea(eventureModel.getResultsSummary());
-					Iterator test = eventureModel.runPipeline2(inputFile);
+					Iterator test = eventureModel.runPipeline(inputFile);
+					eventureModel.putAnnotsToObject(test);
+					eventureModel.processSummary();
+					eventureWindow.setMessageArea(eventureModel.getResultsSummary());
 
-					Annotation timeAnnot;
-					while(test.hasNext()){
-
-						timeAnnot = (Annotation) test.next();
-						if(((String)timeAnnot.getType()).equals("EffectOf")){
-							System.out.println("yayayayay");
-						}
-					}
-					
 				} catch (GateException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -55,5 +46,5 @@ public class EventureController {
 			}
 		});
 	}
-	
+
 }

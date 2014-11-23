@@ -4,7 +4,7 @@ Options: control = all
 
 Rule: Happens1
 (
-	({Lookup.majorType==timeHappened_key}):timeHappened
+	({Lookup.majorType==time_key}):time
 	({Token.chunk != O})*
 	({Token.string == ","})
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event, !GoalEvent})*
@@ -15,16 +15,16 @@ Rule: Happens1
   {
     gate.AnnotationSet matchedEntity=(gate.AnnotationSet) bindings.get("event");
 	Annotation entity=matchedEntity.iterator().next();
-	gate.AnnotationSet matchedEntity2=(gate.AnnotationSet) bindings.get("timeHappened");
+	gate.AnnotationSet matchedEntity2=(gate.AnnotationSet) bindings.get("time");
     Annotation entity2=matchedEntity2.iterator().next();
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("Happens1");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
 	
-	String temp = "", timeHappened = "";
+	String temp = "", time = "";
 	try {
 		temp = doc.getContent().getContent(matchedEntity2.firstNode().getOffset(),matchedEntity2.lastNode().getOffset()).toString();
 	} catch(InvalidOffsetException e) {
-		throw new GateRuntimeHappenedException(e);
+		throw new GateRuntimeException(e);
 	}
 	AnnotationSet lookups = inputAS.getContained(matchedEntity2.firstNode().getOffset(), matchedEntity2.lastNode().getOffset()).get("Lookup");
 	if(lookups.size() > 0)
@@ -32,17 +32,17 @@ Rule: Happens1
 		ArrayList lookupsList = new ArrayList(lookups);
 		Collections.sort(lookupsList, new OffsetComparator());
 		Iterator lookupIter = lookupsList.iterator();
-		Annotation timeHappenedAnnot;
+		Annotation timeAnnot;
 		while(lookupIter.hasNext())
 		{
-			timeHappenedAnnot = (Annotation) lookupIter.next();
+			timeAnnot = (Annotation) lookupIter.next();
 			
-			if(((String)timeHappenedAnnot.getFeatures().get("majorType")).equals("timeHappeneds")|((String)timeHappenedAnnot.getFeatures().get("majorType")).equals("date_key"))
+			if(((String)timeAnnot.getFeatures().get("majorType")).equals("times")|((String)timeAnnot.getFeatures().get("majorType")).equals("date_key"))
 			{
 				try{
-					timeHappened = doc.getContent().getContent(timeHappenedAnnot.getStartNode().getOffset(),timeHappenedAnnot.getEndNode().getOffset()).toString();
+					time = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
 				} catch(InvalidOffsetException e) {
-					throw new GateRuntimeHappenedException(e);
+					throw new GateRuntimeException(e);
 				}
 			}
 			
@@ -51,14 +51,14 @@ Rule: Happens1
 	
     newFeatures.put("Entity1",entity.getFeatures().get("Entity1"));
 	newFeatures.put("Entity2",temp);
-	newFeatures.put("TimeHappened",timeHappened);
+	newFeatures.put("TimeHappened",time);
     newFeatures.put("rule","Happens1");
     annotations.add(matchedEntity.firstNode(),matchedEntity.lastNode(),"HappensRelation", newFeatures);
   }
   
 Rule: Happens2
 (
-	({Event, Event contains {Lookup.majorType==timeHappened_key}}):event
+	({Event, Event contains {Lookup.majorType==time_key}}):event
 ):Happens2
 -->
 :Happens2
@@ -80,21 +80,21 @@ Rule: Happens2
 		while(lookupIter.hasNext())
 		{
 			temp = (Annotation) lookupIter.next();
-			if(((String)temp.getFeatures().get("majorType")).equals("timeHappened_key"))
+			if(((String)temp.getFeatures().get("majorType")).equals("time_key"))
 			{
 				try{
 					text = doc.getContent().getContent(temp.getStartNode().getOffset(),temp.getEndNode().getOffset()).toString();
 					textEvent = doc.getContent().getContent(entity.getStartNode().getOffset(),temp.getStartNode().getOffset()).toString();
 				} catch(InvalidOffsetException e) {
-				throw new GateRuntimeHappenedException(e);
+				throw new GateRuntimeException(e);
 				}
 			}
-			if(((String)temp.getFeatures().get("majorType")).equals("timeHappeneds")|((String)temp.getFeatures().get("majorType")).equals("date_key"))
+			if(((String)temp.getFeatures().get("majorType")).equals("times")|((String)temp.getFeatures().get("majorType")).equals("date_key"))
 			{
 				try{
 					text2 = doc.getContent().getContent(temp.getStartNode().getOffset(),temp.getEndNode().getOffset()).toString();
 				} catch(InvalidOffsetException e) {
-					throw new GateRuntimeHappenedException(e);
+					throw new GateRuntimeException(e);
 				}
 			}
 			

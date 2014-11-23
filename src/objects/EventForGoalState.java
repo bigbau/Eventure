@@ -1,14 +1,14 @@
 package objects;
 
 public class EventForGoalState extends Annotation {
-	private String reqEvent, goalState, goalStateObject, goalStateObjectAdjective, goalStateAdverb, eventVerb, eventObject, eventObjectAdjective, eventAdverb;
+	private String event, goalState, goalStateObject, goalStateObjectAdjective, goalStateAdverb, eventVerb, eventObject, eventObjectAdjective, eventAdverb;
 
-	public EventForGoalState(int startNode, String reqEvent, String goalState,
+	public EventForGoalState(long startNode, String event, String goalState,
 			String goalStateObject, String goalStateObjectAdjective,
 			String goalStateAdverb, String eventVerb, String eventObject,
 			String eventObjectAdjective, String eventAdverb) {
 		super(startNode);
-		this.reqEvent = reqEvent;
+		this.event = event;
 		this.goalState = goalState;
 		this.goalStateObject = goalStateObject;
 		this.goalStateObjectAdjective = goalStateObjectAdjective;
@@ -19,8 +19,8 @@ public class EventForGoalState extends Annotation {
 		this.eventAdverb = eventAdverb;
 	}
 
-	public String getReqEvent() {
-		return reqEvent;
+	public String getEvent() {
+		return event;
 	}
 
 	public String getGoalState() {

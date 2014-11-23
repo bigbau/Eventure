@@ -1,15 +1,15 @@
 package objects;
 
 public class EventForGoalEvent extends Annotation {
-	private String reqEvent, goalEvent, goalVerb, goalObject, goalObjectAdjective, goalAdverb, eventVerb, eventObject, eventObjectAdjective, eventAdverb;
+	private String event, goal, goalVerb, goalObject, goalObjectAdjective, goalAdverb, eventVerb, eventObject, eventObjectAdjective, eventAdverb;
 
-	public EventForGoalEvent(int startNode, String reqEvent, String goalEvent,
+	public EventForGoalEvent(long startNode, String event, String goalEvent,
 			String goalVerb, String goalObject, String goalObjectAdjective,
 			String goalAdverb, String eventVerb, String eventObject,
 			String eventObjectAdjective, String eventAdverb) {
 		super(startNode);
-		this.reqEvent = reqEvent;
-		this.goalEvent = goalEvent;
+		this.event = event;
+		this.goal = goalEvent;
 		this.goalVerb = goalVerb;
 		this.goalObject = goalObject;
 		this.goalObjectAdjective = goalObjectAdjective;
@@ -20,12 +20,12 @@ public class EventForGoalEvent extends Annotation {
 		this.eventAdverb = eventAdverb;
 	}
 
-	public String getReqEvent() {
-		return reqEvent;
+	public String getEvent() {
+		return event;
 	}
 
 	public String getGoalEvent() {
-		return goalEvent;
+		return goal;
 	}
 
 	public String getGoalVerb() {
