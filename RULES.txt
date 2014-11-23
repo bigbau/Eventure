@@ -1,0 +1,10 @@
+Rules:
+1. If the assertion already exists, increase frequency by 1. Otherwise, add assertion and set frequency at 1.
+	note: only the concepts and type of relation matter, descriptions are not taken into account
+2. If current assertion has description, add description as metadata on a separate table. If description exists already, increase its frequency at 1.
+	notes: descriptions for events are adverbs (e.g happily *event*, sadly *event*) or objects (e.g gave a toy, ate pizza)
+	       descriptions for states are adverbs
+3. If a concept or description in the current assertion is synonymous to another concept in the database, the concepts are matched through a relationship table.
+4. If a concept in the current assertion is equal to a concept in another assertion with the same relation type, a generalization can be done. If generalizations exist, they will be added to a relationship table.
+	notes: only concepts that are exactly the same type can be matched (e.g cause events cannot be matched with effect event)
+	       only event and object generalizations are available
