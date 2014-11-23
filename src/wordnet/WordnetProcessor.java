@@ -34,9 +34,10 @@ public abstract class WordnetProcessor {
     private static IDictionary dict = null;
     public static void printHyponymsToFile(String word, POS pos){
         FileWriter write =  null;
+        PrintWriter print_line = null;
         try {
             write = new FileWriter(stopwordsPath, false);
-            PrintWriter print_line = new PrintWriter(write);
+            print_line = new PrintWriter(write);
             Set<String> hyponyms = getHyponyms(word, pos, 2);
             System.out.println("Printing hyponyms for word \"" + word + "\"...");
             for (String h : hyponyms) {
@@ -46,6 +47,7 @@ public abstract class WordnetProcessor {
             Logger.getLogger(WordnetProcessor.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
+            	print_line.close();
                 write.close();
             } catch (IOException ex) {
                 Logger.getLogger(WordnetProcessor.class.getName()).log(Level.SEVERE, null, ex);
@@ -177,7 +179,6 @@ public abstract class WordnetProcessor {
     }
     public static boolean areSynonyms(String word1, String word2, POS pos){
         Set<String> synonyms = getSynonyms(word1, pos);
-        SimpleStemmer stemmer= new SimpleStemmer();
         for(String s: synonyms){
             if(normalize(s).toLowerCase().equals(normalize(word2).toLowerCase())){
                 return true;
