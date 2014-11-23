@@ -1,11 +1,13 @@
 package controller;
 
+import gate.Annotation;
 import gate.util.GateException;
 import gui.EventureWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.util.Iterator;
 import java.util.Set;
 
 import model.EventureModel;
@@ -31,9 +33,20 @@ public class EventureController {
 			public void actionPerformed(ActionEvent e)
 			{
 				try {
-					results = eventureModel.runPipeline(inputFile);
-					eventureModel.addRelationsToLists(results);
-					eventureWindow.setMessageArea(eventureModel.getResultsSummary());
+//					results = eventureModel.runPipeline(inputFile);
+//					eventureModel.addRelationsToLists(results);
+//					eventureWindow.setMessageArea(eventureModel.getResultsSummary());
+					Iterator test = eventureModel.runPipeline2(inputFile);
+
+					Annotation timeAnnot;
+					while(test.hasNext()){
+
+						timeAnnot = (Annotation) test.next();
+						if(((String)timeAnnot.getType()).equals("EffectOf")){
+							System.out.println("yayayayay");
+						}
+					}
+					
 				} catch (GateException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

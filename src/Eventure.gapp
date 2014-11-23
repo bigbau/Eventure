@@ -156,7 +156,7 @@
                 <entry>
                   <string>listsURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../From%20Sir/Gazzetteers/lists.def</urlString>
+                    <urlString>$relpath$../gate/resources/Gazzetteers/lists.def</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
@@ -566,7 +566,7 @@
                 <entry>
                   <string>grammarURL</string>
                   <gate.util.persistence.PersistenceManager-URLHolder>
-                    <urlString>$relpath$../From%20Sir/JAPE/main.jape</urlString>
+                    <urlString>$relpath$../gate/resources/JAPE/main.jape</urlString>
                   </gate.util.persistence.PersistenceManager-URLHolder>
                 </entry>
                 <entry>
