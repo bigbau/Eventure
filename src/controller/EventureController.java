@@ -1,6 +1,5 @@
 package controller;
 
-import gate.Annotation;
 import gate.util.GateException;
 import gui.EventureWindow;
 

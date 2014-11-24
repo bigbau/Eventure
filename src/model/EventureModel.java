@@ -253,6 +253,22 @@ public class EventureModel {
 
 
 			}
+			if(((String)timeAnnot.getType()).equals("CauseOfIsState")){				  
+				String effectVerb = ((String)timeAnnot.getFeatures().get("EffectVerb"))
+						, causeObject = ((String)timeAnnot.getFeatures().get("CauseObject"))
+						, causeObjectAdjective = ((String)timeAnnot.getFeatures().get("CauseObjectAdjective"))
+						, causeAdverb = ((String)timeAnnot.getFeatures().get("CauseAdverb"))
+						, effectObject = ((String)timeAnnot.getFeatures().get("EffectObject"))
+						, effectObjectAdjective = ((String)timeAnnot.getFeatures().get("EffectObjectAdjective"))
+						, effectAdverb = ((String)timeAnnot.getFeatures().get("EffectAdverb"))
+						, causeState = ((String)timeAnnot.getFeatures().get("Cause"))
+						, effectEvent = ((String)timeAnnot.getFeatures().get("Effect"));
+				long startNode = ((Long)timeAnnot.getEndNode().getOffset());
+
+				causeOfIsState.add(new CauseOfIsState(startNode, causeState, effectEvent, effectVerb, causeObject, causeObjectAdjective, causeAdverb, effectObject,effectObjectAdjective, effectAdverb));		
+
+
+			}
 			if(((String)timeAnnot.getType()).equals("HappensRelation")){				  
 				String timeHappened = ((String)timeAnnot.getFeatures().get("TimeHappened"));
 				long startNode = ((Long)timeAnnot.getEndNode().getOffset());
