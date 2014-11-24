@@ -189,11 +189,11 @@ public class EventureModel {
 			if(((String)timeAnnot.getType()).equals("EffectOf")){				  
 				String causeVerb = ((String)timeAnnot.getFeatures().get("CauseVerb"))
 						, causeObject = ((String)timeAnnot.getFeatures().get("CauseObject"))
-						, causeObjectAdjective = ((String)timeAnnot.getFeatures().get("CauseObjectAdjective"))
+						, causeObjectAdjective = ((String)timeAnnot.getFeatures().get("CauseObjectAdjectives"))
 						, causeAdverb = ((String)timeAnnot.getFeatures().get("CauseAdverb"))
 						, effectVerb = ((String)timeAnnot.getFeatures().get("EffectVerb"))
 						, effectObject = ((String)timeAnnot.getFeatures().get("EffectObject"))
-						, effectObjectAdjective = ((String)timeAnnot.getFeatures().get("EffectObjectAdjective"))
+						, effectObjectAdjective = ((String)timeAnnot.getFeatures().get("EffectObjectAdjectives"))
 						, effectAdverb = ((String)timeAnnot.getFeatures().get("EffectAdverb"))
 						, causeEvent = ((String)timeAnnot.getFeatures().get("Cause"))
 						, effectEvent = ((String)timeAnnot.getFeatures().get("Effect"));
@@ -206,10 +206,10 @@ public class EventureModel {
 			if(((String)timeAnnot.getType()).equals("EffectOfIsState")){				  
 				String causeVerb = ((String)timeAnnot.getFeatures().get("CauseVerb"))
 						, causeObject = ((String)timeAnnot.getFeatures().get("CauseObject"))
-						, causeObjectAdjective = ((String)timeAnnot.getFeatures().get("CauseObjectAdjective"))
+						, causeObjectAdjective = ((String)timeAnnot.getFeatures().get("CauseObjectAdjectives"))
 						, causeAdverb = ((String)timeAnnot.getFeatures().get("CauseAdverb"))
 						, effectObject = ((String)timeAnnot.getFeatures().get("EffectObject"))
-						, effectObjectAdjective = ((String)timeAnnot.getFeatures().get("EffectObjectAdjective"))
+						, effectObjectAdjective = ((String)timeAnnot.getFeatures().get("EffectObjectAdjectives"))
 						, effectAdverb = ((String)timeAnnot.getFeatures().get("EffectAdverb"))
 						, causeEvent = ((String)timeAnnot.getFeatures().get("Cause"))
 						, effectEvent = ((String)timeAnnot.getFeatures().get("Effect"));
@@ -222,11 +222,11 @@ public class EventureModel {
 			if(((String)timeAnnot.getType()).equals("EventForGoalEvent")){					  
 				String goalVerb = ((String)timeAnnot.getFeatures().get("GoalVerb"))
 						, goalObject = ((String)timeAnnot.getFeatures().get("GoalObject"))
-						, goalObjectAdjective = ((String)timeAnnot.getFeatures().get("GoalObjectAdjective"))
+						, goalObjectAdjective = ((String)timeAnnot.getFeatures().get("GoalObjectAdjectives"))
 						, goalAdverb = ((String)timeAnnot.getFeatures().get("GoalAdverb"))
 						, eventVerb = ((String)timeAnnot.getFeatures().get("EventVerb"))
 						, eventObject = ((String)timeAnnot.getFeatures().get("EventObject"))
-						, eventObjectAdjective = ((String)timeAnnot.getFeatures().get("EventObjectAdjective"))
+						, eventObjectAdjective = ((String)timeAnnot.getFeatures().get("EventObjectAdjectives"))
 						, eventAdverb = ((String)timeAnnot.getFeatures().get("EventAdverb"))
 						, goalEvent = ((String)timeAnnot.getFeatures().get("Goal"))
 						, event = ((String)timeAnnot.getFeatures().get("Event"));
@@ -238,34 +238,41 @@ public class EventureModel {
 			}
 
 			if(((String)timeAnnot.getType()).equals("EventForGoalState")){					  
-				String goalObject = ((String)timeAnnot.getFeatures().get("GoalObject"))
-						, goalObjectAdjective = ((String)timeAnnot.getFeatures().get("GoalObjectAdjective"))
-						, goalAdverb = ((String)timeAnnot.getFeatures().get("GoalAdverb"))
+				String goalStateObject = ((String)timeAnnot.getFeatures().get("GoalStateObject"))
+						, goalStateObjectAdjective = ((String)timeAnnot.getFeatures().get("GoalStateObjectAdjectives"))
+						, goalStateAdverb = ((String)timeAnnot.getFeatures().get("GoalStateAdverb"))
 						, eventVerb = ((String)timeAnnot.getFeatures().get("EventVerb"))
 						, eventObject = ((String)timeAnnot.getFeatures().get("EventObject"))
-						, eventObjectAdjective = ((String)timeAnnot.getFeatures().get("EventObjectAdjective"))
+						, eventObjectAdjective = ((String)timeAnnot.getFeatures().get("EventObjectAdjectives"))
 						, eventAdverb = ((String)timeAnnot.getFeatures().get("EventAdverb"))
-						, goalEvent = ((String)timeAnnot.getFeatures().get("Goal"))
+						, goalState = ((String)timeAnnot.getFeatures().get("GoalState"))
 						, event = ((String)timeAnnot.getFeatures().get("Event"));
 				long startNode = ((Long)timeAnnot.getEndNode().getOffset());
 
-				eventForGoalState.add(new EventForGoalState(startNode, event, goalEvent, goalObject, goalObjectAdjective, goalAdverb, eventVerb, eventObject,eventObjectAdjective, eventAdverb));		
+				eventForGoalState.add(new EventForGoalState(startNode, event, goalState,
+						goalStateObject, goalStateObjectAdjective,
+						goalStateAdverb, eventVerb, eventObject,
+						eventObjectAdjective, eventAdverb));		
 
 
 			}
 			if(((String)timeAnnot.getType()).equals("CauseOfIsState")){				  
 				String effectVerb = ((String)timeAnnot.getFeatures().get("EffectVerb"))
 						, causeObject = ((String)timeAnnot.getFeatures().get("CauseObject"))
-						, causeObjectAdjective = ((String)timeAnnot.getFeatures().get("CauseObjectAdjective"))
+						, causeObjectAdjective = ((String)timeAnnot.getFeatures().get("CauseObjectAdjectives"))
 						, causeAdverb = ((String)timeAnnot.getFeatures().get("CauseAdverb"))
 						, effectObject = ((String)timeAnnot.getFeatures().get("EffectObject"))
-						, effectObjectAdjective = ((String)timeAnnot.getFeatures().get("EffectObjectAdjective"))
+						, effectObjectAdjective = ((String)timeAnnot.getFeatures().get("EffectObjectAdjectives"))
 						, effectAdverb = ((String)timeAnnot.getFeatures().get("EffectAdverb"))
 						, causeState = ((String)timeAnnot.getFeatures().get("Cause"))
 						, effectEvent = ((String)timeAnnot.getFeatures().get("Effect"));
 				long startNode = ((Long)timeAnnot.getEndNode().getOffset());
 
-				causeOfIsState.add(new CauseOfIsState(startNode, causeState, effectEvent, effectVerb, causeObject, causeObjectAdjective, causeAdverb, effectObject,effectObjectAdjective, effectAdverb));		
+				causeOfIsState.add(new CauseOfIsState(startNode, causeState,
+						effectEvent, effectVerb, causeObject,
+						causeObjectAdjective, causeAdverb,
+						effectObject, effectObjectAdjective,
+						effectAdverb));		
 
 
 			}
