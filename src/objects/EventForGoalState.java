@@ -3,8 +3,8 @@ package objects;
 import java.util.List;
 
 public class EventForGoalState extends Annotation {
-	private String event, goalState, goalStateObject, eventVerb, eventObject;
-	private List<String> goalStateObjectAdjective, goalStateAdverb, eventObjectAdjective, eventAdverb;
+	private String event, goalState, eventVerb;
+	private List<String> goalStateObjectAdjective, goalStateAdverb, eventObjectAdjective, eventAdverb, eventObject, goalStateObject;
 	public EventForGoalState(long startNode, String event, String goalState,
 			String goalStateObject, String goalStateObjectAdjective,
 			String goalStateAdverb, String eventVerb, String eventObject,
@@ -12,11 +12,11 @@ public class EventForGoalState extends Annotation {
 		super(startNode);
 		this.event = event;
 		this.goalState = goalState;
-		this.goalStateObject = goalStateObject;
+		this.goalStateObject = separateValues(goalStateObject);
 		this.goalStateObjectAdjective = separateValues(goalStateObjectAdjective);
 		this.goalStateAdverb = separateValues(goalStateAdverb);
 		this.eventVerb = eventVerb;
-		this.eventObject = eventObject;
+		this.eventObject = separateValues(eventObject);
 		this.eventObjectAdjective = separateValues(eventObjectAdjective);
 		this.eventAdverb = separateValues(eventAdverb);
 	}
@@ -29,7 +29,7 @@ public class EventForGoalState extends Annotation {
 		return goalState;
 	}
 
-	public String getGoalStateObject() {
+	public List<String> getGoalStateObject() {
 		return goalStateObject;
 	}
 
@@ -45,7 +45,7 @@ public class EventForGoalState extends Annotation {
 		return eventVerb;
 	}
 
-	public String getEventObject() {
+	public List<String> getEventObject() {
 		return eventObject;
 	}
 

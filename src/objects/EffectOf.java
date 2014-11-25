@@ -3,8 +3,8 @@ package objects;
 import java.util.List;
 
 public class EffectOf extends Annotation{
-	private String causeEvent, effectEvent, causeVerb, causeObject, effectVerb, effectObject;
-private List<String> causeObjectAdjective, causeAdverb, effectObjectAdjective, effectAdverb;
+	private String causeEvent, effectEvent, causeVerb, effectVerb;
+private List<String> causeObjectAdjective, causeAdverb, effectObjectAdjective, effectAdverb, causeObject, effectObject;
 	public EffectOf(long startNode, String causeEvent, String effectEvent,
 			String causeVerb, String causeObject, String causeObjectAdjective,
 			String causeAdverb, String effectVerb, String effectObject,
@@ -13,11 +13,11 @@ private List<String> causeObjectAdjective, causeAdverb, effectObjectAdjective, e
 		this.causeEvent = causeEvent;
 		this.effectEvent = effectEvent;
 		this.causeVerb = causeVerb;
-		this.causeObject = causeObject;
+		this.causeObject = separateValues(causeObject);
 		this.causeObjectAdjective = separateValues(causeObjectAdjective);
 		this.causeAdverb = separateValues(causeAdverb);
 		this.effectVerb = effectVerb;
-		this.effectObject = effectObject;
+		this.effectObject = separateValues(effectObject);
 		this.effectObjectAdjective = separateValues(effectObjectAdjective);
 		this.effectAdverb = separateValues(effectAdverb);
 	}
@@ -34,7 +34,7 @@ private List<String> causeObjectAdjective, causeAdverb, effectObjectAdjective, e
 		return causeVerb;
 	}
 
-	public String getCauseObject() {
+	public List<String> getCauseObject() {
 		return causeObject;
 	}
 
@@ -50,7 +50,7 @@ private List<String> causeObjectAdjective, causeAdverb, effectObjectAdjective, e
 		return effectVerb;
 	}
 
-	public String getEffectObject() {
+	public List<String> getEffectObject() {
 		return effectObject;
 	}
 

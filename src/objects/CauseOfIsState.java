@@ -3,8 +3,8 @@ package objects;
 import java.util.List;
 
 public class CauseOfIsState extends Annotation {
-	private String causeState, effectEvent, causeObject, effectObject, effectVerb;
-	private List<String> causeObjectAdjective, causeAdverb, effectObjectAdjective, effectAdverb;
+	private String causeState, effectEvent, effectVerb;
+	private List<String> causeObjectAdjective, causeAdverb, effectObjectAdjective, effectAdverb, causeObject, effectObject;
 	public CauseOfIsState(long startNode, String causeState,
 			String effectEvent, String effectVerb, String causeObject,
 			String causeObjectAdjective, String causeAdverb,
@@ -13,10 +13,10 @@ public class CauseOfIsState extends Annotation {
 		super(startNode);
 		this.causeState = causeState;
 		this.effectEvent = effectEvent;
-		this.causeObject = causeObject;
+		this.causeObject = separateValues(causeObject);
 		this.causeObjectAdjective = separateValues(causeObjectAdjective);
 		this.causeAdverb = separateValues(causeAdverb);
-		this.effectObject = effectObject;
+		this.effectObject = separateValues(effectObject);
 		this.effectVerb = effectVerb;
 		this.effectObjectAdjective = separateValues(effectObjectAdjective);
 		this.effectAdverb = separateValues(effectAdverb);
@@ -34,7 +34,7 @@ public class CauseOfIsState extends Annotation {
 		return effectVerb;
 	}
 
-	public String getCauseObject() {
+	public List<String> getCauseObject() {
 		return causeObject;
 	}
 
@@ -46,7 +46,7 @@ public class CauseOfIsState extends Annotation {
 		return causeAdverb;
 	}
 
-	public String getEffectObject() {
+	public List<String> getEffectObject() {
 		return effectObject;
 	}
 
