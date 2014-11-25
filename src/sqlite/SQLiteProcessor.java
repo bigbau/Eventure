@@ -121,6 +121,18 @@ public abstract class SQLiteProcessor {
     		int metadatumId = getMetadatumID(effectAdverb, "adverb", concept2Id, assertionId);
     		findMetadataRelationships(effectAdverb, metadatumId, "adverb", concept2Id, assertionId);
     	}
+    	
+    	List<String> causeObjects = assertion.getCauseObject();
+    	List<String> effectObjects = assertion.getEffectObject();
+    	
+    	for(String causeObject: causeObjects){
+    		int metadatumId = getMetadatumID(causeObject, "object", concept1Id, assertionId);
+    		findMetadataRelationships(causeObject, metadatumId, "object", concept1Id, assertionId);
+    	}
+    	for(String effectObject: effectObjects){
+    		int metadatumId = getMetadatumID(effectObject, "object", concept2Id, assertionId);
+    		findMetadataRelationships(effectObject, metadatumId, "object", concept2Id, assertionId);
+    	}
     }
     public static void insertEffectOfIsState(EffectOfIsState assertion){
     	String concept1 = WordnetProcessor.findRootWord(assertion.getCauseVerb(),POS.VERB);
@@ -249,10 +261,10 @@ public abstract class SQLiteProcessor {
     		update(query);
     		success=true;
     	}
-    	query = "SELECT metadatumId FROM metadata_generalizations WHERE conceptId="+metadatum2+" AND generalization='"+generalization+"'";
+    	query = "SELECT metadatumId FROM metadata_generalizations WHERE metadatumId="+metadatum2+" AND generalization='"+generalization+"'";
     	check = select(query);
     	if(check.isEmpty()){
-        	query = "INSERT INTO concept_generalizations VALUES("+metadatum2+",'"+generalization+"')";
+        	query = "INSERT INTO metadata_generalizations VALUES("+metadatum2+",'"+generalization+"')";
     		update(query);
     		success=true;
     	}

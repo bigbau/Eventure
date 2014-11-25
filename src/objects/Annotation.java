@@ -16,6 +16,9 @@ public class Annotation {
 
 	
 	protected List<String> separateValues(String values){
+		if(values.isEmpty()){
+			return new ArrayList<String>();
+		}
 		return new ArrayList<String>(Arrays.asList(values.split(";")));
 	}
 	
