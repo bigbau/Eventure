@@ -30,7 +30,8 @@ Rule: EffectOfIsState1
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		StringBuilder causeObjects = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0, noCauseObjects = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -56,16 +57,26 @@ Rule: EffectOfIsState1
 			{
 				if(!prepPhrase){
 					if(determiner){
-						try{
-							causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						try{					
+								if(noCauseObjects>0){
+									causeObjects.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+								}else{
+									causeObjects.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+									noCauseObjects++;
+								}
 						} catch(InvalidOffsetException e) {
 							throw new GateRuntimeException(e);
 						}
 						determiner = false;
 					}else{
 						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
-							try{
-								causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							try{					
+								if(noCauseObjects>0){
+									causeObjects.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+								}else{
+									causeObjects.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+									noCauseObjects++;
+								}					
 							} catch(InvalidOffsetException e) {
 								throw new GateRuntimeException(e);
 							}						
@@ -103,6 +114,7 @@ Rule: EffectOfIsState1
 				}
 			}
 		}
+		causeObject = causeObjects.toString();
 		causeObjectAdjective = adjectives.toString();
 		causeAdverb = adverbs.toString();
 	}
@@ -116,7 +128,8 @@ Rule: EffectOfIsState1
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		StringBuilder effectObjects = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -134,16 +147,26 @@ Rule: EffectOfIsState1
 			{
 				if(!prepPhrase){
 					if(determiner){
-						try{
-							effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						try{			
+							if(noEffectObjects>0){
+								effectObjects.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+							}else{
+								effectObjects.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+								noEffectObjects++;
+							}
 						} catch(InvalidOffsetException e) {
 							throw new GateRuntimeException(e);
 						}
 						determiner = false;
 					}else{
 						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
-							try{
-								effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							try{			
+								if(noEffectObjects>0){
+									effectObjects.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+								}else{
+									effectObjects.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+									noEffectObjects++;
+								}
 							} catch(InvalidOffsetException e) {
 								throw new GateRuntimeException(e);
 							}						
@@ -181,6 +204,7 @@ Rule: EffectOfIsState1
 				}
 			}
 		}
+		effectObject = effectObjects.toString();
 		effectObjectAdjective = adjectives.toString();
 		effectAdverb = adverbs.toString();
 		
@@ -193,6 +217,9 @@ Rule: EffectOfIsState1
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+	newFeatures.put("EffectObject",effectObject);
+	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
+	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","EffectOfIsState1");
     annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
   }
@@ -223,7 +250,8 @@ Rule: EffectOfIsState4
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		StringBuilder causeObjects = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0, noCauseObjects = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -249,16 +277,26 @@ Rule: EffectOfIsState4
 			{
 				if(!prepPhrase){
 					if(determiner){
-						try{
-							causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						try{					
+								if(noCauseObjects>0){
+									causeObjects.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+								}else{
+									causeObjects.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+									noCauseObjects++;
+								}
 						} catch(InvalidOffsetException e) {
 							throw new GateRuntimeException(e);
 						}
 						determiner = false;
 					}else{
 						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
-							try{
-								causeObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							try{					
+								if(noCauseObjects>0){
+									causeObjects.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+								}else{
+									causeObjects.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+									noCauseObjects++;
+								}					
 							} catch(InvalidOffsetException e) {
 								throw new GateRuntimeException(e);
 							}						
@@ -296,6 +334,7 @@ Rule: EffectOfIsState4
 				}
 			}
 		}
+		causeObject = causeObjects.toString();
 		causeObjectAdjective = adjectives.toString();
 		causeAdverb = adverbs.toString();
 	}
@@ -309,7 +348,8 @@ Rule: EffectOfIsState4
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		StringBuilder effectObjects = new StringBuilder();
+		int noAdjectives = 0, noAdverbs = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -327,16 +367,26 @@ Rule: EffectOfIsState4
 			{
 				if(!prepPhrase){
 					if(determiner){
-						try{
-							effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+						try{			
+							if(noEffectObjects>0){
+								effectObjects.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+							}else{
+								effectObjects.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+								noEffectObjects++;
+							}
 						} catch(InvalidOffsetException e) {
 							throw new GateRuntimeException(e);
 						}
 						determiner = false;
 					}else{
 						if(((String)timeAnnot.getFeatures().get("chunk")).equals("B-NP")|((String)timeAnnot.getFeatures().get("chunk")).equals("I-NP")){
-							try{
-								effectObject = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+							try{			
+								if(noEffectObjects>0){
+									effectObjects.append("; "+ doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+								}else{
+									effectObjects.append( doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString());
+									noEffectObjects++;
+								}
 							} catch(InvalidOffsetException e) {
 								throw new GateRuntimeException(e);
 							}						
@@ -374,6 +424,7 @@ Rule: EffectOfIsState4
 				}
 			}
 		}
+		effectObject = effectObjects.toString();
 		effectObjectAdjective = adjectives.toString();
 		effectAdverb = adverbs.toString();
 		
@@ -419,7 +470,7 @@ Rule: EffectOfIsState45
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		int noAdjectives = 0, noAdverbs = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -505,7 +556,7 @@ Rule: EffectOfIsState45
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		int noAdjectives = 0, noAdverbs = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -616,7 +667,7 @@ Rule: EffectOfIsState5
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		int noAdjectives = 0, noAdverbs = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -702,7 +753,7 @@ Rule: EffectOfIsState5
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		int noAdjectives = 0, noAdverbs = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -812,7 +863,7 @@ Rule: EffectOfIsState55
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		int noAdjectives = 0, noAdverbs = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -898,7 +949,7 @@ Rule: EffectOfIsState55
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		int noAdjectives = 0, noAdverbs = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -1011,7 +1062,7 @@ Rule: EffectOfIsState2
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		int noAdjectives = 0, noAdverbs = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -1097,7 +1148,7 @@ Rule: EffectOfIsState2
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		int noAdjectives = 0, noAdverbs = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -1208,7 +1259,7 @@ Rule: EffectOfIsState6
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		int noAdjectives = 0, noAdverbs = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -1294,7 +1345,7 @@ Rule: EffectOfIsState6
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		int noAdjectives = 0, noAdverbs = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -1405,7 +1456,7 @@ Rule: EffectOfIsState3
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		int noAdjectives = 0, noAdverbs = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
@@ -1491,7 +1542,7 @@ Rule: EffectOfIsState3
 		Annotation timeAnnot;
 		StringBuilder adjectives = new StringBuilder();
 		StringBuilder adverbs = new StringBuilder();
-		int noAdjectives = 0, noAdverbs = 0;
+		int noAdjectives = 0, noAdverbs = 0, noEffectObjects = 0;
 		boolean determiner = false, prepPhrase = false;
 		while(lookupIter.hasNext())
 		{	
