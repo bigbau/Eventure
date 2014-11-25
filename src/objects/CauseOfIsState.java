@@ -30,7 +30,7 @@ public class CauseOfIsState extends Annotation {
 		return effectEvent;
 	}
 
-	public String getEffecrVerb() {
+	public String getEffectVerb() {
 		return effectVerb;
 	}
 

@@ -138,27 +138,29 @@ public abstract class WordnetProcessor {
 	            IWord wnWord = dict.getWord(wordID);
 	            ISynset synset = wnWord.getSynset();
 	            
-	            hypernyms = getHypernyms(synset, hypernyms, 0);
+	            hypernyms = getHypernyms(synset, hypernyms, 0, pos, 1);
 	        }
         }
         return hypernyms;
         
     }
     //recursion
-    private static Set<String> getHypernyms(ISynset synset, Set<String> hypernyms, int hNum){
+    private static Set<String> getHypernyms(ISynset synset, Set<String> hypernyms, int hNum, POS pos, int depth){
         //get hypernyms
         List<ISynsetID> hypernymList = synset.getRelatedSynsets(Pointer.HYPERNYM);
         List<IWord> words;
-        if(hypernymList.isEmpty()){//depth limit
-            words = synset.getWords();
+        if(pos==POS.VERB){
+        	if(depth==hNum){
+        		return hypernyms;
+        	}
+        }
+        else if(hypernymList.isEmpty()){//depth limit
             return hypernyms;
         }
         for (ISynsetID sid : hypernymList) {
             words = dict.getSynset(sid).getWords();
-            for (Iterator<IWord> it = words.iterator(); it.hasNext();) {
-                hypernyms.add(it.next().getLemma());
-            }
-            hypernyms = getHypernyms(dict.getSynset(sid), hypernyms, hNum+1);
+            hypernyms.add(words.get(0).getLemma());
+            hypernyms = getHypernyms(dict.getSynset(sid), hypernyms, hNum+1, pos, depth);
         }
         return hypernyms;
     }

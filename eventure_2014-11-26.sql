@@ -1,8 +1,8 @@
 ----
 -- phpLiteAdmin database dump (http://phpliteadmin.googlecode.com)
 -- phpLiteAdmin version: 1.9.5
--- Exported: 9:30am on November 23, 2014 (CET)
--- database file: C:\Users\RJ\Desktop\Thesis\Eventure\Eventure
+-- Exported: 6:33pm on November 25, 2014 (CET)
+-- database file: C:\Users\RJ\Desktop\Thesis\Eventure\eventure.db
 ----
 BEGIN TRANSACTION;
 
@@ -28,10 +28,10 @@ CREATE TABLE metadata_types (
 );
 
 ----
--- Data dump for metadata_types, a total of 13 rows
+-- Data dump for metadata_types, a total of 2 rows
 ----
-INSERT INTO "metadata_types" ("metadata_type") VALUES ('Adverb');
-INSERT INTO "metadata_types" ("metadata_type") VALUES ('Object');
+INSERT INTO "metadata_types" ("metadata_type") VALUES ('adverb');
+INSERT INTO "metadata_types" ("metadata_type") VALUES ('object');
 
 ----
 -- Table structure for relations
@@ -62,8 +62,10 @@ CREATE TABLE concepts (
 );
 
 ----
--- Data dump for concepts, a total of 0 rows
+-- Data dump for concepts, a total of 2 rows
 ----
+INSERT INTO "concepts" ("concept","concept_type","conceptId") VALUES ('give','event','0');
+INSERT INTO "concepts" ("concept","concept_type","conceptId") VALUES ('smile','event','1');
 
 ----
 -- Table structure for assertions
@@ -81,8 +83,9 @@ CREATE TABLE assertions (
 );
 
 ----
--- Data dump for assertions, a total of 0 rows
+-- Data dump for assertions, a total of 1 rows
 ----
+INSERT INTO "assertions" ("concept1Id","concept2Id","relation","assertionId","frequency") VALUES ('0','1','EffectOf','0','6');
 
 ----
 -- Table structure for concept_generalizations
@@ -95,8 +98,14 @@ CREATE TABLE concept_generalizations (
 );
 
 ----
--- Data dump for concept_generalize, a total of 0 rows
+-- Data dump for concept_generalizations, a total of 6 rows
 ----
+INSERT INTO "concept_generalizations" ("conceptId","generalization") VALUES ('1','communicate');
+INSERT INTO "concept_generalizations" ("conceptId","generalization") VALUES ('0','communicate');
+INSERT INTO "concept_generalizations" ("conceptId","generalization") VALUES ('1','convey');
+INSERT INTO "concept_generalizations" ("conceptId","generalization") VALUES ('0','convey');
+INSERT INTO "concept_generalizations" ("conceptId","generalization") VALUES ('1','express');
+INSERT INTO "concept_generalizations" ("conceptId","generalization") VALUES ('0','express');
 
 ----
 -- Table structure for concept_synonyms
@@ -130,8 +139,13 @@ CREATE TABLE metadata (
 );
 
 ----
--- Data dump for metadata, a total of 0 rows
+-- Data dump for metadata, a total of 5 rows
 ----
+INSERT INTO "metadata" ("metadatum","metadata_type","conceptId","assertionId","metadatumId","frequency") VALUES ('gladly','adverb','0','0','0','6');
+INSERT INTO "metadata" ("metadatum","metadata_type","conceptId","assertionId","metadatumId","frequency") VALUES ('willingly','adverb','0','0','1','4');
+INSERT INTO "metadata" ("metadatum","metadata_type","conceptId","assertionId","metadatumId","frequency") VALUES ('happily','adverb','1','0','2','2');
+INSERT INTO "metadata" ("metadatum","metadata_type","conceptId","assertionId","metadatumId","frequency") VALUES ('cheerfully','adverb','1','0','3','2');
+INSERT INTO "metadata" ("metadatum","metadata_type","conceptId","assertionId","metadatumId","frequency") VALUES ('merrily','adverb','1','0','4','2');
 
 ----
 -- Table structure for metadata_generalizations
@@ -144,7 +158,7 @@ CREATE TABLE metadata_generalizations (
 );
 
 ----
--- Data dump for metadata_generalize, a total of 0 rows
+-- Data dump for metadata_generalizations, a total of 0 rows
 ----
 
 ----
@@ -159,8 +173,10 @@ CREATE TABLE metadata_synonyms (
 );
 
 ----
--- Data dump for metadata_synonyms, a total of 0 rows
+-- Data dump for metadata_synonyms, a total of 2 rows
 ----
+INSERT INTO "metadata_synonyms" ("metadatum1","metadatum2") VALUES ('2','4');
+INSERT INTO "metadata_synonyms" ("metadatum1","metadatum2") VALUES ('4','2');
 
 ----
 -- structure for index sqlite_autoindex_concept_types_1 on table concept_types
@@ -203,11 +219,6 @@ CREATE TABLE metadata_synonyms (
 ;
 
 ----
--- structure for index sqlite_autoindex_concept_generalize_1 on table concept_generalize
-----
-;
-
-----
 -- structure for index sqlite_autoindex_concept_synonyms_1 on table concept_synonyms
 ----
 ;
@@ -224,11 +235,6 @@ CREATE TABLE metadata_synonyms (
 
 ----
 -- structure for index sqlite_autoindex_metadata_generalizations_1 on table metadata_generalizations
-----
-;
-
-----
--- structure for index sqlite_autoindex_metadata_generalize_1 on table metadata_generalize
 ----
 ;
 

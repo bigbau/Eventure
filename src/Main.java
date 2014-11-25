@@ -15,9 +15,10 @@ public class Main {
     public static void main(String[] args) {
         SQLiteProcessor.setConnection();
         EffectOf assertion = new EffectOf(1, "gave a ball", "smiled immediately",
-    			"shit", "ball", "",
-    			"", "ran", "",
-    			"", "");
+    			"give", "ball", "",
+    			"gladly;willingly", "smile", "",
+    			"", "merrily");
         SQLiteProcessor.insertEffectOf(assertion);
+    	//WordnetProcessor.printGeneralizations("say", "tell", POS.VERB);
     }
 }
