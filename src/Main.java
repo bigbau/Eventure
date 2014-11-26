@@ -1,7 +1,8 @@
+import concepts.Event;
 import edu.mit.jwi.item.POS;
+import relations.EffectOf;
 import sqlite.SQLiteProcessor;
 import wordnet.WordnetProcessor;
-import objects.EffectOf;
 
 /**
  *
@@ -14,10 +15,9 @@ public class Main {
      */
     public static void main(String[] args) {
         SQLiteProcessor.setConnection();
-        EffectOf assertion = new EffectOf(1, "gave a ball", "smiled immediately",
-    			"give", "doll", "",
-    			"gladly;willingly", "smile", "",
-    			"", "merrily");
+        Event causeEvent = new Event("willingly and gladly gave a ball", "ran", "lap", "willingly","");
+        Event effectEvent = new Event("smiled merrily", "stumbled", "", "badly","");
+        EffectOf assertion = new EffectOf(1, causeEvent, effectEvent);
         SQLiteProcessor.insertEffectOf(assertion);
     	//WordnetProcessor.printGeneralizations("say", "tell", POS.VERB);
     }

@@ -1,15 +1,15 @@
-package objects;
+package relations;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Annotation {
+public class Relation {
 	private long startNode;
 
 	
 	
-	public Annotation(long startNode) {
+	public Relation(long startNode) {
 		this.startNode = startNode;
 	}
 

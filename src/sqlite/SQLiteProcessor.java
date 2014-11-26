@@ -20,14 +20,16 @@ import java.util.Set;
 
 import org.sqlite.SQLiteConfig;
 
+import concepts.Event;
+import concepts.State;
 import wordnet.WordnetProcessor;
 import edu.mit.jwi.item.POS;
-import objects.CauseOfIsState;
-import objects.EffectOf;
-import objects.EffectOfIsState;
-import objects.EventForGoalEvent;
-import objects.EventForGoalState;
-import objects.HappensRelation;
+import relations.CauseOfIsState;
+import relations.EffectOf;
+import relations.EffectOfIsState;
+import relations.EventForGoalEvent;
+import relations.EventForGoalState;
+import relations.HappensRelation;
 
 /**
  *
@@ -101,64 +103,45 @@ public abstract class SQLiteProcessor {
         return data;
     }
     public static void insertEffectOf(EffectOf assertion){
-    	String concept1 = WordnetProcessor.findRootWord(assertion.getCauseVerb(),POS.VERB);
-    	String concept2 = WordnetProcessor.findRootWord(assertion.getEffectVerb(),POS.VERB);
+    	Event cause = assertion.getCause();
+    	Event effect = assertion.getEffect();
+    	String concept1 = WordnetProcessor.findRootWord(cause.getVerb(),POS.VERB);
+    	String concept2 = WordnetProcessor.findRootWord(effect.getVerb(),POS.VERB);
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "event");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EffectOf");
     	
     	findRelationships(concept1, concept1Id, "event");
     	findRelationships(concept2, concept2Id, "event");
+
+    	insertMetadata(cause.getAdverbs(), "adverb", concept1Id, assertionId);
+    	insertMetadata(effect.getAdverbs(), "adverb", concept2Id, assertionId);
     	
-    	List<String> causeAdverbs = assertion.getCauseAdverb();
-    	List<String> effectAdverbs = assertion.getEffectAdverb();
-    	
-    	for(String causeAdverb: causeAdverbs){
-    		int metadatumId = getMetadatumID(causeAdverb, "adverb", concept1Id, assertionId);
-    		findMetadataRelationships(causeAdverb, metadatumId, "adverb", concept1Id, assertionId);
-    	}
-    	for(String effectAdverb: effectAdverbs){
-    		int metadatumId = getMetadatumID(effectAdverb, "adverb", concept2Id, assertionId);
-    		findMetadataRelationships(effectAdverb, metadatumId, "adverb", concept2Id, assertionId);
-    	}
-    	
-    	List<String> causeObjects = assertion.getCauseObject();
-    	List<String> effectObjects = assertion.getEffectObject();
-    	
-    	for(String causeObject: causeObjects){
-    		int metadatumId = getMetadatumID(causeObject, "object", concept1Id, assertionId);
-    		findMetadataRelationships(causeObject, metadatumId, "object", concept1Id, assertionId);
-    	}
-    	for(String effectObject: effectObjects){
-    		int metadatumId = getMetadatumID(effectObject, "object", concept2Id, assertionId);
-    		findMetadataRelationships(effectObject, metadatumId, "object", concept2Id, assertionId);
-    	}
+    	insertMetadata(cause.getObjects(), "object", concept1Id, assertionId);
+    	insertMetadata(effect.getObjects(), "object", concept2Id, assertionId);
     }
     public static void insertEffectOfIsState(EffectOfIsState assertion){
-    	String concept1 = WordnetProcessor.findRootWord(assertion.getCauseVerb(),POS.VERB);
-    	String concept2 = WordnetProcessor.findRootWord(assertion.getEffectState(),POS.ADJECTIVE);
+    	Event cause = assertion.getEvent();
+    	State effect = assertion.getState();
+    	String concept1 = WordnetProcessor.findRootWord(cause.getVerb(),POS.VERB);
+    	String concept2 = WordnetProcessor.findRootWord(effect.toString(),POS.ADJECTIVE);
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "state");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EffectOfIsState");
     	
     	findRelationships(concept1, concept1Id, "event");
     	findRelationships(concept2, concept2Id, "state");
+
+    	insertMetadata(cause.getAdverbs(),"adverb", concept1Id, assertionId);
+    	insertMetadata(effect.getAdverbs(),"adverb", concept2Id, assertionId);
     	
-    	List<String> causeAdverbs = assertion.getCauseAdverb();
-    	List<String> effectAdverbs = assertion.getEffectAdverb();
-    	
-    	for(String causeAdverb: causeAdverbs){
-    		int metadatumId = getMetadatumID(causeAdverb, "adverb", concept1Id, assertionId);
-    		findMetadataRelationships(causeAdverb, metadatumId, "adverb", concept1Id, assertionId);
-    	}
-    	for(String effectAdverb: effectAdverbs){
-    		int metadatumId = getMetadatumID(effectAdverb, "adverb", concept2Id, assertionId);
-    		findMetadataRelationships(effectAdverb, metadatumId, "adverb", concept2Id, assertionId);
-    	}
+    	insertMetadata(cause.getObjects(), "object", concept1Id, assertionId);
     }
     public static void insertCauseOfIsState(CauseOfIsState assertion){
-    	String concept1 = WordnetProcessor.findRootWord(assertion.getStateState(),POS.ADJECTIVE);
-    	String concept2 = WordnetProcessor.findRootWord(assertion.getEffectVerb(),POS.VERB);
+    	State cause = assertion.getState();
+    	Event effect = assertion.getEvent();
+    	String concept1 = WordnetProcessor.findRootWord(cause.toString(),POS.ADJECTIVE);
+    	String concept2 = WordnetProcessor.findRootWord(effect.getVerb(),POS.VERB);
     	int concept1Id = getConceptID(concept1, "state");
     	int concept2Id = getConceptID(concept2, "event");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "CauseOfIsState");
@@ -166,21 +149,16 @@ public abstract class SQLiteProcessor {
     	findRelationships(concept1, concept1Id, "state");
     	findRelationships(concept2, concept2Id, "event");
     	
-    	List<String> causeAdverbs = assertion.getCauseAdverb();
-    	List<String> effectAdverbs = assertion.getEffectAdverb();
+    	insertMetadata(cause.getAdverbs(),"adverb", concept1Id, assertionId);
+    	insertMetadata(effect.getAdverbs(),"adverb", concept2Id, assertionId);
     	
-    	for(String causeAdverb: causeAdverbs){
-    		int metadatumId = getMetadatumID(causeAdverb, "adverb", concept1Id, assertionId);
-    		findMetadataRelationships(causeAdverb, metadatumId, "adverb", concept1Id, assertionId);
-    	}
-    	for(String effectAdverb: effectAdverbs){
-    		int metadatumId = getMetadatumID(effectAdverb, "adverb", concept2Id, assertionId);
-    		findMetadataRelationships(effectAdverb, metadatumId, "adverb", concept2Id, assertionId);
-    	}
+    	insertMetadata(effect.getObjects(), "object", concept2Id, assertionId);
     }
     public static void insertEventForGoalEvent(EventForGoalEvent assertion){
-    	String concept1 = WordnetProcessor.findRootWord(assertion.getEventVerb(),POS.VERB);
-    	String concept2 = WordnetProcessor.findRootWord(assertion.getGoalVerb(),POS.VERB);
+    	Event task = assertion.getTask(), goal = assertion.getGoal();
+    	
+    	String concept1 = WordnetProcessor.findRootWord(task.getVerb(),POS.VERB);
+    	String concept2 = WordnetProcessor.findRootWord(goal.getVerb(),POS.VERB);
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "event");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EventForGoalEvent");
@@ -188,38 +166,36 @@ public abstract class SQLiteProcessor {
     	findRelationships(concept1, concept1Id, "event");
     	findRelationships(concept2, concept2Id, "event");
     	
-    	List<String> eventAdverbs = assertion.getEventAdverb();
-    	List<String> goalAdverbs = assertion.getGoalAdverb();
+    	insertMetadata(task.getAdverbs(), "adverb", concept1Id, assertionId);
+    	insertMetadata(goal.getAdverbs(), "adverb", concept2Id, assertionId);
     	
-    	for(String eventAdverb: eventAdverbs){
-    		int metadatumId = getMetadatumID(eventAdverb, "adverb", concept1Id, assertionId);
-    		findMetadataRelationships(eventAdverb, metadatumId, "adverb", concept1Id, assertionId);
-    	}
-    	for(String goalAdverb: goalAdverbs){
-    		int metadatumId = getMetadatumID(goalAdverb, "adverb", concept2Id, assertionId);
-    		findMetadataRelationships(goalAdverb, metadatumId, "adverb", concept2Id, assertionId);
-    	}
+    	insertMetadata(task.getObjects(), "object", concept1Id, assertionId);
+    	insertMetadata(goal.getObjects(), "object", concept2Id, assertionId);
     }
     public static void insertEventForGoalState(EventForGoalState assertion){
-    	String concept1 = WordnetProcessor.findRootWord(assertion.getEventVerb(),POS.VERB);
-    	String concept2 = WordnetProcessor.findRootWord(assertion.getGoalState(),POS.ADJECTIVE);
+    	Event task = assertion.getEvent();
+    	State goal = assertion.getState();
+    	String concept1 = WordnetProcessor.findRootWord(task.getVerb(),POS.VERB);
+    	String concept2 = WordnetProcessor.findRootWord(goal.toString(),POS.ADJECTIVE);
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "state");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EventForGoalState");
     	
     	findRelationships(concept1, concept1Id, "event");
     	findRelationships(concept2, concept2Id, "state");
+
+    	insertMetadata(task.getAdverbs(), "adverb", concept1Id, assertionId);
+    	insertMetadata(goal.getAdverbs(), "adverb", concept2Id, assertionId);
     	
-    	List<String> eventAdverbs = assertion.getEventAdverb();
-    	List<String> goalAdverbs = assertion.getGoalStateAdverb();
-    	
-    	for(String eventAdverb: eventAdverbs){
-    		int metadatumId = getMetadatumID(eventAdverb, "adverb", concept1Id, assertionId);
-    		findMetadataRelationships(eventAdverb, metadatumId, "adverb", concept1Id, assertionId);
-    	}
-    	for(String goalAdverb: goalAdverbs){
-    		int metadatumId = getMetadatumID(goalAdverb, "adverb", concept2Id, assertionId);
-    		findMetadataRelationships(goalAdverb, metadatumId, "adverb", concept2Id, assertionId);
+    	insertMetadata(task.getObjects(), "object", concept1Id, assertionId);
+    }
+    public static void insertMetadata(List<String> metadata, String type, int conceptId, int assertionId){
+    	System.out.println("Inserting "+type+"s for concept # "+conceptId+" in assertion # "+assertionId+"...");
+    	if(metadata!=null&&!metadata.isEmpty()){
+	    	for(String metadatum: metadata){
+	    		int metadatumId = getMetadatumID(metadatum, type, conceptId, assertionId);
+	    		findMetadataRelationships(metadatum, metadatumId, type, conceptId, assertionId);
+	    	}
     	}
     }
     /*
@@ -234,7 +210,6 @@ public abstract class SQLiteProcessor {
     	String query = "SELECT metadatumId, metadatum FROM metadata WHERE metadata_type ='"+metadata_type+"' "
     			+ "AND conceptId = "+conceptId+" AND assertionId = "+assertionId;
     	List<Map<String, String>> metadata = select(query);
-    	printTable(metadata);
     	for(Map<String, String> row: metadata){
     		int id = Integer.parseInt(row.get("metadatumId"));
     		String currDatum = row.get("metadatum");
