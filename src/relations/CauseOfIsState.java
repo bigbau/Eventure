@@ -19,4 +19,9 @@ public class CauseOfIsState extends Relation {
 		return event;
 	}
 
+	@Override
+	public String toString() {
+		return "CauseOfIsState [state=" + state.toString() + ", event=" + event.toString() + "]";
+	}
+
 }

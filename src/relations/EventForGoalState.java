@@ -19,4 +19,9 @@ public class EventForGoalState extends Relation {
 	public State getState() {
 		return state;
 	}
+
+	@Override
+	public String toString() {
+		return "EventForGoalState [event=" + event.toString() + ", state=" + state.toString() + "]";
+	}
 }

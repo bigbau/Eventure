@@ -30,4 +30,8 @@ public class Event extends Concept{
 	public List<String> getObjectAdjectives(){
 		return objectAdjectives;
 	}
+	@Override
+	public String toString() {
+		return  conceptName;
+	}
 }

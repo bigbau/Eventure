@@ -18,5 +18,10 @@ public class EffectOfIsState extends Relation{
 	public Event getEvent() {
 		return event;
 	}
+
+	@Override
+	public String toString() {
+		return "EffectOfIsState [event=" + event.toString() + ", state=" + state.toString() + "]";
+	}
 	
 }

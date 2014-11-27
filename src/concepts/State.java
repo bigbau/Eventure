@@ -12,5 +12,9 @@ public class State extends Concept {
 	public List<String> getAdverbs(){
 		return adverbs;
 	}
-
+	@Override
+	public String toString() {
+		return conceptName;
+	}
+	
 }

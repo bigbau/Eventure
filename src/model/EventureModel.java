@@ -116,7 +116,7 @@ public class EventureModel {
 			while(temp.hasNext()){
 				id++;
 				EffectOf holder = (EffectOf)temp.next();
-				results.append(id+": ");
+				results.append(id+": "+holder.toString());
 				results.append("\n");
 			}
 		}
@@ -128,7 +128,7 @@ public class EventureModel {
 			while(temp.hasNext()){
 				id++;
 				EffectOfIsState holder = (EffectOfIsState)temp.next();
-				results.append(id+": ");
+				results.append(id+": "+holder.toString());
 				results.append("\n");
 			}
 		}
@@ -140,7 +140,7 @@ public class EventureModel {
 			while(temp.hasNext()){
 				id++;
 				CauseOfIsState holder = (CauseOfIsState)temp.next();
-				results.append(id+": ");
+				results.append(id+": "+holder.toString());
 				results.append("\n");
 			}
 		}
@@ -152,7 +152,7 @@ public class EventureModel {
 			while(temp.hasNext()){
 				id++;
 				EventForGoalEvent holder = (EventForGoalEvent)temp.next();
-				results.append(id+": ");
+				results.append(id+": "+holder.toString());
 				results.append("\n");
 			}
 		}
@@ -164,7 +164,7 @@ public class EventureModel {
 			while(temp.hasNext()){
 				id++;
 				EventForGoalState holder = (EventForGoalState)temp.next();
-				results.append(id+": ");
+				results.append(id+": "+holder.toString());
 				results.append("\n");
 			}
 		}
@@ -175,7 +175,7 @@ public class EventureModel {
 			while(temp.hasNext()){
 				id++;
 				HappensRelation holder = (HappensRelation)temp.next();
-				results.append(id+": ");
+				results.append(id+": "+holder.toString());
 				results.append("\n");
 			}
 		}

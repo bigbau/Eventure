@@ -12,6 +12,11 @@ public class HappensRelation extends Relation {
 	public String getTimeHappened() {
 		return timeHappened;
 	}
+
+	@Override
+	public String toString() {
+		return "HappensRelation [timeHappened=" + timeHappened + "]";
+	}
 	
 	
 }

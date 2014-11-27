@@ -16,5 +16,10 @@ public class EffectOf extends Relation{
 	public Event getEffect() {
 		return effect;
 	}
+
+	@Override
+	public String toString() {
+		return "EffectOf [cause=" + cause.toString() + ", effect=" + effect.toString() + "]";
+	}
 	
 }

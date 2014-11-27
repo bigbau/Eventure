@@ -16,4 +16,10 @@ public class EventForGoalEvent extends Relation {
 	public Event getGoal() {
 		return goal;
 	}
+
+	@Override
+	public String toString() {
+		return "EventForGoalEvent [task=" + task.toString() + ", goal=" + goal.toString() + "]";
+	}
+	
 }
