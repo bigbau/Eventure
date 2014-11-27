@@ -300,3 +300,5 @@ Opened database successfully
 Concept learn  added
 Inserting CauseOfIsState(learn , learn)
 New CauseOfIsState added
+Opened database successfully
+Opened database successfully

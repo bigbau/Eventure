@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GATE"/>
-	<classpathentry kind="lib" path="C:/Users/JT/Desktop/Thesis/Workspace/Eventure/lib/edu.mit.jwi_2.3.3_jdk.jar"/>
-	<classpathentry kind="lib" path="C:/Users/JT/Desktop/Thesis/Workspace/Eventure/lib/sqlite-jdbc-3.8.7.jar"/>
+	<classpathentry kind="lib" path="lib/edu.mit.jwi_2.3.3_jdk.jar"/>
+	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.8.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

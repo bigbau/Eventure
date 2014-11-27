@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import concepts.Event;
 import relations.CauseOfIsState;
 import relations.EffectOf;
 import relations.EffectOfIsState;
@@ -43,11 +44,15 @@ public class EventureController {
 					eventureModel.putAnnotsToObject(test);
 					eventureModel.processSummary();
 					eventureWindow.setMessageArea(eventureModel.getResultsSummary());
+					
 					List<EffectOf> EO = eventureModel.getEffectOf();
 					List<EffectOfIsState> EOIS = eventureModel.getEffectOfIsState();
 					List<EventForGoalEvent> EFGE = eventureModel.getEventForGoalEvent();
 					List<EventForGoalState> EFGS = eventureModel.getEventForGoalState();
 					List<CauseOfIsState> COIS = eventureModel.getCauseOfIsState();
+					List<Event> EVENTS = eventureModel.getEvents();
+
+					System.out.println(EVENTS.size()+" Events assertions");
 					System.out.println(EO.size()+" EffectOf assertions");
 					for(EffectOf eo: EO){
 						System.out.println("cause ="+eo.getCause().getVerb());

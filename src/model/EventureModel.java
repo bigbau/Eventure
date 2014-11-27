@@ -43,7 +43,7 @@ public class EventureModel {
 	private List<EventForGoalEvent>  eventForGoalEvent = new ArrayList<EventForGoalEvent>();
 	private List<EventForGoalState>  eventForGoalState = new ArrayList<EventForGoalState>();
 	private List<HappensRelation>  happensRelation = new ArrayList<HappensRelation>();
-	private List<Event> event = new ArrayList<Event>();
+	private List<Event> events = new ArrayList<Event>();
 
 
 	public Iterator runPipeline(String inputFile) throws GateException{
@@ -116,7 +116,7 @@ public class EventureModel {
 			while(temp.hasNext()){
 				id++;
 				EffectOf holder = (EffectOf)temp.next();
-				results.append("ID: "+id+" ,");
+				results.append(id+": ");
 				results.append("\n");
 			}
 		}
@@ -128,7 +128,7 @@ public class EventureModel {
 			while(temp.hasNext()){
 				id++;
 				EffectOfIsState holder = (EffectOfIsState)temp.next();
-				results.append("ID: "+id+" ,");
+				results.append(id+": ");
 				results.append("\n");
 			}
 		}
@@ -140,7 +140,7 @@ public class EventureModel {
 			while(temp.hasNext()){
 				id++;
 				CauseOfIsState holder = (CauseOfIsState)temp.next();
-				results.append("ID: "+id+" ,");
+				results.append(id+": ");
 				results.append("\n");
 			}
 		}
@@ -152,7 +152,7 @@ public class EventureModel {
 			while(temp.hasNext()){
 				id++;
 				EventForGoalEvent holder = (EventForGoalEvent)temp.next();
-				results.append("ID: "+id+" ,");
+				results.append(id+": ");
 				results.append("\n");
 			}
 		}
@@ -164,7 +164,7 @@ public class EventureModel {
 			while(temp.hasNext()){
 				id++;
 				EventForGoalState holder = (EventForGoalState)temp.next();
-				results.append("ID: "+id+" ,");
+				results.append(id+": ");
 				results.append("\n");
 			}
 		}
@@ -175,7 +175,7 @@ public class EventureModel {
 			while(temp.hasNext()){
 				id++;
 				HappensRelation holder = (HappensRelation)temp.next();
-				results.append("ID: "+id+" ,");
+				results.append(id+": ");
 				results.append("\n");
 			}
 		}
@@ -279,9 +279,13 @@ public class EventureModel {
 				happensRelation.add(new HappensRelation(startNode, timeHappened));
 			}
 			if(((String)timeAnnot.getType()).equals("Event")){				  
-				String effectEvent = ((String)timeAnnot.getFeatures().get("Entity1"));
+				String event = ((String)timeAnnot.getFeatures().get("Entity1"))
+						, verb = ((String)timeAnnot.getFeatures().get("Verb"))
+						, objects = ((String)timeAnnot.getFeatures().get("Objects"))
+						, adjectives = ((String)timeAnnot.getFeatures().get("Adjectives"))
+						, adverbs = ((String)timeAnnot.getFeatures().get("Adverbs"));
 				long startNode = ((Long)timeAnnot.getEndNode().getOffset());
-				event.add(new Event(startNode, effectEvent, "", "", "", ""));
+				events.add(new Event(startNode, event, verb, adverbs, objects, adjectives));
 			}
 		}
 	}
@@ -318,6 +322,11 @@ public class EventureModel {
 
 	public List<HappensRelation> getHappensRelation() {
 		return happensRelation;
+	}
+
+
+	public List<Event> getEvents() {
+		return events;
 	}
 
 }

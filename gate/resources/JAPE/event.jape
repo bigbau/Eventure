@@ -22,7 +22,7 @@ Rule: Event1
 -->
 :Event1
   {
-	String verb = "", object = "", objectAdjective = "", adverb = "";
+	String verb = "", object = "", adjective = "", adverb = "";
     gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");	
 	ArrayList words = new ArrayList(matchedEntities);
 	Collections.sort(words, new OffsetComparator());
@@ -130,15 +130,15 @@ Rule: Event1
 			}
 		}
 		object = objects.toString();
-		objectAdjective = adjectives.toString();
+		adjective = adjectives.toString();
 		adverb = adverbs.toString();
 	}
 	
     newFeatures.put("Entity1",text);
 	newFeatures.put("Verb",verb);
-	newFeatures.put("Object",object);
-	newFeatures.put("ObjectAdjectives",objectAdjective);
-	newFeatures.put("Adverb",adverb);
+	newFeatures.put("Objects",object);
+	newFeatures.put("Adjectives",adjective);
+	newFeatures.put("Adverbs",adverb);
     newFeatures.put("rule","Event1");
     annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"Event", newFeatures);
   }
