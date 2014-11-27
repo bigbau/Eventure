@@ -6,6 +6,9 @@
 
 package sqlite;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -40,6 +43,23 @@ public abstract class SQLiteProcessor {
     private static Connection c = null;
     public static final String DB_URL = "jdbc:sqlite:eventure.db";  
     public static final String DRIVER = "org.sqlite.JDBC";  
+    private static final String  logPath ="eventure_log.txt";
+    private static FileWriter writer = null;
+    private static PrintWriter print_line = null;
+    public static void writeLineToLog(String line){
+		try {
+			writer = new FileWriter(logPath,true);
+		    print_line = new PrintWriter(writer);
+	    	print_line.println(line);
+	    	writer.close();
+	    	print_line.close();
+	    }
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
     public static void setConnection() {
         try {
         	SQLiteConfig config = new SQLiteConfig();  
@@ -50,7 +70,7 @@ public abstract class SQLiteProcessor {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println("Opened database successfully");
+        writeLineToLog("Opened database successfully");
     }
     public static void closeConnection(){
     	try {
@@ -59,7 +79,7 @@ public abstract class SQLiteProcessor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        System.out.println("Closed database successfully");
+        writeLineToLog("Closed database successfully");
     }
 
     public static void printTable(List<Map<String, String>> data) {
@@ -118,7 +138,7 @@ public abstract class SQLiteProcessor {
     	Event effect = assertion.getEffect();
     	String concept1 = WordnetProcessor.findRootWord(cause.getVerb(),POS.VERB);
     	String concept2 = WordnetProcessor.findRootWord(effect.getVerb(),POS.VERB);
-    	System.out.println("Inserting EffectOf("+concept1+", "+concept2+")");
+    	writeLineToLog("Inserting EffectOf("+concept1+", "+concept2+")");
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "event");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EffectOf");
@@ -139,8 +159,8 @@ public abstract class SQLiteProcessor {
     	Event cause = assertion.getEvent();
     	State effect = assertion.getState();
     	String concept1 = WordnetProcessor.findRootWord(cause.getVerb(),POS.VERB);
-    	String concept2 = WordnetProcessor.findRootWord(effect.toString(),POS.ADJECTIVE);
-    	System.out.println("Inserting EffectOfIsState("+concept1+", "+concept2+")");
+    	String concept2 = effect.toString();
+    	writeLineToLog("Inserting EffectOfIsState("+concept1+", "+concept2+")");
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "state");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EffectOfIsState");
@@ -158,11 +178,11 @@ public abstract class SQLiteProcessor {
     	setConnection();
     	State cause = assertion.getState();
     	Event effect = assertion.getEvent();
-    	String concept1 = WordnetProcessor.findRootWord(cause.toString(),POS.ADJECTIVE);
+    	String concept1 = cause.toString();
     	String concept2 = WordnetProcessor.findRootWord(effect.getVerb(),POS.VERB);
     	int concept1Id = getConceptID(concept1, "state");
     	int concept2Id = getConceptID(concept2, "event");
-    	System.out.println("Inserting CauseOfIsState("+concept1+", "+concept2+")");
+    	writeLineToLog("Inserting CauseOfIsState("+concept1+", "+concept2+")");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "CauseOfIsState");
     	
     	findRelationships(concept1, concept1Id, "state");
@@ -182,7 +202,7 @@ public abstract class SQLiteProcessor {
     	String concept2 = WordnetProcessor.findRootWord(goal.getVerb(),POS.VERB);
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "event");
-    	System.out.println("Inserting EventForGoalEvent("+concept1+", "+concept2+")");
+    	writeLineToLog("Inserting EventForGoalEvent("+concept1+", "+concept2+")");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EventForGoalEvent");
     	
     	findRelationships(concept1, concept1Id, "event");
@@ -200,10 +220,10 @@ public abstract class SQLiteProcessor {
     	Event task = assertion.getEvent();
     	State goal = assertion.getState();
     	String concept1 = WordnetProcessor.findRootWord(task.getVerb(),POS.VERB);
-    	String concept2 = WordnetProcessor.findRootWord(goal.toString(),POS.ADJECTIVE);
+    	String concept2 = goal.toString();
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "state");
-    	System.out.println("Inserting EventForGoalState("+concept1+", "+concept2+")");
+    	writeLineToLog("Inserting EventForGoalState("+concept1+", "+concept2+")");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EventForGoalState");
     	
     	findRelationships(concept1, concept1Id, "event");
@@ -216,7 +236,7 @@ public abstract class SQLiteProcessor {
     	closeConnection();
     }
     public static void insertMetadata(List<String> metadata, String type, int conceptId, int assertionId){
-    	System.out.println("Inserting "+type+"s for concept # "+conceptId+" in assertion # "+assertionId+"...");
+    	writeLineToLog("Inserting "+type+"s for concept # "+conceptId+" in assertion # "+assertionId+"...");
     	if(metadata!=null&&!metadata.isEmpty()){
 	    	for(String metadatum: metadata){
 	    		int metadatumId = getMetadatumID(metadatum, type, conceptId, assertionId);
@@ -242,12 +262,12 @@ public abstract class SQLiteProcessor {
     		if(!currDatum.equals(metadatum)){
     			if(!ifMetadataSynonymsExist(metadatumId,id)&&WordnetProcessor.areSynonyms(metadatum, currDatum, pos)){
 	    			insertMetadataSynonyms(id, metadatumId);
-	    	    	System.out.println("Inserted "+metadatum+" and "+currDatum+" as synonyms");
+	    	    	writeLineToLog("Inserted "+metadatum+" and "+currDatum+" as synonyms");
 	    		} else if(pos==POS.NOUN){
 		    		Set<String> generalizations = WordnetProcessor.getGeneralizations(metadatum, currDatum, pos);
 		    		for(String generalization: generalizations){
 		    			if(insertMetadataGeneralization(id, metadatumId, generalization))
-		    				System.out.println("Generalized "+metadatum+" and "+currDatum+" as "+generalization);
+		    				writeLineToLog("Generalized "+metadatum+" and "+currDatum+" as "+generalization);
 		    		}
 	    		}
     		}
@@ -303,12 +323,12 @@ public abstract class SQLiteProcessor {
     		if(!currConcept.equals(concept)){
 	    		if(!ifConceptSynonymsExist(conceptId,id)&&WordnetProcessor.areSynonyms(currConcept, concept, pos)){
 	    			insertConceptSynonyms(id, conceptId);
-	    	    	System.out.println("Inserted "+concept+" and "+currConcept+" as synonyms");
+	    	    	writeLineToLog("Inserted "+concept+" and "+currConcept+" as synonyms");
 	    		} else if(pos==POS.VERB){
 		    		Set<String> generalizations = WordnetProcessor.getGeneralizations(concept, currConcept, pos);
 		    		for(String generalization: generalizations){
 		    			if(insertConceptGeneralization(id, conceptId, generalization))
-		    				System.out.println("Generalized "+concept+" and "+currConcept+" as "+generalization);
+		    				writeLineToLog("Generalized "+concept+" and "+currConcept+" as "+generalization);
 		    		}
 	    		}
     		}
@@ -361,7 +381,7 @@ public abstract class SQLiteProcessor {
     				+ " SET frequency = frequency+1"
     				+ " WHERE metadatumId ='"+data.get(0).get("metadatumId")+"'";
     		update(frequencyQuery);
-    		System.out.println("Increased frequency for metadatum # "+id);
+    		writeLineToLog("Increased frequency for metadatum # "+id);
     	}
     	return id;
     }
@@ -375,7 +395,7 @@ public abstract class SQLiteProcessor {
     	String query ="INSERT INTO metadata (metadatum,metadata_type,conceptId,assertionId,metadatumId) "
     			+ "VALUES ('"+metadatum+"','"+metadata_type+"',"+conceptId+","+assertionId+","+id+")";
     	update(query);
-    	System.out.println("New "+metadata_type+":"+metadatum+" added for concept # "+conceptId +" in assertion # "+assertionId);
+    	writeLineToLog("New "+metadata_type+":"+metadatum+" added for concept # "+conceptId +" in assertion # "+assertionId);
     }
     private static int getAssertionID(int concept1Id, int concept2Id, String relation){
     	String query = "SELECT assertionId FROM assertions WHERE "
@@ -392,7 +412,7 @@ public abstract class SQLiteProcessor {
     				+ " SET frequency = frequency+1"
     				+ " WHERE assertionId ='"+data.get(0).get("assertionId")+"'";
     		update(frequencyQuery);
-    		System.out.println("Increased frequency for assertion # "+id);
+    		writeLineToLog("Increased frequency for assertion # "+id);
     	}
     	return id;
     }
@@ -406,7 +426,7 @@ public abstract class SQLiteProcessor {
     	String query ="INSERT INTO assertions(concept1Id,concept2Id,relation,assertionId) "
     			+ "VALUES ("+concept1Id+","+concept2Id+",'"+relation+"',"+id+")";
     	update(query);
-    	System.out.println("New "+relation+" added");
+    	writeLineToLog("New "+relation+" added");
     }
     private static int getConceptID(String concept, String concept_type){
     	String query =  "SELECT conceptId FROM concepts WHERE concept = '"+concept+
@@ -427,7 +447,7 @@ public abstract class SQLiteProcessor {
     	}
     	String query = "INSERT INTO concepts VALUES('"+concept+"','"+concept_type+"',"+id+")";
     	update(query);
-    	System.out.println("Concept "+concept+" added");
+    	writeLineToLog("Concept "+concept+" added");
     }
     public static void update(String query) {
         Statement stmt = null;
@@ -435,7 +455,7 @@ public abstract class SQLiteProcessor {
 
             stmt = c.createStatement();
             if(stmt.executeUpdate(query)==0){
-                System.out.println("Records created successfully");
+                writeLineToLog("Records created successfully");
             }
 
             stmt.close();

@@ -49,26 +49,30 @@ public class EventureController {
 					List<EventForGoalState> EFGS = eventureModel.getEventForGoalState();
 					List<CauseOfIsState> COIS = eventureModel.getCauseOfIsState();
 					System.out.println(EO.size()+" EffectOf assertions");
-					System.out.println(EOIS.size()+" EffectOfIsState assertions");
-					System.out.println(EFGE.size()+" EventForGoalEvent assertions");
-					System.out.println(EFGS.size()+" EventForGoalState assertions");
-					System.out.println(COIS.size()+" CauseOfIsState assertions");
 					for(EffectOf eo: EO){
 						System.out.println("cause ="+eo.getCause().getVerb());
 						System.out.println("effect ="+eo.getEffect().getVerb());
 						SQLiteProcessor.insertEffectOf(eo);
 					}
+					System.out.println(EOIS.size()+" EffectOfIsState assertions");
 					for(EffectOfIsState eois: EOIS){
 						System.out.println("cause = "+eois.getEvent().getVerb());
 						System.out.println("effect = "+eois.getState().toString());
 						SQLiteProcessor.insertEffectOfIsState(eois);
 					}
+					System.out.println(EFGE.size()+" EventForGoalEvent assertions");
 					for(EventForGoalEvent efge: EFGE){
+						System.out.println("task = "+efge.getTask().getVerb());
+						System.out.println("goal = "+efge.getGoal().getVerb());
 						SQLiteProcessor.insertEventForGoalEvent(efge);
 					}
+					System.out.println(EFGS.size()+" EventForGoalState assertions");
 					for(EventForGoalState efgs: EFGS){
+						System.out.println("task = "+efgs.getEvent().getVerb());
+						System.out.println("goal = "+efgs.getState().toString());
 						SQLiteProcessor.insertEventForGoalState(efgs);
 					}
+					System.out.println(COIS.size()+" CauseOfIsState assertions");
 					for(CauseOfIsState cois: COIS){
 						System.out.println("cause = "+cois.getState().toString());
 						System.out.println("effect = "+cois.getEvent().getVerb());
