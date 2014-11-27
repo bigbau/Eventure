@@ -7,8 +7,7 @@ import concepts.State;
 public class EventForGoalState extends Relation {
 	private Event event;
 	private State state;
-	public EventForGoalState(long startNode, Event event, State state) {
-		super(startNode);
+	public EventForGoalState(Event event, State state) {
 		this.event = event;
 		this.state = state;
 	}

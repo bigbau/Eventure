@@ -4,8 +4,7 @@ import concepts.Event;
 
 public class EffectOf extends Relation{
 	private Event cause, effect;
-	public EffectOf(long startNode, Event cause, Event effect) {
-		super(startNode);
+	public EffectOf(Event cause, Event effect) {
 		this.cause = cause;
 		this.effect = effect;
 	}

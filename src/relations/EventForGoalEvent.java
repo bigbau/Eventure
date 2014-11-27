@@ -4,8 +4,7 @@ import concepts.Event;
 
 public class EventForGoalEvent extends Relation {
 	Event task, goal;
-	public EventForGoalEvent(long startNode, Event task, Event goal) {
-		super(startNode);
+	public EventForGoalEvent(Event task, Event goal) {
 		this.task =task;
 		this.goal=goal;
 	}

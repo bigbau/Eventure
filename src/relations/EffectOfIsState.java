@@ -6,8 +6,7 @@ import concepts.State;
 public class EffectOfIsState extends Relation{
 	private Event event;
 	private State state;
-	public EffectOfIsState(long startNode, Event event, State state) {
-		super(startNode);
+	public EffectOfIsState(Event event, State state) {
 		this.event =event;
 		this.state=state;
 	}
