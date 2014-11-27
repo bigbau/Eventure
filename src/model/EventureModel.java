@@ -10,6 +10,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 import concepts.Event;
+import concepts.Time;
 import concepts.State;
 import gate.Annotation;
 import gate.AnnotationSet;
@@ -27,7 +28,6 @@ import relations.EffectOf;
 import relations.EffectOfIsState;
 import relations.EventForGoalEvent;
 import relations.EventForGoalState;
-import relations.HappensRelation;
 
 
 public class EventureModel {
@@ -42,7 +42,7 @@ public class EventureModel {
 	private List<CauseOfIsState> causeOfIsState = new ArrayList<CauseOfIsState>();
 	private List<EventForGoalEvent>  eventForGoalEvent = new ArrayList<EventForGoalEvent>();
 	private List<EventForGoalState>  eventForGoalState = new ArrayList<EventForGoalState>();
-	private List<HappensRelation>  happensRelation = new ArrayList<HappensRelation>();
+	private List<Time>  happensRelation = new ArrayList<Time>();
 	private List<Event> events = new ArrayList<Event>();
 
 
@@ -174,7 +174,7 @@ public class EventureModel {
 			int id = 0;
 			while(temp.hasNext()){
 				id++;
-				HappensRelation holder = (HappensRelation)temp.next();
+				Time holder = (Time)temp.next();
 				results.append(id+": "+holder.toString());
 				results.append("\n");
 			}
@@ -276,7 +276,7 @@ public class EventureModel {
 			if(((String)timeAnnot.getType()).equals("HappensRelation")){				  
 				String timeHappened = ((String)timeAnnot.getFeatures().get("TimeHappened"));
 				long startNode = ((Long)timeAnnot.getEndNode().getOffset());
-				happensRelation.add(new HappensRelation(startNode, timeHappened));
+				happensRelation.add(new Time(startNode, timeHappened));
 			}
 			if(((String)timeAnnot.getType()).equals("Event")){				  
 				String event = ((String)timeAnnot.getFeatures().get("Entity1"))
@@ -320,7 +320,7 @@ public class EventureModel {
 	}
 
 
-	public List<HappensRelation> getHappensRelation() {
+	public List<Time> getHappensRelation() {
 		return happensRelation;
 	}
 

@@ -25,6 +25,7 @@ import java.util.Set;
 import org.sqlite.SQLiteConfig;
 
 import concepts.Event;
+import concepts.Time;
 import concepts.State;
 import wordnet.WordnetProcessor;
 import edu.mit.jwi.item.POS;
@@ -33,7 +34,6 @@ import relations.EffectOf;
 import relations.EffectOfIsState;
 import relations.EventForGoalEvent;
 import relations.EventForGoalState;
-import relations.HappensRelation;
 
 /**
  *
@@ -233,6 +233,24 @@ public abstract class SQLiteProcessor {
     	insertMetadata(goal.getAdverbs(), "adverb", concept2Id, assertionId);
     	
     	insertMetadata(task.getObjects(), "object", concept1Id, assertionId);
+    	closeConnection();
+    }
+    public static void insertHappens(Event event, Time happens){
+    	setConnection();
+    	String concept1 = WordnetProcessor.findRootWord(event.getVerb(),POS.VERB);
+    	String concept2 = happens.getTimeHappened();
+    	
+    	int concept1Id = getConceptID(concept1, "event");
+    	int concept2Id = getConceptID(concept2, "time");
+    	writeLineToLog("Inserting Happens("+concept1+", "+concept2+")");
+    	int assertionId = getAssertionID(concept1Id, concept2Id, "Happens");
+
+    	findRelationships(concept1, concept1Id, "event");
+
+    	insertMetadata(event.getAdverbs(), "adverb", concept1Id, assertionId);
+
+    	insertMetadata(event.getObjects(), "object", concept1Id, assertionId);
+    	
     	closeConnection();
     }
     public static void insertMetadata(List<String> metadata, String type, int conceptId, int assertionId){

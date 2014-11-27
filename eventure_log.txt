@@ -1,5 +1,7 @@
 Opened database successfully
 Inserting EffectOf(break, punish)
+Opened database successfully
+Inserting EffectOf(break, punish)
 Concept break added
 Concept punish added
 New EffectOf added
@@ -301,6 +303,1821 @@ Concept learn  added
 Inserting CauseOfIsState(learn , learn)
 New CauseOfIsState added
 Opened database successfully
+Inserting EffectOf(break, punish)
+Concept break added
+Concept punish added
+New EffectOf added
+Inserting adverbs for concept # 0 in assertion # 0...
+Inserting adverbs for concept # 1 in assertion # 0...
+Inserting objects for concept # 0 in assertion # 0...
+New object:vase added for concept # 0 in assertion # 0
+Inserting objects for concept # 1 in assertion # 0...
+Closed database successfully
 Opened database successfully
+Inserting EffectOf(play, become)
+Concept play added
+Concept become added
+New EffectOf added
+Generalized become and break as change_state
+Inserting adverbs for concept # 2 in assertion # 1...
+Inserting adverbs for concept # 3 in assertion # 1...
+Inserting objects for concept # 2 in assertion # 1...
+Inserting objects for concept # 3 in assertion # 1...
+Closed database successfully
 Opened database successfully
+Inserting EffectOf(buy, make)
+Concept buy added
+Concept make added
+New EffectOf added
+Generalized buy and make as get
+Generalized buy and make as be
+Generalized make and break as change
+Generalized make and break as become
+Generalized make and play as perform
+Generalized make and play as act
+Generalized make and play as make
+Inserting adverbs for concept # 4 in assertion # 2...
+Inserting adverbs for concept # 5 in assertion # 2...
+Inserting objects for concept # 4 in assertion # 2...
+New object:food added for concept # 4 in assertion # 2
+Inserting objects for concept # 5 in assertion # 2...
+Closed database successfully
 Opened database successfully
+Inserting EffectOf(become, clean)
+Concept clean added
+New EffectOf added
+Generalized clean and break as change
+Generalized clean and buy as be
+Generalized clean and make as tidy
+Inserting adverbs for concept # 3 in assertion # 3...
+Inserting adverbs for concept # 6 in assertion # 3...
+Inserting objects for concept # 3 in assertion # 3...
+Inserting objects for concept # 6 in assertion # 3...
+New object:wounds added for concept # 6 in assertion # 3
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(call, water)
+Concept call added
+Concept water added
+New EffectOf added
+Generalized call and make as see
+Inserting adverbs for concept # 7 in assertion # 4...
+Inserting adverbs for concept # 8 in assertion # 4...
+Inserting objects for concept # 7 in assertion # 4...
+New object:students added for concept # 7 in assertion # 4
+Inserting objects for concept # 8 in assertion # 4...
+New object:plants added for concept # 8 in assertion # 4
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(run, take)
+Concept run added
+Concept take added
+New EffectOf added
+Generalized run and break as change
+Generalized run and break as become
+Inserted run and play as synonyms
+Generalized run and buy as be
+Generalized run and make as direct
+Generalized run and make as pass
+Generalized run and take as change
+Generalized run and take as become
+Generalized run and take as move
+Generalized run and take as be
+Generalized take and play as use
+Generalized take and play as act
+Generalized take and play as move
+Generalized take and buy as get
+Inserted take and make as synonyms
+Inserting adverbs for concept # 9 in assertion # 5...
+Inserting adverbs for concept # 10 in assertion # 5...
+Inserting objects for concept # 9 in assertion # 5...
+Inserting objects for concept # 10 in assertion # 5...
+New object:bath added for concept # 10 in assertion # 5
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(brush, develop)
+Concept brush added
+Concept develop added
+New EffectOf added
+Generalized brush and play as move
+Generalized brush and clean as remove
+Inserted develop and break as synonyms
+Generalized develop and make as change
+Generalized develop and make as create_by_mental_act
+Generalized develop and make as become
+Generalized develop and make as create
+Generalized develop and call as play
+Inserting adverbs for concept # 11 in assertion # 6...
+Inserting adverbs for concept # 12 in assertion # 6...
+Inserting objects for concept # 11 in assertion # 6...
+New object:teeth added for concept # 11 in assertion # 6
+Inserting objects for concept # 12 in assertion # 6...
+New object:cavity added for concept # 12 in assertion # 6
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(play, sad)
+Concept sad added
+New EffectOfIsState added
+Generalized play and run as travel
+Generalized play and run as compete
+Inserting adverbs for concept # 2 in assertion # 7...
+Inserting adverbs for concept # 13 in assertion # 7...
+Inserting objects for concept # 2 in assertion # 7...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(play, dirty)
+Concept dirty added
+New EffectOfIsState added
+Inserting adverbs for concept # 2 in assertion # 8...
+Inserting adverbs for concept # 14 in assertion # 8...
+Inserting objects for concept # 2 in assertion # 8...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(buy, happy)
+Concept happy added
+New EffectOfIsState added
+Inserting adverbs for concept # 4 in assertion # 9...
+Inserting adverbs for concept # 15 in assertion # 9...
+Inserting objects for concept # 4 in assertion # 9...
+New object:food added for concept # 4 in assertion # 9
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(brush, developed)
+Concept developed added
+New EffectOfIsState added
+Inserting adverbs for concept # 11 in assertion # 10...
+Inserting adverbs for concept # 16 in assertion # 10...
+Inserting objects for concept # 11 in assertion # 10...
+New object:teeth added for concept # 11 in assertion # 10
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(break, punished)
+Concept punished added
+New EffectOfIsState added
+Generalized break and develop as happen
+Inserting adverbs for concept # 0 in assertion # 11...
+Inserting adverbs for concept # 17 in assertion # 11...
+Inserting objects for concept # 0 in assertion # 11...
+New object:vase added for concept # 0 in assertion # 11
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(run, slim)
+Concept slim added
+New EffectOfIsState added
+Inserting adverbs for concept # 9 in assertion # 12...
+Inserting adverbs for concept # 18 in assertion # 12...
+Inserting objects for concept # 9 in assertion # 12...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(take, happy)
+New EffectOfIsState added
+Generalized take and make as head
+Inserting adverbs for concept # 10 in assertion # 13...
+Inserting adverbs for concept # 15 in assertion # 13...
+Inserting objects for concept # 10 in assertion # 13...
+New object:bath added for concept # 10 in assertion # 13
+Closed database successfully
+Opened database successfully
+Inserting EventForGoalEvent(buy, make)
+New EventForGoalEvent added
+Inserting adverbs for concept # 4 in assertion # 14...
+Inserting adverbs for concept # 5 in assertion # 14...
+Inserting objects for concept # 4 in assertion # 14...
+New object:cake added for concept # 4 in assertion # 14
+Inserting objects for concept # 5 in assertion # 14...
+New object:Hopsalot added for concept # 5 in assertion # 14
+Closed database successfully
+Opened database successfully
+Concept read added
+Concept learn added
+Inserting EventForGoalEvent(read, learn)
+New EventForGoalEvent added
+Generalized read and call as indicate
+Inserted read and take as synonyms
+Inserted read and learn as synonyms
+Inserted learn and take as synonyms
+Inserting adverbs for concept # 19 in assertion # 15...
+Inserting adverbs for concept # 20 in assertion # 15...
+Inserting objects for concept # 19 in assertion # 15...
+New object:book added for concept # 19 in assertion # 15
+Inserting objects for concept # 20 in assertion # 15...
+Closed database successfully
+Opened database successfully
+Concept save added
+Inserting EventForGoalEvent(save, buy)
+New EventForGoalEvent added
+Generalized save and take as record
+Inserting adverbs for concept # 21 in assertion # 16...
+Inserting adverbs for concept # 4 in assertion # 16...
+Inserting objects for concept # 21 in assertion # 16...
+Inserting objects for concept # 4 in assertion # 16...
+New object:car added for concept # 4 in assertion # 16
+Closed database successfully
+Opened database successfully
+Concept go added
+Concept spend added
+Inserting EventForGoalEvent(go, spend)
+New EventForGoalEvent added
+Inserted go and break as synonyms
+Generalized go and play as act
+Inserted go and become as synonyms
+Generalized go and buy as be
+Generalized go and make as change
+Inserted go and run as synonyms
+Generalized go and develop as happen
+Generalized spend and buy as pay
+Inserting adverbs for concept # 22 in assertion # 17...
+Inserting adverbs for concept # 23 in assertion # 17...
+Inserting objects for concept # 22 in assertion # 17...
+Inserting objects for concept # 23 in assertion # 17...
+Closed database successfully
+Opened database successfully
+Concept be happy added
+Inserting EventForGoalState(buy, be happy)
+New EventForGoalState added
+Inserting adverbs for concept # 4 in assertion # 18...
+Inserting adverbs for concept # 24 in assertion # 18...
+Inserting objects for concept # 4 in assertion # 18...
+New object:cake added for concept # 4 in assertion # 18
+Closed database successfully
+Opened database successfully
+Concept be neat added
+Inserting EventForGoalState(take, be neat)
+New EventForGoalState added
+Generalized take and read as have
+Generalized take and read as interpret
+Inserting adverbs for concept # 10 in assertion # 19...
+Inserting adverbs for concept # 25 in assertion # 19...
+Inserting objects for concept # 10 in assertion # 19...
+New object:bath added for concept # 10 in assertion # 19
+Closed database successfully
+Opened database successfully
+Concept be slim added
+Inserting EventForGoalState(run, be slim)
+New EventForGoalState added
+Inserting adverbs for concept # 9 in assertion # 20...
+Inserting adverbs for concept # 26 in assertion # 20...
+Inserting objects for concept # 9 in assertion # 20...
+Closed database successfully
+Opened database successfully
+Inserting EventForGoalState(run, be slim)
+Increased frequency for assertion # 20
+Inserting adverbs for concept # 9 in assertion # 20...
+Inserting adverbs for concept # 26 in assertion # 20...
+Inserting objects for concept # 9 in assertion # 20...
+Closed database successfully
+Opened database successfully
+Concept morning added
+Inserting Happens(run, morning)
+New Happens added
+Inserting adverbs for concept # 9 in assertion # 21...
+Inserting objects for concept # 9 in assertion # 21...
+Closed database successfully
+Opened database successfully
+Concept cleaned his wounds  added
+Inserting CauseOfIsState(cleaned his wounds , clean)
+New CauseOfIsState added
+Inserting adverbs for concept # 28 in assertion # 22...
+Inserting adverbs for concept # 6 in assertion # 22...
+Inserting objects for concept # 6 in assertion # 22...
+Closed database successfully
+Opened database successfully
+Concept developed a cavity  added
+Inserting CauseOfIsState(developed a cavity , develop)
+New CauseOfIsState added
+Inserting adverbs for concept # 29 in assertion # 23...
+Inserting adverbs for concept # 12 in assertion # 23...
+Inserting objects for concept # 12 in assertion # 23...
+Closed database successfully
+Opened database successfully
+Concept punished  added
+Inserting CauseOfIsState(punished , punish)
+New CauseOfIsState added
+Inserted punished  and punished as synonyms
+Inserting adverbs for concept # 30 in assertion # 24...
+Inserting adverbs for concept # 1 in assertion # 24...
+Inserting objects for concept # 1 in assertion # 24...
+Closed database successfully
+Opened database successfully
+Concept crafted by the carpenter  added
+Concept craft added
+Inserting CauseOfIsState(crafted by the carpenter , craft)
+New CauseOfIsState added
+Inserting adverbs for concept # 31 in assertion # 25...
+Inserting adverbs for concept # 32 in assertion # 25...
+Inserting objects for concept # 32 in assertion # 25...
+Closed database successfully
+Opened database successfully
+Concept learn  added
+Inserting CauseOfIsState(learn , learn)
+New CauseOfIsState added
+Opened database successfully
+Inserting EffectOf(break, punish)
+Concept break added
+Concept punish added
+New EffectOf added
+Inserting adverbs for concept # 0 in assertion # 0...
+Inserting adverbs for concept # 1 in assertion # 0...
+Inserting objects for concept # 0 in assertion # 0...
+New object:vase added for concept # 0 in assertion # 0
+Inserting objects for concept # 1 in assertion # 0...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(play, become)
+Concept play added
+Concept become added
+New EffectOf added
+Generalized become and break as change_state
+Inserting adverbs for concept # 2 in assertion # 1...
+Inserting adverbs for concept # 3 in assertion # 1...
+Inserting objects for concept # 2 in assertion # 1...
+Inserting objects for concept # 3 in assertion # 1...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(buy, make)
+Concept buy added
+Concept make added
+New EffectOf added
+Generalized buy and make as get
+Generalized buy and make as be
+Generalized make and break as change
+Generalized make and break as become
+Generalized make and play as perform
+Generalized make and play as act
+Generalized make and play as make
+Inserting adverbs for concept # 4 in assertion # 2...
+Inserting adverbs for concept # 5 in assertion # 2...
+Inserting objects for concept # 4 in assertion # 2...
+New object:food added for concept # 4 in assertion # 2
+Inserting objects for concept # 5 in assertion # 2...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(become, clean)
+Concept clean added
+New EffectOf added
+Generalized clean and break as change
+Generalized clean and buy as be
+Generalized clean and make as tidy
+Inserting adverbs for concept # 3 in assertion # 3...
+Inserting adverbs for concept # 6 in assertion # 3...
+Inserting objects for concept # 3 in assertion # 3...
+Inserting objects for concept # 6 in assertion # 3...
+New object:wounds added for concept # 6 in assertion # 3
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(call, water)
+Concept call added
+Concept water added
+New EffectOf added
+Generalized call and make as see
+Inserting adverbs for concept # 7 in assertion # 4...
+Inserting adverbs for concept # 8 in assertion # 4...
+Inserting objects for concept # 7 in assertion # 4...
+New object:students added for concept # 7 in assertion # 4
+Inserting objects for concept # 8 in assertion # 4...
+New object:plants added for concept # 8 in assertion # 4
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(run, take)
+Concept run added
+Concept take added
+New EffectOf added
+Generalized run and break as change
+Generalized run and break as become
+Inserted run and play as synonyms
+Generalized run and buy as be
+Generalized run and make as direct
+Generalized run and make as pass
+Generalized run and take as change
+Generalized run and take as become
+Generalized run and take as move
+Generalized run and take as be
+Generalized take and play as use
+Generalized take and play as act
+Generalized take and play as move
+Generalized take and buy as get
+Inserted take and make as synonyms
+Inserting adverbs for concept # 9 in assertion # 5...
+Inserting adverbs for concept # 10 in assertion # 5...
+Inserting objects for concept # 9 in assertion # 5...
+Inserting objects for concept # 10 in assertion # 5...
+New object:bath added for concept # 10 in assertion # 5
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(brush, develop)
+Concept brush added
+Concept develop added
+New EffectOf added
+Generalized brush and play as move
+Generalized brush and clean as remove
+Inserted develop and break as synonyms
+Generalized develop and make as change
+Generalized develop and make as create_by_mental_act
+Generalized develop and make as become
+Generalized develop and make as create
+Generalized develop and call as play
+Inserting adverbs for concept # 11 in assertion # 6...
+Inserting adverbs for concept # 12 in assertion # 6...
+Inserting objects for concept # 11 in assertion # 6...
+New object:teeth added for concept # 11 in assertion # 6
+Inserting objects for concept # 12 in assertion # 6...
+New object:cavity added for concept # 12 in assertion # 6
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(play, sad)
+Concept sad added
+New EffectOfIsState added
+Generalized play and run as travel
+Generalized play and run as compete
+Inserting adverbs for concept # 2 in assertion # 7...
+Inserting adverbs for concept # 13 in assertion # 7...
+Inserting objects for concept # 2 in assertion # 7...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(play, dirty)
+Concept dirty added
+New EffectOfIsState added
+Inserting adverbs for concept # 2 in assertion # 8...
+Inserting adverbs for concept # 14 in assertion # 8...
+Inserting objects for concept # 2 in assertion # 8...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(buy, happy)
+Concept happy added
+New EffectOfIsState added
+Inserting adverbs for concept # 4 in assertion # 9...
+Inserting adverbs for concept # 15 in assertion # 9...
+Inserting objects for concept # 4 in assertion # 9...
+New object:food added for concept # 4 in assertion # 9
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(brush, developed)
+Concept developed added
+New EffectOfIsState added
+Inserting adverbs for concept # 11 in assertion # 10...
+Inserting adverbs for concept # 16 in assertion # 10...
+Inserting objects for concept # 11 in assertion # 10...
+New object:teeth added for concept # 11 in assertion # 10
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(break, punished)
+Concept punished added
+New EffectOfIsState added
+Generalized break and develop as happen
+Inserting adverbs for concept # 0 in assertion # 11...
+Inserting adverbs for concept # 17 in assertion # 11...
+Inserting objects for concept # 0 in assertion # 11...
+New object:vase added for concept # 0 in assertion # 11
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(run, slim)
+Concept slim added
+New EffectOfIsState added
+Inserting adverbs for concept # 9 in assertion # 12...
+Inserting adverbs for concept # 18 in assertion # 12...
+Inserting objects for concept # 9 in assertion # 12...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(take, happy)
+New EffectOfIsState added
+Generalized take and make as head
+Inserting adverbs for concept # 10 in assertion # 13...
+Inserting adverbs for concept # 15 in assertion # 13...
+Inserting objects for concept # 10 in assertion # 13...
+New object:bath added for concept # 10 in assertion # 13
+Closed database successfully
+Opened database successfully
+Inserting EventForGoalEvent(buy, make)
+New EventForGoalEvent added
+Inserting adverbs for concept # 4 in assertion # 14...
+Inserting adverbs for concept # 5 in assertion # 14...
+Inserting objects for concept # 4 in assertion # 14...
+New object:cake added for concept # 4 in assertion # 14
+Inserting objects for concept # 5 in assertion # 14...
+New object:Hopsalot added for concept # 5 in assertion # 14
+Closed database successfully
+Opened database successfully
+Concept read added
+Concept learn added
+Inserting EventForGoalEvent(read, learn)
+New EventForGoalEvent added
+Generalized read and call as indicate
+Inserted read and take as synonyms
+Inserted read and learn as synonyms
+Inserted learn and take as synonyms
+Inserting adverbs for concept # 19 in assertion # 15...
+Inserting adverbs for concept # 20 in assertion # 15...
+Inserting objects for concept # 19 in assertion # 15...
+New object:book added for concept # 19 in assertion # 15
+Inserting objects for concept # 20 in assertion # 15...
+Closed database successfully
+Opened database successfully
+Concept save added
+Inserting EventForGoalEvent(save, buy)
+New EventForGoalEvent added
+Generalized save and take as record
+Inserting adverbs for concept # 21 in assertion # 16...
+Inserting adverbs for concept # 4 in assertion # 16...
+Inserting objects for concept # 21 in assertion # 16...
+Inserting objects for concept # 4 in assertion # 16...
+New object:car added for concept # 4 in assertion # 16
+Closed database successfully
+Opened database successfully
+Concept go added
+Concept spend added
+Inserting EventForGoalEvent(go, spend)
+New EventForGoalEvent added
+Inserted go and break as synonyms
+Generalized go and play as act
+Inserted go and become as synonyms
+Generalized go and buy as be
+Generalized go and make as change
+Inserted go and run as synonyms
+Generalized go and develop as happen
+Generalized spend and buy as pay
+Inserting adverbs for concept # 22 in assertion # 17...
+Inserting adverbs for concept # 23 in assertion # 17...
+Inserting objects for concept # 22 in assertion # 17...
+Inserting objects for concept # 23 in assertion # 17...
+Closed database successfully
+Opened database successfully
+Concept be happy added
+Inserting EventForGoalState(buy, be happy)
+New EventForGoalState added
+Inserting adverbs for concept # 4 in assertion # 18...
+Inserting adverbs for concept # 24 in assertion # 18...
+Inserting objects for concept # 4 in assertion # 18...
+New object:cake added for concept # 4 in assertion # 18
+Closed database successfully
+Opened database successfully
+Concept be neat added
+Inserting EventForGoalState(take, be neat)
+New EventForGoalState added
+Generalized take and read as have
+Generalized take and read as interpret
+Inserting adverbs for concept # 10 in assertion # 19...
+Inserting adverbs for concept # 25 in assertion # 19...
+Inserting objects for concept # 10 in assertion # 19...
+New object:bath added for concept # 10 in assertion # 19
+Closed database successfully
+Opened database successfully
+Concept be slim added
+Inserting EventForGoalState(run, be slim)
+New EventForGoalState added
+Inserting adverbs for concept # 9 in assertion # 20...
+Inserting adverbs for concept # 26 in assertion # 20...
+Inserting objects for concept # 9 in assertion # 20...
+Closed database successfully
+Opened database successfully
+Inserting EventForGoalState(run, be slim)
+Increased frequency for assertion # 20
+Inserting adverbs for concept # 9 in assertion # 20...
+Inserting adverbs for concept # 26 in assertion # 20...
+Inserting objects for concept # 9 in assertion # 20...
+Closed database successfully
+Opened database successfully
+Concept morning added
+Inserting Happens(run, morning)
+New Happens added
+Inserting adverbs for concept # 9 in assertion # 21...
+Inserting objects for concept # 9 in assertion # 21...
+Closed database successfully
+Opened database successfully
+Concept cleaned his wounds  added
+Inserting CauseOfIsState(cleaned his wounds , clean)
+New CauseOfIsState added
+Inserting adverbs for concept # 28 in assertion # 22...
+Inserting adverbs for concept # 6 in assertion # 22...
+Inserting objects for concept # 6 in assertion # 22...
+Closed database successfully
+Opened database successfully
+Concept developed a cavity  added
+Inserting CauseOfIsState(developed a cavity , develop)
+New CauseOfIsState added
+Inserting adverbs for concept # 29 in assertion # 23...
+Inserting adverbs for concept # 12 in assertion # 23...
+Inserting objects for concept # 12 in assertion # 23...
+Closed database successfully
+Opened database successfully
+Concept punished  added
+Inserting CauseOfIsState(punished , punish)
+New CauseOfIsState added
+Inserted punished  and punished as synonyms
+Inserting adverbs for concept # 30 in assertion # 24...
+Inserting adverbs for concept # 1 in assertion # 24...
+Inserting objects for concept # 1 in assertion # 24...
+Closed database successfully
+Opened database successfully
+Concept crafted by the carpenter  added
+Concept craft added
+Inserting CauseOfIsState(crafted by the carpenter , craft)
+New CauseOfIsState added
+Inserting adverbs for concept # 31 in assertion # 25...
+Inserting adverbs for concept # 32 in assertion # 25...
+Inserting objects for concept # 32 in assertion # 25...
+Closed database successfully
+Opened database successfully
+Concept learn  added
+Inserting CauseOfIsState(learn , learn)
+New CauseOfIsState added
+Opened database successfully
+Inserting EffectOf(break, punish)
+Concept break added
+Concept punish added
+New EffectOf added
+Inserting adverbs for concept # 0 in assertion # 0...
+Inserting adverbs for concept # 1 in assertion # 0...
+Inserting objects for concept # 0 in assertion # 0...
+New object:vase added for concept # 0 in assertion # 0
+Inserting objects for concept # 1 in assertion # 0...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(play, become)
+Concept play added
+Concept become added
+New EffectOf added
+Generalized become and break as change_state
+Inserting adverbs for concept # 2 in assertion # 1...
+Inserting adverbs for concept # 3 in assertion # 1...
+Inserting objects for concept # 2 in assertion # 1...
+Inserting objects for concept # 3 in assertion # 1...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(buy, make)
+Concept buy added
+Concept make added
+New EffectOf added
+Generalized buy and make as get
+Generalized buy and make as be
+Generalized make and break as change
+Generalized make and break as become
+Generalized make and play as perform
+Generalized make and play as act
+Generalized make and play as make
+Inserting adverbs for concept # 4 in assertion # 2...
+Inserting adverbs for concept # 5 in assertion # 2...
+Inserting objects for concept # 4 in assertion # 2...
+New object:food added for concept # 4 in assertion # 2
+Inserting objects for concept # 5 in assertion # 2...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(become, clean)
+Concept clean added
+New EffectOf added
+Generalized clean and break as change
+Generalized clean and buy as be
+Generalized clean and make as tidy
+Inserting adverbs for concept # 3 in assertion # 3...
+Inserting adverbs for concept # 6 in assertion # 3...
+Inserting objects for concept # 3 in assertion # 3...
+Inserting objects for concept # 6 in assertion # 3...
+New object:wounds added for concept # 6 in assertion # 3
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(call, water)
+Concept call added
+Concept water added
+New EffectOf added
+Generalized call and make as see
+Inserting adverbs for concept # 7 in assertion # 4...
+Inserting adverbs for concept # 8 in assertion # 4...
+Inserting objects for concept # 7 in assertion # 4...
+New object:students added for concept # 7 in assertion # 4
+Inserting objects for concept # 8 in assertion # 4...
+New object:plants added for concept # 8 in assertion # 4
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(run, take)
+Concept run added
+Concept take added
+New EffectOf added
+Generalized run and break as change
+Generalized run and break as become
+Inserted run and play as synonyms
+Generalized run and buy as be
+Generalized run and make as direct
+Generalized run and make as pass
+Generalized run and take as change
+Generalized run and take as become
+Generalized run and take as move
+Generalized run and take as be
+Generalized take and play as use
+Generalized take and play as act
+Generalized take and play as move
+Generalized take and buy as get
+Inserted take and make as synonyms
+Inserting adverbs for concept # 9 in assertion # 5...
+Inserting adverbs for concept # 10 in assertion # 5...
+Inserting objects for concept # 9 in assertion # 5...
+Inserting objects for concept # 10 in assertion # 5...
+New object:bath added for concept # 10 in assertion # 5
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(brush, develop)
+Concept brush added
+Concept develop added
+New EffectOf added
+Generalized brush and play as move
+Generalized brush and clean as remove
+Inserted develop and break as synonyms
+Generalized develop and make as change
+Generalized develop and make as create_by_mental_act
+Generalized develop and make as become
+Generalized develop and make as create
+Generalized develop and call as play
+Inserting adverbs for concept # 11 in assertion # 6...
+Inserting adverbs for concept # 12 in assertion # 6...
+Inserting objects for concept # 11 in assertion # 6...
+New object:teeth added for concept # 11 in assertion # 6
+Inserting objects for concept # 12 in assertion # 6...
+New object:cavity added for concept # 12 in assertion # 6
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(play, sad)
+Concept sad added
+New EffectOfIsState added
+Generalized play and run as travel
+Generalized play and run as compete
+Inserting adverbs for concept # 2 in assertion # 7...
+Inserting adverbs for concept # 13 in assertion # 7...
+Inserting objects for concept # 2 in assertion # 7...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(play, dirty)
+Concept dirty added
+New EffectOfIsState added
+Inserting adverbs for concept # 2 in assertion # 8...
+Inserting adverbs for concept # 14 in assertion # 8...
+Inserting objects for concept # 2 in assertion # 8...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(buy, happy)
+Concept happy added
+New EffectOfIsState added
+Inserting adverbs for concept # 4 in assertion # 9...
+Inserting adverbs for concept # 15 in assertion # 9...
+Inserting objects for concept # 4 in assertion # 9...
+New object:food added for concept # 4 in assertion # 9
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(brush, developed)
+Concept developed added
+New EffectOfIsState added
+Inserting adverbs for concept # 11 in assertion # 10...
+Inserting adverbs for concept # 16 in assertion # 10...
+Inserting objects for concept # 11 in assertion # 10...
+New object:teeth added for concept # 11 in assertion # 10
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(break, punished)
+Concept punished added
+New EffectOfIsState added
+Generalized break and develop as happen
+Inserting adverbs for concept # 0 in assertion # 11...
+Inserting adverbs for concept # 17 in assertion # 11...
+Inserting objects for concept # 0 in assertion # 11...
+New object:vase added for concept # 0 in assertion # 11
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(run, slim)
+Concept slim added
+New EffectOfIsState added
+Inserting adverbs for concept # 9 in assertion # 12...
+Inserting adverbs for concept # 18 in assertion # 12...
+Inserting objects for concept # 9 in assertion # 12...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(take, happy)
+New EffectOfIsState added
+Generalized take and make as head
+Inserting adverbs for concept # 10 in assertion # 13...
+Inserting adverbs for concept # 15 in assertion # 13...
+Inserting objects for concept # 10 in assertion # 13...
+New object:bath added for concept # 10 in assertion # 13
+Closed database successfully
+Opened database successfully
+Inserting EventForGoalEvent(buy, make)
+New EventForGoalEvent added
+Inserting adverbs for concept # 4 in assertion # 14...
+Inserting adverbs for concept # 5 in assertion # 14...
+Inserting objects for concept # 4 in assertion # 14...
+New object:cake added for concept # 4 in assertion # 14
+Inserting objects for concept # 5 in assertion # 14...
+New object:Hopsalot added for concept # 5 in assertion # 14
+Closed database successfully
+Opened database successfully
+Concept read added
+Concept learn added
+Inserting EventForGoalEvent(read, learn)
+New EventForGoalEvent added
+Generalized read and call as indicate
+Inserted read and take as synonyms
+Inserted read and learn as synonyms
+Inserted learn and take as synonyms
+Inserting adverbs for concept # 19 in assertion # 15...
+Inserting adverbs for concept # 20 in assertion # 15...
+Inserting objects for concept # 19 in assertion # 15...
+New object:book added for concept # 19 in assertion # 15
+Inserting objects for concept # 20 in assertion # 15...
+Closed database successfully
+Opened database successfully
+Concept save added
+Inserting EventForGoalEvent(save, buy)
+New EventForGoalEvent added
+Generalized save and take as record
+Inserting adverbs for concept # 21 in assertion # 16...
+Inserting adverbs for concept # 4 in assertion # 16...
+Inserting objects for concept # 21 in assertion # 16...
+Inserting objects for concept # 4 in assertion # 16...
+New object:car added for concept # 4 in assertion # 16
+Closed database successfully
+Opened database successfully
+Concept go added
+Concept spend added
+Inserting EventForGoalEvent(go, spend)
+New EventForGoalEvent added
+Inserted go and break as synonyms
+Generalized go and play as act
+Inserted go and become as synonyms
+Generalized go and buy as be
+Generalized go and make as change
+Inserted go and run as synonyms
+Generalized go and develop as happen
+Generalized spend and buy as pay
+Inserting adverbs for concept # 22 in assertion # 17...
+Inserting adverbs for concept # 23 in assertion # 17...
+Inserting objects for concept # 22 in assertion # 17...
+Inserting objects for concept # 23 in assertion # 17...
+Closed database successfully
+Opened database successfully
+Concept be happy added
+Inserting EventForGoalState(buy, be happy)
+New EventForGoalState added
+Inserting adverbs for concept # 4 in assertion # 18...
+Inserting adverbs for concept # 24 in assertion # 18...
+Inserting objects for concept # 4 in assertion # 18...
+New object:cake added for concept # 4 in assertion # 18
+Closed database successfully
+Opened database successfully
+Concept be neat added
+Inserting EventForGoalState(take, be neat)
+New EventForGoalState added
+Generalized take and read as have
+Generalized take and read as interpret
+Inserting adverbs for concept # 10 in assertion # 19...
+Inserting adverbs for concept # 25 in assertion # 19...
+Inserting objects for concept # 10 in assertion # 19...
+New object:bath added for concept # 10 in assertion # 19
+Closed database successfully
+Opened database successfully
+Concept be slim added
+Inserting EventForGoalState(run, be slim)
+New EventForGoalState added
+Inserting adverbs for concept # 9 in assertion # 20...
+Inserting adverbs for concept # 26 in assertion # 20...
+Inserting objects for concept # 9 in assertion # 20...
+Closed database successfully
+Opened database successfully
+Inserting EventForGoalState(run, be slim)
+Increased frequency for assertion # 20
+Inserting adverbs for concept # 9 in assertion # 20...
+Inserting adverbs for concept # 26 in assertion # 20...
+Inserting objects for concept # 9 in assertion # 20...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(break, punish)
+Concept break added
+Concept punish added
+New EffectOf added
+Inserting adverbs for concept # 0 in assertion # 0...
+Inserting adverbs for concept # 1 in assertion # 0...
+Inserting objects for concept # 0 in assertion # 0...
+New object:vase added for concept # 0 in assertion # 0
+Inserting objects for concept # 1 in assertion # 0...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(play, become)
+Concept play added
+Concept become added
+New EffectOf added
+Generalized become and break as change_state
+Inserting adverbs for concept # 2 in assertion # 1...
+Inserting adverbs for concept # 3 in assertion # 1...
+Inserting objects for concept # 2 in assertion # 1...
+Inserting objects for concept # 3 in assertion # 1...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(buy, make)
+Concept buy added
+Concept make added
+New EffectOf added
+Generalized buy and make as get
+Generalized buy and make as be
+Generalized make and break as change
+Generalized make and break as become
+Generalized make and play as perform
+Generalized make and play as act
+Generalized make and play as make
+Inserting adverbs for concept # 4 in assertion # 2...
+Inserting adverbs for concept # 5 in assertion # 2...
+Inserting objects for concept # 4 in assertion # 2...
+New object:food added for concept # 4 in assertion # 2
+Inserting objects for concept # 5 in assertion # 2...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(become, clean)
+Concept clean added
+New EffectOf added
+Generalized clean and break as change
+Generalized clean and buy as be
+Generalized clean and make as tidy
+Inserting adverbs for concept # 3 in assertion # 3...
+Inserting adverbs for concept # 6 in assertion # 3...
+Inserting objects for concept # 3 in assertion # 3...
+Inserting objects for concept # 6 in assertion # 3...
+New object:wounds added for concept # 6 in assertion # 3
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(call, water)
+Concept call added
+Concept water added
+New EffectOf added
+Generalized call and make as see
+Inserting adverbs for concept # 7 in assertion # 4...
+Inserting adverbs for concept # 8 in assertion # 4...
+Inserting objects for concept # 7 in assertion # 4...
+New object:students added for concept # 7 in assertion # 4
+Inserting objects for concept # 8 in assertion # 4...
+New object:plants added for concept # 8 in assertion # 4
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(run, take)
+Concept run added
+Concept take added
+New EffectOf added
+Generalized run and break as change
+Generalized run and break as become
+Inserted run and play as synonyms
+Generalized run and buy as be
+Generalized run and make as direct
+Generalized run and make as pass
+Generalized run and take as change
+Generalized run and take as become
+Generalized run and take as move
+Generalized run and take as be
+Generalized take and play as use
+Generalized take and play as act
+Generalized take and play as move
+Generalized take and buy as get
+Inserted take and make as synonyms
+Inserting adverbs for concept # 9 in assertion # 5...
+Inserting adverbs for concept # 10 in assertion # 5...
+Inserting objects for concept # 9 in assertion # 5...
+Inserting objects for concept # 10 in assertion # 5...
+New object:bath added for concept # 10 in assertion # 5
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(brush, develop)
+Concept brush added
+Concept develop added
+New EffectOf added
+Generalized brush and play as move
+Generalized brush and clean as remove
+Inserted develop and break as synonyms
+Generalized develop and make as change
+Generalized develop and make as create_by_mental_act
+Generalized develop and make as become
+Generalized develop and make as create
+Generalized develop and call as play
+Inserting adverbs for concept # 11 in assertion # 6...
+Inserting adverbs for concept # 12 in assertion # 6...
+Inserting objects for concept # 11 in assertion # 6...
+New object:teeth added for concept # 11 in assertion # 6
+Inserting objects for concept # 12 in assertion # 6...
+New object:cavity added for concept # 12 in assertion # 6
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(play, sad)
+Concept sad added
+New EffectOfIsState added
+Generalized play and run as travel
+Generalized play and run as compete
+Inserting adverbs for concept # 2 in assertion # 7...
+Inserting adverbs for concept # 13 in assertion # 7...
+Inserting objects for concept # 2 in assertion # 7...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(play, dirty)
+Concept dirty added
+New EffectOfIsState added
+Inserting adverbs for concept # 2 in assertion # 8...
+Inserting adverbs for concept # 14 in assertion # 8...
+Inserting objects for concept # 2 in assertion # 8...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(buy, happy)
+Concept happy added
+New EffectOfIsState added
+Inserting adverbs for concept # 4 in assertion # 9...
+Inserting adverbs for concept # 15 in assertion # 9...
+Inserting objects for concept # 4 in assertion # 9...
+New object:food added for concept # 4 in assertion # 9
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(brush, developed)
+Concept developed added
+New EffectOfIsState added
+Inserting adverbs for concept # 11 in assertion # 10...
+Inserting adverbs for concept # 16 in assertion # 10...
+Inserting objects for concept # 11 in assertion # 10...
+New object:teeth added for concept # 11 in assertion # 10
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(break, punished)
+Concept punished added
+New EffectOfIsState added
+Generalized break and develop as happen
+Inserting adverbs for concept # 0 in assertion # 11...
+Inserting adverbs for concept # 17 in assertion # 11...
+Inserting objects for concept # 0 in assertion # 11...
+New object:vase added for concept # 0 in assertion # 11
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(run, slim)
+Concept slim added
+New EffectOfIsState added
+Inserting adverbs for concept # 9 in assertion # 12...
+Inserting adverbs for concept # 18 in assertion # 12...
+Inserting objects for concept # 9 in assertion # 12...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(take, happy)
+New EffectOfIsState added
+Generalized take and make as head
+Inserting adverbs for concept # 10 in assertion # 13...
+Inserting adverbs for concept # 15 in assertion # 13...
+Inserting objects for concept # 10 in assertion # 13...
+New object:bath added for concept # 10 in assertion # 13
+Closed database successfully
+Opened database successfully
+Inserting EventForGoalEvent(buy, make)
+New EventForGoalEvent added
+Inserting adverbs for concept # 4 in assertion # 14...
+Inserting adverbs for concept # 5 in assertion # 14...
+Inserting objects for concept # 4 in assertion # 14...
+New object:cake added for concept # 4 in assertion # 14
+Inserting objects for concept # 5 in assertion # 14...
+New object:Hopsalot added for concept # 5 in assertion # 14
+Closed database successfully
+Opened database successfully
+Concept read added
+Concept learn added
+Inserting EventForGoalEvent(read, learn)
+New EventForGoalEvent added
+Generalized read and call as indicate
+Inserted read and take as synonyms
+Inserted read and learn as synonyms
+Inserted learn and take as synonyms
+Inserting adverbs for concept # 19 in assertion # 15...
+Inserting adverbs for concept # 20 in assertion # 15...
+Inserting objects for concept # 19 in assertion # 15...
+New object:book added for concept # 19 in assertion # 15
+Inserting objects for concept # 20 in assertion # 15...
+Closed database successfully
+Opened database successfully
+Concept save added
+Inserting EventForGoalEvent(save, buy)
+New EventForGoalEvent added
+Generalized save and take as record
+Inserting adverbs for concept # 21 in assertion # 16...
+Inserting adverbs for concept # 4 in assertion # 16...
+Inserting objects for concept # 21 in assertion # 16...
+Inserting objects for concept # 4 in assertion # 16...
+New object:car added for concept # 4 in assertion # 16
+Closed database successfully
+Opened database successfully
+Concept go added
+Concept spend added
+Inserting EventForGoalEvent(go, spend)
+New EventForGoalEvent added
+Inserted go and break as synonyms
+Generalized go and play as act
+Inserted go and become as synonyms
+Generalized go and buy as be
+Generalized go and make as change
+Inserted go and run as synonyms
+Generalized go and develop as happen
+Generalized spend and buy as pay
+Inserting adverbs for concept # 22 in assertion # 17...
+Inserting adverbs for concept # 23 in assertion # 17...
+Inserting objects for concept # 22 in assertion # 17...
+Inserting objects for concept # 23 in assertion # 17...
+Closed database successfully
+Opened database successfully
+Concept be happy added
+Inserting EventForGoalState(buy, be happy)
+New EventForGoalState added
+Inserting adverbs for concept # 4 in assertion # 18...
+Inserting adverbs for concept # 24 in assertion # 18...
+Inserting objects for concept # 4 in assertion # 18...
+New object:cake added for concept # 4 in assertion # 18
+Closed database successfully
+Opened database successfully
+Concept be neat added
+Inserting EventForGoalState(take, be neat)
+New EventForGoalState added
+Generalized take and read as have
+Generalized take and read as interpret
+Inserting adverbs for concept # 10 in assertion # 19...
+Inserting adverbs for concept # 25 in assertion # 19...
+Inserting objects for concept # 10 in assertion # 19...
+New object:bath added for concept # 10 in assertion # 19
+Closed database successfully
+Opened database successfully
+Concept be slim added
+Inserting EventForGoalState(run, be slim)
+New EventForGoalState added
+Inserting adverbs for concept # 9 in assertion # 20...
+Inserting adverbs for concept # 26 in assertion # 20...
+Inserting objects for concept # 9 in assertion # 20...
+Closed database successfully
+Opened database successfully
+Inserting EventForGoalState(run, be slim)
+Increased frequency for assertion # 20
+Inserting adverbs for concept # 9 in assertion # 20...
+Inserting adverbs for concept # 26 in assertion # 20...
+Inserting objects for concept # 9 in assertion # 20...
+Closed database successfully
+Opened database successfully
+Concept cleaned his wounds  added
+Inserting CauseOfIsState(cleaned his wounds , clean)
+New CauseOfIsState added
+Inserting adverbs for concept # 27 in assertion # 21...
+Inserting adverbs for concept # 6 in assertion # 21...
+Inserting objects for concept # 6 in assertion # 21...
+Closed database successfully
+Opened database successfully
+Concept developed a cavity  added
+Inserting CauseOfIsState(developed a cavity , develop)
+New CauseOfIsState added
+Inserting adverbs for concept # 28 in assertion # 22...
+Inserting adverbs for concept # 12 in assertion # 22...
+Inserting objects for concept # 12 in assertion # 22...
+Closed database successfully
+Opened database successfully
+Concept punished  added
+Inserting CauseOfIsState(punished , punish)
+New CauseOfIsState added
+Inserted punished  and punished as synonyms
+Inserting adverbs for concept # 29 in assertion # 23...
+Inserting adverbs for concept # 1 in assertion # 23...
+Inserting objects for concept # 1 in assertion # 23...
+Closed database successfully
+Opened database successfully
+Concept crafted by the carpenter  added
+Concept craft added
+Inserting CauseOfIsState(crafted by the carpenter , craft)
+New CauseOfIsState added
+Inserting adverbs for concept # 30 in assertion # 24...
+Inserting adverbs for concept # 31 in assertion # 24...
+Inserting objects for concept # 31 in assertion # 24...
+Closed database successfully
+Opened database successfully
+Concept learn  added
+Inserting CauseOfIsState(learn , learn)
+New CauseOfIsState added
+Opened database successfully
+Inserting EffectOf(break, punish)
+Concept break added
+Concept punish added
+New EffectOf added
+Inserting adverbs for concept # 0 in assertion # 0...
+Inserting adverbs for concept # 1 in assertion # 0...
+Inserting objects for concept # 0 in assertion # 0...
+New object:vase added for concept # 0 in assertion # 0
+Inserting objects for concept # 1 in assertion # 0...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(play, become)
+Concept play added
+Concept become added
+New EffectOf added
+Generalized become and break as change_state
+Inserting adverbs for concept # 2 in assertion # 1...
+Inserting adverbs for concept # 3 in assertion # 1...
+Inserting objects for concept # 2 in assertion # 1...
+Inserting objects for concept # 3 in assertion # 1...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(buy, make)
+Concept buy added
+Concept make added
+New EffectOf added
+Generalized buy and make as get
+Generalized buy and make as be
+Generalized make and break as change
+Generalized make and break as become
+Generalized make and play as perform
+Generalized make and play as act
+Generalized make and play as make
+Inserting adverbs for concept # 4 in assertion # 2...
+Inserting adverbs for concept # 5 in assertion # 2...
+Inserting objects for concept # 4 in assertion # 2...
+New object:food added for concept # 4 in assertion # 2
+Inserting objects for concept # 5 in assertion # 2...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(become, clean)
+Concept clean added
+New EffectOf added
+Generalized clean and break as change
+Generalized clean and buy as be
+Generalized clean and make as tidy
+Inserting adverbs for concept # 3 in assertion # 3...
+Inserting adverbs for concept # 6 in assertion # 3...
+Inserting objects for concept # 3 in assertion # 3...
+Inserting objects for concept # 6 in assertion # 3...
+New object:wounds added for concept # 6 in assertion # 3
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(call, water)
+Concept call added
+Concept water added
+New EffectOf added
+Generalized call and make as see
+Inserting adverbs for concept # 7 in assertion # 4...
+Inserting adverbs for concept # 8 in assertion # 4...
+Inserting objects for concept # 7 in assertion # 4...
+New object:students added for concept # 7 in assertion # 4
+Inserting objects for concept # 8 in assertion # 4...
+New object:plants added for concept # 8 in assertion # 4
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(run, take)
+Concept run added
+Concept take added
+New EffectOf added
+Generalized run and break as change
+Generalized run and break as become
+Inserted run and play as synonyms
+Generalized run and buy as be
+Generalized run and make as direct
+Generalized run and make as pass
+Generalized run and take as change
+Generalized run and take as become
+Generalized run and take as move
+Generalized run and take as be
+Generalized take and play as use
+Generalized take and play as act
+Generalized take and play as move
+Generalized take and buy as get
+Inserted take and make as synonyms
+Inserting adverbs for concept # 9 in assertion # 5...
+Inserting adverbs for concept # 10 in assertion # 5...
+Inserting objects for concept # 9 in assertion # 5...
+Inserting objects for concept # 10 in assertion # 5...
+New object:bath added for concept # 10 in assertion # 5
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(brush, develop)
+Concept brush added
+Concept develop added
+New EffectOf added
+Generalized brush and play as move
+Generalized brush and clean as remove
+Inserted develop and break as synonyms
+Generalized develop and make as change
+Generalized develop and make as create_by_mental_act
+Generalized develop and make as become
+Generalized develop and make as create
+Generalized develop and call as play
+Inserting adverbs for concept # 11 in assertion # 6...
+Inserting adverbs for concept # 12 in assertion # 6...
+Inserting objects for concept # 11 in assertion # 6...
+New object:teeth added for concept # 11 in assertion # 6
+Inserting objects for concept # 12 in assertion # 6...
+New object:cavity added for concept # 12 in assertion # 6
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(play, sad)
+Concept sad added
+New EffectOfIsState added
+Generalized play and run as travel
+Generalized play and run as compete
+Inserting adverbs for concept # 2 in assertion # 7...
+Inserting adverbs for concept # 13 in assertion # 7...
+Inserting objects for concept # 2 in assertion # 7...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(play, dirty)
+Concept dirty added
+New EffectOfIsState added
+Inserting adverbs for concept # 2 in assertion # 8...
+Inserting adverbs for concept # 14 in assertion # 8...
+Inserting objects for concept # 2 in assertion # 8...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(buy, happy)
+Concept happy added
+New EffectOfIsState added
+Inserting adverbs for concept # 4 in assertion # 9...
+Inserting adverbs for concept # 15 in assertion # 9...
+Inserting objects for concept # 4 in assertion # 9...
+New object:food added for concept # 4 in assertion # 9
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(brush, developed)
+Concept developed added
+New EffectOfIsState added
+Inserting adverbs for concept # 11 in assertion # 10...
+Inserting adverbs for concept # 16 in assertion # 10...
+Inserting objects for concept # 11 in assertion # 10...
+New object:teeth added for concept # 11 in assertion # 10
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(break, punished)
+Concept punished added
+New EffectOfIsState added
+Generalized break and develop as happen
+Inserting adverbs for concept # 0 in assertion # 11...
+Inserting adverbs for concept # 17 in assertion # 11...
+Inserting objects for concept # 0 in assertion # 11...
+New object:vase added for concept # 0 in assertion # 11
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(run, slim)
+Concept slim added
+New EffectOfIsState added
+Inserting adverbs for concept # 9 in assertion # 12...
+Inserting adverbs for concept # 18 in assertion # 12...
+Inserting objects for concept # 9 in assertion # 12...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(take, happy)
+New EffectOfIsState added
+Generalized take and make as head
+Inserting adverbs for concept # 10 in assertion # 13...
+Inserting adverbs for concept # 15 in assertion # 13...
+Inserting objects for concept # 10 in assertion # 13...
+New object:bath added for concept # 10 in assertion # 13
+Closed database successfully
+Opened database successfully
+Inserting EventForGoalEvent(buy, make)
+New EventForGoalEvent added
+Inserting adverbs for concept # 4 in assertion # 14...
+Inserting adverbs for concept # 5 in assertion # 14...
+Inserting objects for concept # 4 in assertion # 14...
+New object:cake added for concept # 4 in assertion # 14
+Inserting objects for concept # 5 in assertion # 14...
+New object:Hopsalot added for concept # 5 in assertion # 14
+Closed database successfully
+Opened database successfully
+Concept read added
+Concept learn added
+Inserting EventForGoalEvent(read, learn)
+New EventForGoalEvent added
+Generalized read and call as indicate
+Inserted read and take as synonyms
+Inserted read and learn as synonyms
+Inserted learn and take as synonyms
+Inserting adverbs for concept # 19 in assertion # 15...
+Inserting adverbs for concept # 20 in assertion # 15...
+Inserting objects for concept # 19 in assertion # 15...
+New object:book added for concept # 19 in assertion # 15
+Inserting objects for concept # 20 in assertion # 15...
+Closed database successfully
+Opened database successfully
+Concept save added
+Inserting EventForGoalEvent(save, buy)
+New EventForGoalEvent added
+Generalized save and take as record
+Inserting adverbs for concept # 21 in assertion # 16...
+Inserting adverbs for concept # 4 in assertion # 16...
+Inserting objects for concept # 21 in assertion # 16...
+Inserting objects for concept # 4 in assertion # 16...
+New object:car added for concept # 4 in assertion # 16
+Closed database successfully
+Opened database successfully
+Concept go added
+Concept spend added
+Inserting EventForGoalEvent(go, spend)
+New EventForGoalEvent added
+Inserted go and break as synonyms
+Generalized go and play as act
+Inserted go and become as synonyms
+Generalized go and buy as be
+Generalized go and make as change
+Inserted go and run as synonyms
+Generalized go and develop as happen
+Generalized spend and buy as pay
+Inserting adverbs for concept # 22 in assertion # 17...
+Inserting adverbs for concept # 23 in assertion # 17...
+Inserting objects for concept # 22 in assertion # 17...
+Inserting objects for concept # 23 in assertion # 17...
+Closed database successfully
+Opened database successfully
+Concept be happy added
+Inserting EventForGoalState(buy, be happy)
+New EventForGoalState added
+Inserting adverbs for concept # 4 in assertion # 18...
+Inserting adverbs for concept # 24 in assertion # 18...
+Inserting objects for concept # 4 in assertion # 18...
+New object:cake added for concept # 4 in assertion # 18
+Closed database successfully
+Opened database successfully
+Concept be neat added
+Inserting EventForGoalState(take, be neat)
+New EventForGoalState added
+Generalized take and read as have
+Generalized take and read as interpret
+Inserting adverbs for concept # 10 in assertion # 19...
+Inserting adverbs for concept # 25 in assertion # 19...
+Inserting objects for concept # 10 in assertion # 19...
+New object:bath added for concept # 10 in assertion # 19
+Closed database successfully
+Opened database successfully
+Concept be slim added
+Inserting EventForGoalState(run, be slim)
+New EventForGoalState added
+Inserting adverbs for concept # 9 in assertion # 20...
+Inserting adverbs for concept # 26 in assertion # 20...
+Inserting objects for concept # 9 in assertion # 20...
+Closed database successfully
+Opened database successfully
+Inserting EventForGoalState(run, be slim)
+Increased frequency for assertion # 20
+Inserting adverbs for concept # 9 in assertion # 20...
+Inserting adverbs for concept # 26 in assertion # 20...
+Inserting objects for concept # 9 in assertion # 20...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(break, punish)
+Concept break added
+Concept punish added
+New EffectOf added
+Inserting adverbs for concept # 0 in assertion # 0...
+Inserting adverbs for concept # 1 in assertion # 0...
+Inserting objects for concept # 0 in assertion # 0...
+New object:vase added for concept # 0 in assertion # 0
+Inserting objects for concept # 1 in assertion # 0...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(play, become)
+Concept play added
+Concept become added
+New EffectOf added
+Generalized become and break as change_state
+Inserting adverbs for concept # 2 in assertion # 1...
+Inserting adverbs for concept # 3 in assertion # 1...
+Inserting objects for concept # 2 in assertion # 1...
+Inserting objects for concept # 3 in assertion # 1...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(buy, make)
+Concept buy added
+Concept make added
+New EffectOf added
+Generalized buy and make as get
+Generalized buy and make as be
+Generalized make and break as change
+Generalized make and break as become
+Generalized make and play as perform
+Generalized make and play as act
+Generalized make and play as make
+Inserting adverbs for concept # 4 in assertion # 2...
+Inserting adverbs for concept # 5 in assertion # 2...
+Inserting objects for concept # 4 in assertion # 2...
+New object:food added for concept # 4 in assertion # 2
+Inserting objects for concept # 5 in assertion # 2...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(become, clean)
+Concept clean added
+New EffectOf added
+Generalized clean and break as change
+Generalized clean and buy as be
+Generalized clean and make as tidy
+Inserting adverbs for concept # 3 in assertion # 3...
+Inserting adverbs for concept # 6 in assertion # 3...
+Inserting objects for concept # 3 in assertion # 3...
+Inserting objects for concept # 6 in assertion # 3...
+New object:wounds added for concept # 6 in assertion # 3
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(call, water)
+Concept call added
+Concept water added
+New EffectOf added
+Generalized call and make as see
+Inserting adverbs for concept # 7 in assertion # 4...
+Inserting adverbs for concept # 8 in assertion # 4...
+Inserting objects for concept # 7 in assertion # 4...
+New object:students added for concept # 7 in assertion # 4
+Inserting objects for concept # 8 in assertion # 4...
+New object:plants added for concept # 8 in assertion # 4
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(run, take)
+Concept run added
+Concept take added
+New EffectOf added
+Generalized run and break as change
+Generalized run and break as become
+Inserted run and play as synonyms
+Generalized run and buy as be
+Generalized run and make as direct
+Generalized run and make as pass
+Generalized run and take as change
+Generalized run and take as become
+Generalized run and take as move
+Generalized run and take as be
+Generalized take and play as use
+Generalized take and play as act
+Generalized take and play as move
+Generalized take and buy as get
+Inserted take and make as synonyms
+Inserting adverbs for concept # 9 in assertion # 5...
+Inserting adverbs for concept # 10 in assertion # 5...
+Inserting objects for concept # 9 in assertion # 5...
+Inserting objects for concept # 10 in assertion # 5...
+New object:bath added for concept # 10 in assertion # 5
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(brush, develop)
+Concept brush added
+Concept develop added
+New EffectOf added
+Generalized brush and play as move
+Generalized brush and clean as remove
+Inserted develop and break as synonyms
+Generalized develop and make as change
+Generalized develop and make as create_by_mental_act
+Generalized develop and make as become
+Generalized develop and make as create
+Generalized develop and call as play
+Inserting adverbs for concept # 11 in assertion # 6...
+Inserting adverbs for concept # 12 in assertion # 6...
+Inserting objects for concept # 11 in assertion # 6...
+New object:teeth added for concept # 11 in assertion # 6
+Inserting objects for concept # 12 in assertion # 6...
+New object:cavity added for concept # 12 in assertion # 6
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(play, sad)
+Concept sad added
+New EffectOfIsState added
+Generalized play and run as travel
+Generalized play and run as compete
+Inserting adverbs for concept # 2 in assertion # 7...
+Inserting adverbs for concept # 13 in assertion # 7...
+Inserting objects for concept # 2 in assertion # 7...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(play, dirty)
+Concept dirty added
+New EffectOfIsState added
+Inserting adverbs for concept # 2 in assertion # 8...
+Inserting adverbs for concept # 14 in assertion # 8...
+Inserting objects for concept # 2 in assertion # 8...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(buy, happy)
+Concept happy added
+New EffectOfIsState added
+Inserting adverbs for concept # 4 in assertion # 9...
+Inserting adverbs for concept # 15 in assertion # 9...
+Inserting objects for concept # 4 in assertion # 9...
+New object:food added for concept # 4 in assertion # 9
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(brush, developed)
+Concept developed added
+New EffectOfIsState added
+Inserting adverbs for concept # 11 in assertion # 10...
+Inserting adverbs for concept # 16 in assertion # 10...
+Inserting objects for concept # 11 in assertion # 10...
+New object:teeth added for concept # 11 in assertion # 10
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(break, punished)
+Concept punished added
+New EffectOfIsState added
+Generalized break and develop as happen
+Inserting adverbs for concept # 0 in assertion # 11...
+Inserting adverbs for concept # 17 in assertion # 11...
+Inserting objects for concept # 0 in assertion # 11...
+New object:vase added for concept # 0 in assertion # 11
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(run, slim)
+Concept slim added
+New EffectOfIsState added
+Inserting adverbs for concept # 9 in assertion # 12...
+Inserting adverbs for concept # 18 in assertion # 12...
+Inserting objects for concept # 9 in assertion # 12...
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(take, happy)
+New EffectOfIsState added
+Generalized take and make as head
+Inserting adverbs for concept # 10 in assertion # 13...
+Inserting adverbs for concept # 15 in assertion # 13...
+Inserting objects for concept # 10 in assertion # 13...
+New object:bath added for concept # 10 in assertion # 13
+Closed database successfully
+Opened database successfully
+Inserting EventForGoalEvent(buy, make)
+New EventForGoalEvent added
+Inserting adverbs for concept # 4 in assertion # 14...
+Inserting adverbs for concept # 5 in assertion # 14...
+Inserting objects for concept # 4 in assertion # 14...
+New object:cake added for concept # 4 in assertion # 14
+Inserting objects for concept # 5 in assertion # 14...
+New object:Hopsalot added for concept # 5 in assertion # 14
+Closed database successfully
+Opened database successfully
+Concept read added
+Concept learn added
+Inserting EventForGoalEvent(read, learn)
+New EventForGoalEvent added
+Generalized read and call as indicate
+Inserted read and take as synonyms
+Inserted read and learn as synonyms
+Inserted learn and take as synonyms
+Inserting adverbs for concept # 19 in assertion # 15...
+Inserting adverbs for concept # 20 in assertion # 15...
+Inserting objects for concept # 19 in assertion # 15...
+New object:book added for concept # 19 in assertion # 15
+Inserting objects for concept # 20 in assertion # 15...
+Closed database successfully
+Opened database successfully
+Concept save added
+Inserting EventForGoalEvent(save, buy)
+New EventForGoalEvent added
+Generalized save and take as record
+Inserting adverbs for concept # 21 in assertion # 16...
+Inserting adverbs for concept # 4 in assertion # 16...
+Inserting objects for concept # 21 in assertion # 16...
+Inserting objects for concept # 4 in assertion # 16...
+New object:car added for concept # 4 in assertion # 16
+Closed database successfully
+Opened database successfully
+Concept go added
+Concept spend added
+Inserting EventForGoalEvent(go, spend)
+New EventForGoalEvent added
+Inserted go and break as synonyms
+Generalized go and play as act
+Inserted go and become as synonyms
+Generalized go and buy as be
+Generalized go and make as change
+Inserted go and run as synonyms
+Generalized go and develop as happen
+Generalized spend and buy as pay
+Inserting adverbs for concept # 22 in assertion # 17...
+Inserting adverbs for concept # 23 in assertion # 17...
+Inserting objects for concept # 22 in assertion # 17...
+Inserting objects for concept # 23 in assertion # 17...
+Closed database successfully
+Opened database successfully
+Concept be happy added
+Inserting EventForGoalState(buy, be happy)
+New EventForGoalState added
+Inserting adverbs for concept # 4 in assertion # 18...
+Inserting adverbs for concept # 24 in assertion # 18...
+Inserting objects for concept # 4 in assertion # 18...
+New object:cake added for concept # 4 in assertion # 18
+Closed database successfully
+Opened database successfully
+Concept be neat added
+Inserting EventForGoalState(take, be neat)
+New EventForGoalState added
+Generalized take and read as have
+Generalized take and read as interpret
+Inserting adverbs for concept # 10 in assertion # 19...
+Inserting adverbs for concept # 25 in assertion # 19...
+Inserting objects for concept # 10 in assertion # 19...
+New object:bath added for concept # 10 in assertion # 19
+Closed database successfully
+Opened database successfully
+Concept be slim added
+Inserting EventForGoalState(run, be slim)
+New EventForGoalState added
+Inserting adverbs for concept # 9 in assertion # 20...
+Inserting adverbs for concept # 26 in assertion # 20...
+Inserting objects for concept # 9 in assertion # 20...
+Closed database successfully
+Opened database successfully
+Inserting EventForGoalState(run, be slim)
+Increased frequency for assertion # 20
+Inserting adverbs for concept # 9 in assertion # 20...
+Inserting adverbs for concept # 26 in assertion # 20...
+Inserting objects for concept # 9 in assertion # 20...
+Closed database successfully
+Opened database successfully
+Concept cleaned his wounds  added
+Inserting CauseOfIsState(cleaned his wounds , clean)
+New CauseOfIsState added
+Inserting adverbs for concept # 27 in assertion # 21...
+Inserting adverbs for concept # 6 in assertion # 21...
+Inserting objects for concept # 6 in assertion # 21...
+Closed database successfully
+Opened database successfully
+Concept developed a cavity  added
+Inserting CauseOfIsState(developed a cavity , develop)
+New CauseOfIsState added
+Inserting adverbs for concept # 28 in assertion # 22...
+Inserting adverbs for concept # 12 in assertion # 22...
+Inserting objects for concept # 12 in assertion # 22...
+Closed database successfully
+Opened database successfully
+Concept punished  added
+Inserting CauseOfIsState(punished , punish)
+New CauseOfIsState added
+Inserted punished  and punished as synonyms
+Inserting adverbs for concept # 29 in assertion # 23...
+Inserting adverbs for concept # 1 in assertion # 23...
+Inserting objects for concept # 1 in assertion # 23...
+Closed database successfully
+Opened database successfully
+Concept crafted by the carpenter  added
+Concept craft added
+Inserting CauseOfIsState(crafted by the carpenter , craft)
+New CauseOfIsState added
+Inserting adverbs for concept # 30 in assertion # 24...
+Inserting adverbs for concept # 31 in assertion # 24...
+Inserting objects for concept # 31 in assertion # 24...
+Closed database successfully
+Opened database successfully
+Concept learn  added
+Inserting CauseOfIsState(learn , learn)
+New CauseOfIsState added
+Opened database successfully
+Inserting EffectOf(break, punish)
+Increased frequency for assertion # 0
+Generalized break and go as change_state
+Generalized break and go as end
+Inserting adverbs for concept # 0 in assertion # 0...
+Inserting adverbs for concept # 1 in assertion # 0...
+Inserting objects for concept # 0 in assertion # 0...
+Increased frequency for metadatum # 0
+Inserting objects for concept # 1 in assertion # 0...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(play, become)
+Increased frequency for assertion # 1
+Inserting adverbs for concept # 2 in assertion # 1...
+Inserting adverbs for concept # 3 in assertion # 1...
+Inserting objects for concept # 2 in assertion # 1...
+Inserting objects for concept # 3 in assertion # 1...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(buy, make)
+Increased frequency for assertion # 2
+Inserting adverbs for concept # 4 in assertion # 2...
+Inserting adverbs for concept # 5 in assertion # 2...
+Inserting objects for concept # 4 in assertion # 2...
+Increased frequency for metadatum # 1
+Inserting objects for concept # 5 in assertion # 2...
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(become, clean)
+Increased frequency for assertion # 3
+Inserting adverbs for concept # 3 in assertion # 3...
+Inserting adverbs for concept # 6 in assertion # 3...
+Inserting objects for concept # 3 in assertion # 3...
+Inserting objects for concept # 6 in assertion # 3...
+Increased frequency for metadatum # 2
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(call, water)
+Increased frequency for assertion # 4
+Inserting adverbs for concept # 7 in assertion # 4...
+Inserting adverbs for concept # 8 in assertion # 4...
+Inserting objects for concept # 7 in assertion # 4...
+Increased frequency for metadatum # 3
+Inserting objects for concept # 8 in assertion # 4...
+Increased frequency for metadatum # 4
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(run, take)
+Increased frequency for assertion # 5
+Inserting adverbs for concept # 9 in assertion # 5...
+Inserting adverbs for concept # 10 in assertion # 5...
+Inserting objects for concept # 9 in assertion # 5...
+Inserting objects for concept # 10 in assertion # 5...
+Increased frequency for metadatum # 5
+Closed database successfully
+Opened database successfully
+Inserting EffectOf(brush, develop)
+Increased frequency for assertion # 6
+Inserting adverbs for concept # 11 in assertion # 6...
+Inserting adverbs for concept # 12 in assertion # 6...
+Inserting objects for concept # 11 in assertion # 6...
+Increased frequency for metadatum # 6
+Inserting objects for concept # 12 in assertion # 6...
+Increased frequency for metadatum # 7
+Closed database successfully
+Opened database successfully
+Inserting EffectOfIsState(play, sad)
+Increased frequency for assertion # 7
