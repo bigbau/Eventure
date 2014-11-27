@@ -24,10 +24,10 @@ Rule: Event1
   {
 	String verb = "", object = "", objectAdjective = "", adverb = "";
     gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");	
-	ArrayList tokens = new ArrayList(matchedEntities);
-	Collections.sort(tokens, new OffsetComparator());
+	ArrayList words = new ArrayList(matchedEntities);
+	Collections.sort(words, new OffsetComparator());
 	String text = "";
-	Iterator tokIter = tokens.iterator();
+	Iterator tokIter = words.iterator();
 	while(tokIter.hasNext())
 		text += (String)((Annotation)tokIter.next()).getFeatures().get("string") + " ";
 		
