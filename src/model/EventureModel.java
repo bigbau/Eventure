@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 
-import concepts.Concept;
 import concepts.Event;
 import concepts.State;
 import gate.Annotation;
@@ -212,8 +211,6 @@ public class EventureModel {
 						, causeObject = ((String)timeAnnot.getFeatures().get("CauseObject"))
 						, causeObjectAdjective = ((String)timeAnnot.getFeatures().get("CauseObjectAdjectives"))
 						, causeAdverb = ((String)timeAnnot.getFeatures().get("CauseAdverb"))
-						, effectObject = ((String)timeAnnot.getFeatures().get("EffectObject"))
-						, effectObjectAdjective = ((String)timeAnnot.getFeatures().get("EffectObjectAdjectives"))
 						, effectAdverb = ((String)timeAnnot.getFeatures().get("EffectAdverb"))
 						, causeEvent = ((String)timeAnnot.getFeatures().get("Cause"))
 						, effectState = ((String)timeAnnot.getFeatures().get("Effect"));

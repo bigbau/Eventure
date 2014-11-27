@@ -13,7 +13,7 @@ public abstract class Concept {
 		return conceptName;
 	}
 	protected List<String> separateValues(String values){
-		if(values.equals("")||values.isEmpty()){
+		if(values.equals("")||values==null){
 			return new ArrayList<String>();
 		}
 		return new ArrayList<String>(Arrays.asList(values.split(";")));

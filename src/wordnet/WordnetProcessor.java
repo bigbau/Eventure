@@ -227,6 +227,9 @@ public abstract class WordnetProcessor {
         openDictionary();
         IStemmer stemmer= new WordnetStemmer(dict);
         List<String> stems = stemmer.findStems(word, pos);
+        if(stems.isEmpty()){
+        	return word;
+        }
         return stems.get(0);
     }
     public static void printWordData(String word, POS pos){

@@ -10,7 +10,7 @@ public class Event extends Concept{
 		// TODO Auto-generated constructor stub
 		this.verb=verb;
 		this.adverbs = super.separateValues(adverbs);
-		this.adverbs = super.separateValues(objects);
+		this.objects = super.separateValues(objects);
 		this.objectAdjectives=super.separateValues(objectAdjectives);
 	}
 	public String getVerb(){

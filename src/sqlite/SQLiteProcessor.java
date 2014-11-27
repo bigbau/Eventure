@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +51,15 @@ public abstract class SQLiteProcessor {
             System.exit(0);
         }
         System.out.println("Opened database successfully");
+    }
+    public static void closeConnection(){
+    	try {
+			c.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        System.out.println("Closed database successfully");
     }
 
     public static void printTable(List<Map<String, String>> data) {
@@ -103,10 +113,12 @@ public abstract class SQLiteProcessor {
         return data;
     }
     public static void insertEffectOf(EffectOf assertion){
+    	setConnection();
     	Event cause = assertion.getCause();
     	Event effect = assertion.getEffect();
     	String concept1 = WordnetProcessor.findRootWord(cause.getVerb(),POS.VERB);
     	String concept2 = WordnetProcessor.findRootWord(effect.getVerb(),POS.VERB);
+    	System.out.println("Inserting EffectOf("+concept1+", "+concept2+")");
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "event");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EffectOf");
@@ -119,12 +131,16 @@ public abstract class SQLiteProcessor {
     	
     	insertMetadata(cause.getObjects(), "object", concept1Id, assertionId);
     	insertMetadata(effect.getObjects(), "object", concept2Id, assertionId);
+    	closeConnection();
+    	
     }
     public static void insertEffectOfIsState(EffectOfIsState assertion){
+    	setConnection();
     	Event cause = assertion.getEvent();
     	State effect = assertion.getState();
     	String concept1 = WordnetProcessor.findRootWord(cause.getVerb(),POS.VERB);
     	String concept2 = WordnetProcessor.findRootWord(effect.toString(),POS.ADJECTIVE);
+    	System.out.println("Inserting EffectOfIsState("+concept1+", "+concept2+")");
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "state");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EffectOfIsState");
@@ -136,14 +152,17 @@ public abstract class SQLiteProcessor {
     	insertMetadata(effect.getAdverbs(),"adverb", concept2Id, assertionId);
     	
     	insertMetadata(cause.getObjects(), "object", concept1Id, assertionId);
+    	closeConnection();
     }
     public static void insertCauseOfIsState(CauseOfIsState assertion){
+    	setConnection();
     	State cause = assertion.getState();
     	Event effect = assertion.getEvent();
     	String concept1 = WordnetProcessor.findRootWord(cause.toString(),POS.ADJECTIVE);
     	String concept2 = WordnetProcessor.findRootWord(effect.getVerb(),POS.VERB);
     	int concept1Id = getConceptID(concept1, "state");
     	int concept2Id = getConceptID(concept2, "event");
+    	System.out.println("Inserting CauseOfIsState("+concept1+", "+concept2+")");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "CauseOfIsState");
     	
     	findRelationships(concept1, concept1Id, "state");
@@ -153,14 +172,17 @@ public abstract class SQLiteProcessor {
     	insertMetadata(effect.getAdverbs(),"adverb", concept2Id, assertionId);
     	
     	insertMetadata(effect.getObjects(), "object", concept2Id, assertionId);
+    	closeConnection();
     }
     public static void insertEventForGoalEvent(EventForGoalEvent assertion){
+    	setConnection();
     	Event task = assertion.getTask(), goal = assertion.getGoal();
     	
     	String concept1 = WordnetProcessor.findRootWord(task.getVerb(),POS.VERB);
     	String concept2 = WordnetProcessor.findRootWord(goal.getVerb(),POS.VERB);
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "event");
+    	System.out.println("Inserting EventForGoalEvent("+concept1+", "+concept2+")");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EventForGoalEvent");
     	
     	findRelationships(concept1, concept1Id, "event");
@@ -171,14 +193,17 @@ public abstract class SQLiteProcessor {
     	
     	insertMetadata(task.getObjects(), "object", concept1Id, assertionId);
     	insertMetadata(goal.getObjects(), "object", concept2Id, assertionId);
+    	closeConnection();
     }
     public static void insertEventForGoalState(EventForGoalState assertion){
+    	setConnection();
     	Event task = assertion.getEvent();
     	State goal = assertion.getState();
     	String concept1 = WordnetProcessor.findRootWord(task.getVerb(),POS.VERB);
     	String concept2 = WordnetProcessor.findRootWord(goal.toString(),POS.ADJECTIVE);
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "state");
+    	System.out.println("Inserting EventForGoalState("+concept1+", "+concept2+")");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EventForGoalState");
     	
     	findRelationships(concept1, concept1Id, "event");
@@ -188,6 +213,7 @@ public abstract class SQLiteProcessor {
     	insertMetadata(goal.getAdverbs(), "adverb", concept2Id, assertionId);
     	
     	insertMetadata(task.getObjects(), "object", concept1Id, assertionId);
+    	closeConnection();
     }
     public static void insertMetadata(List<String> metadata, String type, int conceptId, int assertionId){
     	System.out.println("Inserting "+type+"s for concept # "+conceptId+" in assertion # "+assertionId+"...");
@@ -324,16 +350,20 @@ public abstract class SQLiteProcessor {
     			+ "metadatum = '"+metadatum+"' AND metadata_type ='"+metadata_type+"'"
     					+ " AND conceptId = "+conceptId+" AND assertionId ="+assertionId;
     	List<Map<String, String>> data = select(query);
+    	int id;
     	if(data.isEmpty()){
     		insertMetadatum(metadatum, metadata_type, conceptId, assertionId);
     		data = select(query);
+    		id = Integer.parseInt(data.get(0).get("metadatumId"));
     	} else{
+    		id = Integer.parseInt(data.get(0).get("metadatumId"));
     		String frequencyQuery = "UPDATE metadata"
     				+ " SET frequency = frequency+1"
     				+ " WHERE metadatumId ='"+data.get(0).get("metadatumId")+"'";
     		update(frequencyQuery);
+    		System.out.println("Increased frequency for metadatum # "+id);
     	}
-    	return Integer.parseInt(data.get(0).get("metadatumId"));
+    	return id;
     }
     private static void insertMetadatum(String metadatum, String metadata_type, int conceptId, int assertionId){
     	String maxQuery = "SELECT (MAX(metadatumId)+1) as id FROM metadata";
@@ -351,16 +381,20 @@ public abstract class SQLiteProcessor {
     	String query = "SELECT assertionId FROM assertions WHERE "
     			+ "concept1Id = "+concept1Id+" AND concept2Id = "+concept2Id+" AND relation = '"+relation+"'";
     	List<Map<String, String>> data = select(query);
+    	int id;
     	if(data.isEmpty()){
     		insertAssertion(concept1Id, concept2Id, relation);
     		data = select(query);
+    		id = Integer.parseInt(data.get(0).get("assertionId"));
     	} else{
+    		id = Integer.parseInt(data.get(0).get("assertionId"));
     		String frequencyQuery = "UPDATE assertions"
     				+ " SET frequency = frequency+1"
     				+ " WHERE assertionId ='"+data.get(0).get("assertionId")+"'";
     		update(frequencyQuery);
+    		System.out.println("Increased frequency for assertion # "+id);
     	}
-    	return Integer.parseInt(data.get(0).get("assertionId"));
+    	return id;
     }
     private static void insertAssertion(int concept1Id, int concept2Id, String relation){
     	String maxQuery = "SELECT (MAX(assertionId)+1) as id FROM assertions";
