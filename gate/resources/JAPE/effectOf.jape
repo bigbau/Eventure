@@ -454,9 +454,9 @@ Rule: EffectOf15
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
-	newFeatures.put("EffectVerb",effectVerb);
-	newFeatures.put("EffectObject",effectObject);
-	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
+	newFeatures.put("EffectObject",effect.getFeatures().get("Objects"));
+	newFeatures.put("EffectObjectAdjectives",effect.getFeatures().get("Adjectives"));
+	newFeatures.put("EffectAdverb",effect.getFeatures().get("Adverbs"));
 	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","EffectOf15");
     annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"EffectOf", newFeatures);
