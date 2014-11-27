@@ -43,7 +43,7 @@ public class EventureModel {
 	private List<EventForGoalEvent>  eventForGoalEvent = new ArrayList<EventForGoalEvent>();
 	private List<EventForGoalState>  eventForGoalState = new ArrayList<EventForGoalState>();
 	private List<HappensRelation>  happensRelation = new ArrayList<HappensRelation>();
-
+	private List<Event> event = new ArrayList<Event>();
 
 
 	public Iterator runPipeline(String inputFile) throws GateException{
@@ -68,7 +68,8 @@ public class EventureModel {
 		annotTypesToWrite.add("CauseOfIsState");
 		annotTypesToWrite.add("HappensRelation");
 		annotTypesToWrite.add("EventForGoalEvent");
-		annotTypesToWrite.add("EventForGoalState");;
+		annotTypesToWrite.add("EventForGoalState");
+		annotTypesToWrite.add("Event");
 		// if we want to just write out specific annotation types, we must
 		// extract the annotations into a Set
 
@@ -276,6 +277,10 @@ public class EventureModel {
 				String timeHappened = ((String)timeAnnot.getFeatures().get("TimeHappened"));
 				long startNode = ((Long)timeAnnot.getEndNode().getOffset());
 				happensRelation.add(new HappensRelation(startNode, timeHappened));
+			}
+			if(((String)timeAnnot.getType()).equals("Event")){				  
+				String effectEvent = ((String)timeAnnot.getFeatures().get("Entity1"));
+				event.add(new Event(effectEvent, "", "", "", ""));
 			}
 		}
 	}
