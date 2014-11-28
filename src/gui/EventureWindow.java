@@ -82,7 +82,13 @@ public class EventureWindow extends JFrame {
 		scrollPane.setViewportView(messageArea);
 		messageArea.setEditable(false);
 		
+		
+		
 	}
+	public void setInputLocation(String inputLocation){
+		this.inputLocation.setText(inputLocation);
+	}
+	
 	public void addBtnBrowseActionListener(ActionListener al) {
 		btnBrowse.addActionListener(al);
 	}

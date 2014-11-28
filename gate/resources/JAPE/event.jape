@@ -115,7 +115,7 @@ Rule: Event1
 				}
 			}
 			
-			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB")|((String)timeAnnot.getFeatures().get("chunk")).equals("B-ADVB"))
 			{
 				try{
 				 if(noAdverbs>0){

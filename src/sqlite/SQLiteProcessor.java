@@ -133,7 +133,6 @@ public abstract class SQLiteProcessor {
         return data;
     }
     public static void insertEffectOf(EffectOf assertion){
-    	setConnection();
     	Event cause = assertion.getCause();
     	Event effect = assertion.getEffect();
     	String concept1 = WordnetProcessor.findRootWord(cause.getVerb(),POS.VERB);
@@ -151,11 +150,9 @@ public abstract class SQLiteProcessor {
     	
     	insertMetadata(cause.getObjects(), "object", concept1Id, assertionId);
     	insertMetadata(effect.getObjects(), "object", concept2Id, assertionId);
-    	closeConnection();
     	
     }
     public static void insertEffectOfIsState(EffectOfIsState assertion){
-    	setConnection();
     	Event cause = assertion.getEvent();
     	State effect = assertion.getState();
     	String concept1 = WordnetProcessor.findRootWord(cause.getVerb(),POS.VERB);
@@ -172,10 +169,8 @@ public abstract class SQLiteProcessor {
     	insertMetadata(effect.getAdverbs(),"adverb", concept2Id, assertionId);
     	
     	insertMetadata(cause.getObjects(), "object", concept1Id, assertionId);
-    	closeConnection();
     }
     public static void insertCauseOfIsState(CauseOfIsState assertion){
-    	setConnection();
     	State cause = assertion.getState();
     	Event effect = assertion.getEvent();
     	String concept1 = cause.toString();
@@ -192,10 +187,8 @@ public abstract class SQLiteProcessor {
     	insertMetadata(effect.getAdverbs(),"adverb", concept2Id, assertionId);
     	
     	insertMetadata(effect.getObjects(), "object", concept2Id, assertionId);
-    	closeConnection();
     }
     public static void insertEventForGoalEvent(EventForGoalEvent assertion){
-    	setConnection();
     	Event task = assertion.getTask(), goal = assertion.getGoal();
     	
     	String concept1 = WordnetProcessor.findRootWord(task.getVerb(),POS.VERB);
@@ -213,10 +206,8 @@ public abstract class SQLiteProcessor {
     	
     	insertMetadata(task.getObjects(), "object", concept1Id, assertionId);
     	insertMetadata(goal.getObjects(), "object", concept2Id, assertionId);
-    	closeConnection();
     }
     public static void insertEventForGoalState(EventForGoalState assertion){
-    	setConnection();
     	Event task = assertion.getEvent();
     	State goal = assertion.getState();
     	String concept1 = WordnetProcessor.findRootWord(task.getVerb(),POS.VERB);
@@ -233,10 +224,8 @@ public abstract class SQLiteProcessor {
     	insertMetadata(goal.getAdverbs(), "adverb", concept2Id, assertionId);
     	
     	insertMetadata(task.getObjects(), "object", concept1Id, assertionId);
-    	closeConnection();
     }
     public static void insertHappens(Event event, Time happens){
-    	setConnection();
     	String concept1 = WordnetProcessor.findRootWord(event.getVerb(),POS.VERB);
     	String concept2 = happens.getTimeHappened();
     	
@@ -251,7 +240,6 @@ public abstract class SQLiteProcessor {
 
     	insertMetadata(event.getObjects(), "object", concept1Id, assertionId);
     	
-    	closeConnection();
     }
     public static void insertMetadata(List<String> metadata, String type, int conceptId, int assertionId){
     	writeLineToLog("Inserting "+type+"s for concept # "+conceptId+" in assertion # "+assertionId+"...");

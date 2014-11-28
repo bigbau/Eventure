@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -28,6 +30,7 @@ import relations.EffectOf;
 import relations.EffectOfIsState;
 import relations.EventForGoalEvent;
 import relations.EventForGoalState;
+import sqlite.SQLiteProcessor;
 
 
 public class EventureModel {
@@ -328,5 +331,149 @@ public class EventureModel {
 	public List<Event> getEvents() {
 		return events;
 	}
+	public void insertEffectOfAssertions(List<EffectOf> assertions){
+		System.out.println(assertions.size()+" EffectOf assertions");
+		for(EffectOf assertion: assertions){
+			if(assertion.getCause().getVerb()!=null||assertion.getCause().getVerb()!=""||
+					assertion.getEffect().getVerb()!=null||assertion.getEffect().getVerb()!=""){
+				System.out.println("Current assertion: EffectOf("+assertion.getCause().getVerb()+", "
+			+assertion.getEffect().getVerb()+")");
+				try{
+					SQLiteProcessor.insertEffectOf(assertion);
+				} catch(Exception ex){
+					ex.printStackTrace();
+					System.err.println("Unsuccessful insertion");
+					SQLiteProcessor.writeLineToLog("Unsuccessful insertion");
+				}
+			} else{
+				System.err.println("Invalid concept");
+				SQLiteProcessor.writeLineToLog("Invalid concept");
+			}
+		}
+	}
+	public void insertEffectOfIsStateAssertions(List<EffectOfIsState> assertions){
+		System.out.println(assertions.size()+" EffectOfIsState assertions");
+		for(EffectOfIsState assertion: assertions){
+			if(assertion.getEvent().getVerb()!=null||assertion.getEvent().getVerb()!=""||
+					assertion.getState().toString()!=null||assertion.getState().toString()!=""){
+				System.out.println("Current assertion: EffectOfIsState("+assertion.getEvent().getVerb()+", "
+			+assertion.getState().toString()+")");
+				try{
+					SQLiteProcessor.insertEffectOfIsState(assertion);
+				} catch(Exception ex){
+					ex.printStackTrace();
+					System.err.println("Unsuccessful insertion");
+					SQLiteProcessor.writeLineToLog("Unsuccessful insertion");
+				}
+			} else{
+				System.err.println("Invalid concept");
+				SQLiteProcessor.writeLineToLog("Invalid concept");
+			}
+		}
+	}
+	public void insertEventForGoalEventAssertions(List<EventForGoalEvent> assertions){
+		System.out.println(assertions.size()+" EventForGoalEvent assertions");
+		for(EventForGoalEvent assertion: assertions){
+			if(assertion.getTask().getVerb()!=null||assertion.getTask().getVerb()!=""||
+					assertion.getGoal().getVerb()!=null||assertion.getGoal().getVerb()!=""){
+				System.out.println("Current assertion: EventForGoalEvent("+assertion.getTask().getVerb()+", "
+			+assertion.getGoal().getVerb()+")");
+				try{
+					SQLiteProcessor.insertEventForGoalEvent(assertion);
+				} catch(Exception ex){
+					ex.printStackTrace();
+					System.err.println("Unsuccessful insertion");
+					SQLiteProcessor.writeLineToLog("Unsuccessful insertion");
+				}
+			}else{
+				System.err.println("Invalid concept");
+				SQLiteProcessor.writeLineToLog("Invalid concept");
+			}
+		} 
+	}
+	public void insertEventForGoalStateAssertions(List<EventForGoalState> assertions){
+		System.out.println(assertions.size()+" EventForGoalState assertions");
+		for(EventForGoalState assertion: assertions){
+			if(assertion.getEvent().getVerb()!=null||assertion.getEvent().getVerb()!=""||
+					assertion.getState().toString()!=null||assertion.getState().toString()!=""){
+				System.out.println("Current assertion: EventForGoalState("+assertion.getEvent().getVerb()+", "
+			+assertion.getState().toString()+")");
+				try{
+					SQLiteProcessor.insertEventForGoalState(assertion);
+				} catch(Exception ex){
+					ex.printStackTrace();
+					System.err.println("Unsuccessful insertion");
+					SQLiteProcessor.writeLineToLog("Unsuccessful insertion");
+				}
+			}else{
+				System.err.println("Invalid concept");
+				SQLiteProcessor.writeLineToLog("Invalid concept");
+			}
+		}
+	}
+	public void insertCauseOfIsStateAssertions(List<CauseOfIsState> assertions){
+		System.out.println(assertions.size()+" CauseOfIsState assertions");
+		for(CauseOfIsState assertion: assertions){
+			if(assertion.getEvent().getVerb()!=null||assertion.getEvent().getVerb()!=""||
+					assertion.getState().toString()!=null||assertion.getState().toString()!=""){
+				System.out.println("Current assertion: CauseOfIsState("+assertion.getState().toString()+", "
+			+assertion.getEvent().getVerb()+")");
+				try{
+					SQLiteProcessor.insertCauseOfIsState(assertion);
+				} catch(Exception ex){
+					ex.printStackTrace();
+					System.err.println("Unsuccessful insertion");
+					SQLiteProcessor.writeLineToLog("Unsuccessful insertion");
+				}
+			}
+			else{
+				System.err.println("Invalid concept");
+				SQLiteProcessor.writeLineToLog("Invalid concept");
+			}
+		}
+	}
+	public void sortEvents(List<Event> events){
+		Collections.sort(events, new Comparator<Event>() {
+	        @Override
+	        public int compare(Event  event1, Event  event2)
+	        {
+	        	Long start1 = event1.getStartNode();
+	        	Long start2 = event2.getStartNode();
+	            return  start1.compareTo(start2);
+	        }
+	    });
+	}
+	public void sortTimelines(List<Time> timelines){
+		Collections.sort(timelines, new Comparator<Time>() {
+	        @Override
+	        public int compare(Time  time1, Time  time2)
+	        {
+	        	Long start1 = time1.getStartNode();
+	        	Long start2 = time2.getStartNode();
+	            return  start1.compareTo(start2);
+	        }
+	    });
+	}
+	public void insertHappensAssertions(List<Time> timelines, List<Event> events){
+		System.out.println(timelines.size()+" timelines for "+events.size()+" events");
+		for(Event event: events){
+			for(int i=0; i<timelines.size(); i++){
+				if(event.getStartNode()>=timelines.get(i).getStartNode()){
+					if(timelines.size()==i+1||timelines.get(i+1).getStartNode()>event.getStartNode()){
+						System.out.println("Current assertion: Happens("+event.getVerb()+", "
+								+timelines.get(i).getTimeHappened()+")");
+						try{
+							SQLiteProcessor.insertHappens(event, timelines.get(i));
+						} catch(Exception ex){
+							ex.printStackTrace();
+							System.err.println("Unsuccessful insertion");
+							SQLiteProcessor.writeLineToLog("Unsuccessful insertion");
+						}
+					}
+				}
+			}
+		}
+	}
+	
 
 }

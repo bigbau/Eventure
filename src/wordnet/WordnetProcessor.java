@@ -174,6 +174,9 @@ public abstract class WordnetProcessor {
         return false;
     }
     private static String normalize(String word){
+    	if(word==null){
+    		return word;
+    	}
         word=word.trim();
         if(word.length()==0){
             throw new IllegalArgumentException();
@@ -200,15 +203,19 @@ public abstract class WordnetProcessor {
         Set<String> synonyms = new HashSet<String>();
         for(String s:rootWords){
 	        IIndexWord idxWord = dict.getIndexWord(s, pos);
-	        for (int i = 0; i < idxWord.getWordIDs().size(); i++) {
-	            IWordID wordID = idxWord.getWordIDs().get(i); // curr meaning
-	            IWord wnWord = dict.getWord(wordID);
-	            ISynset synset = wnWord.getSynset();
-	            
-	            // iterate over words associated with the synset
-	            for (IWord w : synset.getWords()) {
-	                synonyms.add(w.getLemma());
-	            }
+	        if(idxWord!=null){
+		        for (int i = 0; i < idxWord.getWordIDs().size(); i++) {
+		            IWordID wordID = idxWord.getWordIDs().get(i); // curr meaning
+		            IWord wnWord = dict.getWord(wordID);
+		            ISynset synset = wnWord.getSynset();
+		            
+		            // iterate over words associated with the synset
+		            for (IWord w : synset.getWords()) {
+		                synonyms.add(w.getLemma());
+		            }
+		        }
+	        } else{
+	        	return synonyms;
 	        }
         }
         return synonyms;
@@ -224,10 +231,13 @@ public abstract class WordnetProcessor {
         return rootWords;
     }
     public static String findRootWord(String word, POS pos){
+    	if(word==null||word.equals("")){
+    		return word;
+    	}
         openDictionary();
         IStemmer stemmer= new WordnetStemmer(dict);
         List<String> stems = stemmer.findStems(word, pos);
-        if(stems.isEmpty()){
+        if(stems.isEmpty()||stems==null){
         	return word;
         }
         return stems.get(0);
