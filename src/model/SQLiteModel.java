@@ -100,8 +100,9 @@ public abstract class SQLiteModel {
             System.exit(0);
         }
     }
+    
     private static List<Map<String, String>> select(String query) {
-    	System.out.println(query);
+    	//System.out.println(query);
         ResultSet rs = null;
         Statement stmt = null;
         int first =1;
@@ -434,6 +435,28 @@ public abstract class SQLiteModel {
     	update(query);
     	writeLineToLog("New "+relation+" added");
     }
+    public static String[][] getAssertions(){
+    	String query = "SELECT assertionId, relation, "
+    			+ "(SELECT concept FROM concepts WHERE conceptId=concept1Id) as concept1, "
+    			+ "(SELECT concept FROM concepts WHERE conceptId=concept2Id) as concept2, "
+    			+ "frequency FROM assertions";
+    	List<Map<String, String>>data = select(query);
+        String[][] tableData=null;
+        try {
+        	tableData = new String[data.size()][6];
+            for(int i=0; i<data.size(); i++){
+                   tableData[i][0]= data.get(i).get("assertionId");
+                   tableData[i][1]= data.get(i).get("relation");
+                   tableData[i][2]= data.get(i).get("concept1");
+                   tableData[i][3]= data.get(i).get("concept2");
+                   tableData[i][4]= data.get(i).get("frequency");
+            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return tableData;
+    }
     private static int getConceptID(String concept, String concept_type){
     	String query =  "SELECT conceptId FROM concepts WHERE concept = '"+concept+
     			"' AND concept_type = '"+concept_type+"'";
@@ -456,7 +479,7 @@ public abstract class SQLiteModel {
     	writeLineToLog("Concept "+concept+" added");
     }
     public static void update(String query) {
-    	System.out.println(query);
+    	//System.out.println(query);
         Statement stmt = null;
         try {
 

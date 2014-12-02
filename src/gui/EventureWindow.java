@@ -3,6 +3,7 @@ package gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 
 import java.awt.BorderLayout;
@@ -32,7 +33,8 @@ public class EventureWindow extends JFrame {
 	private JTextArea messageArea;
 	private JButton btnBrowse;
 	private JButton btnRun;
-	private JScrollPane scrollPane;
+	private JScrollPane extractionScrollPane;
+	private JScrollPane ontologyScrollPane;
 	private JTable tAssertions;
 	private JTable tMetadata;
 	
@@ -47,7 +49,7 @@ public class EventureWindow extends JFrame {
 		this.setVisible(true);
 	}
 	
-	public EventureWindow() {
+	public EventureWindow(String[][] data) {
 		setResizable(false);
 		setFont(new Font("Arial", Font.PLAIN, 12));
 		setTitle("Eventure Build 1.5");
@@ -71,6 +73,8 @@ public class EventureWindow extends JFrame {
 		lblOntology.setFont(new Font("Arial", Font.PLAIN, 19));
 		ontologyPanel.add(lblOntology);
 		
+		
+		
 		inputLocation = new JTextField();
 		inputLocation.setText("Click browse to look for a .txt file");
 		inputLocation.setBounds(10, 45, 640, 29);
@@ -92,14 +96,33 @@ public class EventureWindow extends JFrame {
 		btnRun.setBounds(10, 85, 774, 29);
 		extractionPanel.add(btnRun);
 		
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 121, 774, 430);
-		extractionPanel.add(scrollPane);
+		extractionScrollPane = new JScrollPane();
+		extractionScrollPane.setBounds(10, 121, 774, 430);
+		extractionPanel.add(extractionScrollPane);
 		
 		messageArea = new JTextArea();
-		scrollPane.setViewportView(messageArea);
+		extractionScrollPane.setViewportView(messageArea);
 		messageArea.setEditable(false);
-		
+
+		ontologyScrollPane = new JScrollPane();
+		ontologyScrollPane.setBounds(10, 45, 774, 500);
+		ontologyScrollPane.setBounds(10, 121, 774, 430);
+		ontologyPanel.add(ontologyScrollPane);
+		String[] columnNames = {"Assertion ID","Relation","Concept 1","Concept 2","Frequency"};
+
+		DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
+			   @Override
+			   public boolean isCellEditable(int row, int column) {
+			       return false;
+			   }
+			};
+		tAssertions = new JTable(tableModel);
+		tAssertions.setRowSelectionAllowed(true);
+
+		ontologyScrollPane.setBounds(10, 45, 774, 500);
+		tAssertions.setFont(new Font("Arial", Font.PLAIN, 13));
+		ontologyPanel.add(tAssertions);
+		ontologyScrollPane.setViewportView(tAssertions);
 
 		tabbedPane = new JTabbedPane();
 		tabbedPane.setBorder(new EmptyBorder(0,0,0,0));
