@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -39,15 +40,16 @@ public class EventureModel {
 	private CorpusController application;
 	private String resultsSummary;
 
-	private List<EffectOf> effectOf = new ArrayList<EffectOf>();
-	private List<EffectOfIsState> effectOfIsState = new ArrayList<EffectOfIsState>();
-	private List<CauseOfIsState> causeOfIsState = new ArrayList<CauseOfIsState>();
-	private List<EventForGoalEvent>  eventForGoalEvent = new ArrayList<EventForGoalEvent>();
-	private List<EventForGoalState>  eventForGoalState = new ArrayList<EventForGoalState>();
-	private List<Time>  happensRelation = new ArrayList<Time>();
-	private List<Event> events = new ArrayList<Event>();
+	private List<EffectOf> effectOf;
+	private List<EffectOfIsState> effectOfIsState;
+	private List<CauseOfIsState> causeOfIsState;
+	private List<EventForGoalEvent>  eventForGoalEvent;
+	private List<EventForGoalState>  eventForGoalState;
+	private List<Time>  happensRelation;
+	private List<Event> events;
 
-
+	private List<String> sentences;
+	
 	public Iterator runPipeline(String inputFile) throws GateException{
 		Gate.init();
 		try {
@@ -70,6 +72,8 @@ public class EventureModel {
 		eventForGoalState = new ArrayList<EventForGoalState>();
 		happensRelation = new ArrayList<Time>();
 		events = new ArrayList<Event>();
+		sentences = separateValues(inputFile);
+		
 		List annotTypesToWrite = new ArrayList();
 		annotTypesToWrite.add("EffectOf");
 		annotTypesToWrite.add("EffectOfIsState");
@@ -184,6 +188,17 @@ public class EventureModel {
 				id++;
 				Time holder = (Time)temp.next();
 				results.append(id+": "+holder.toString());
+				results.append("\n");
+			}
+		}
+		
+		if(sentences.size()>0){
+			results.append("Sentences:\n");
+			Iterator temp = sentences.iterator();
+			int id = 0;
+			while(temp.hasNext()){
+				id++;
+				results.append(id+": "+temp.next().toString());
 				results.append("\n");
 			}
 		}
@@ -497,4 +512,10 @@ public class EventureModel {
 	}
 	
 
+	private List<String> separateValues(String values){
+		if(values.equals("")||values==null){
+			return new ArrayList<String>();
+		}
+		return new ArrayList<String>(Arrays.asList(values.split("\\.")));
+	}
 }
