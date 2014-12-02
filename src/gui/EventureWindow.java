@@ -39,7 +39,7 @@ public class EventureWindow extends JFrame {
 	public EventureWindow() {
 		setResizable(false);
 		setFont(new Font("Arial", Font.PLAIN, 12));
-		setTitle("Eventure Build 1.2");
+		setTitle("Eventure Build 1.5");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
