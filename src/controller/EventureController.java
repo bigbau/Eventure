@@ -21,8 +21,8 @@ import relations.EffectOf;
 import relations.EffectOfIsState;
 import relations.EventForGoalEvent;
 import relations.EventForGoalState;
-import sqlite.SQLiteProcessor;
 import model.EventureModel;
+import model.SQLiteModel;
 
 public class EventureController {
 
@@ -51,11 +51,12 @@ public class EventureController {
 			    chooser.setFileFilter(filter);
 			    int returnVal = chooser.showOpenDialog(eventureWindow);
 			    if(returnVal == JFileChooser.APPROVE_OPTION) {
+			    	path="";
+			    	inputFile = "";
 			       System.out.println("You chose to open this file: " +
 			            chooser.getSelectedFile().getName());
 			       path = chooser.getSelectedFile().getPath();
 			       try {
-			    	   inputFile = "";
 			    	   inputFile = eventureModel.stringFromFile(path);
 			       } catch (FileNotFoundException e2) {
 						// TODO Auto-generated catch block
@@ -69,11 +70,14 @@ public class EventureController {
 			public void actionPerformed(ActionEvent e)
 			{
 				try {
+					//Event Relations Extraction
 					Iterator test = eventureModel.runPipeline(inputFile);
 					eventureModel.putAnnotsToObject(test);
 					eventureModel.processSummary();
 					eventureWindow.setMessageArea(eventureModel.getResultsSummary());
 					
+					
+					//Refining Module
 					List<EffectOf> eo = eventureModel.getEffectOf();
 					List<EffectOfIsState> eois = eventureModel.getEffectOfIsState();
 					List<EventForGoalEvent> efge = eventureModel.getEventForGoalEvent();
@@ -81,7 +85,9 @@ public class EventureController {
 					List<CauseOfIsState> cois = eventureModel.getCauseOfIsState();
 					List<Event> events = eventureModel.getEvents();
 					List<Time> timelines = eventureModel.getHappensRelation();
-					SQLiteProcessor.setConnection();
+					
+					SQLiteModel.setConnection();
+					
 					eventureModel.insertEffectOfAssertions(eo);
 					eventureModel.insertEffectOfIsStateAssertions(eois);
 					eventureModel.insertEventForGoalEventAssertions(efge);
@@ -91,8 +97,10 @@ public class EventureController {
 					eventureModel.sortEvents(events);
 					eventureModel.sortTimelines(timelines);
 					eventureModel.insertHappensAssertions(timelines, events);
-					SQLiteProcessor.closeConnection();
 					
+					SQLiteModel.closeConnection();
+					
+					System.out.println("Extraction done!");
 
 				} catch (GateException e1) {
 					// TODO Auto-generated catch block

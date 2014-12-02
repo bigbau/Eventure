@@ -1,3 +1,5 @@
+import model.SQLiteModel;
+import model.WordnetModel;
 import concepts.Event;
 import concepts.State;
 import edu.mit.jwi.item.POS;
@@ -6,8 +8,6 @@ import relations.EffectOf;
 import relations.EffectOfIsState;
 import relations.EventForGoalEvent;
 import relations.EventForGoalState;
-import sqlite.SQLiteProcessor;
-import wordnet.WordnetProcessor;
 
 /**
  *
@@ -20,6 +20,6 @@ public class Main {
      */
     public static void main(String[] args) {
         
-    	System.out.println(WordnetProcessor.findRootWord("crafted by the carpenter", POS.ADJECTIVE));
+    	System.out.println(WordnetModel.findRootWord("crafted by the carpenter", POS.ADJECTIVE));
     }
 }

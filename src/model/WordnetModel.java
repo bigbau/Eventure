@@ -1,4 +1,4 @@
-package wordnet;
+package model;
 
 import edu.mit.jwi.Dictionary;
 import edu.mit.jwi.IDictionary;
@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  *
  * @author RJ
  */
-public abstract class WordnetProcessor {
+public abstract class WordnetModel {
     private final static String path = "dict";
     private final static String stopwordsPath = "stopwords.txt";
     private static IDictionary dict = null;
@@ -43,13 +43,13 @@ public abstract class WordnetProcessor {
                 print_line.println(h);
             }
         } catch (Exception ex) {
-            Logger.getLogger(WordnetProcessor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WordnetModel.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
             	print_line.close();
                 write.close();
             } catch (IOException ex) {
-                Logger.getLogger(WordnetProcessor.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(WordnetModel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -271,7 +271,7 @@ public abstract class WordnetProcessor {
             if(!dict.isOpen())
             dict.open();
         } catch (IOException ex) {
-            Logger.getLogger(WordnetProcessor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WordnetModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

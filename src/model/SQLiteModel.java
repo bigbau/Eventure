@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package sqlite;
+package model;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,7 +27,6 @@ import org.sqlite.SQLiteConfig;
 import concepts.Event;
 import concepts.Time;
 import concepts.State;
-import wordnet.WordnetProcessor;
 import edu.mit.jwi.item.POS;
 import relations.CauseOfIsState;
 import relations.EffectOf;
@@ -39,7 +38,7 @@ import relations.EventForGoalState;
  *
  * @author RJ
  */
-public abstract class SQLiteProcessor {
+public abstract class SQLiteModel {
     private static Connection c = null;
     public static final String DB_URL = "jdbc:sqlite:eventure.db";  
     public static final String DRIVER = "org.sqlite.JDBC";  
@@ -102,6 +101,7 @@ public abstract class SQLiteProcessor {
         }
     }
     private static List<Map<String, String>> select(String query) {
+    	System.out.println(query);
         ResultSet rs = null;
         Statement stmt = null;
         int first =1;
@@ -135,8 +135,8 @@ public abstract class SQLiteProcessor {
     public static void insertEffectOf(EffectOf assertion){
     	Event cause = assertion.getCause();
     	Event effect = assertion.getEffect();
-    	String concept1 = WordnetProcessor.findRootWord(cause.getVerb(),POS.VERB);
-    	String concept2 = WordnetProcessor.findRootWord(effect.getVerb(),POS.VERB);
+    	String concept1 = WordnetModel.findRootWord(cause.getVerb(),POS.VERB);
+    	String concept2 = WordnetModel.findRootWord(effect.getVerb(),POS.VERB);
     	writeLineToLog("Inserting EffectOf("+concept1+", "+concept2+")");
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "event");
@@ -155,7 +155,7 @@ public abstract class SQLiteProcessor {
     public static void insertEffectOfIsState(EffectOfIsState assertion){
     	Event cause = assertion.getEvent();
     	State effect = assertion.getState();
-    	String concept1 = WordnetProcessor.findRootWord(cause.getVerb(),POS.VERB);
+    	String concept1 = WordnetModel.findRootWord(cause.getVerb(),POS.VERB);
     	String concept2 = effect.toString();
     	writeLineToLog("Inserting EffectOfIsState("+concept1+", "+concept2+")");
     	int concept1Id = getConceptID(concept1, "event");
@@ -174,7 +174,7 @@ public abstract class SQLiteProcessor {
     	State cause = assertion.getState();
     	Event effect = assertion.getEvent();
     	String concept1 = cause.toString();
-    	String concept2 = WordnetProcessor.findRootWord(effect.getVerb(),POS.VERB);
+    	String concept2 = WordnetModel.findRootWord(effect.getVerb(),POS.VERB);
     	int concept1Id = getConceptID(concept1, "state");
     	int concept2Id = getConceptID(concept2, "event");
     	writeLineToLog("Inserting CauseOfIsState("+concept1+", "+concept2+")");
@@ -191,8 +191,8 @@ public abstract class SQLiteProcessor {
     public static void insertEventForGoalEvent(EventForGoalEvent assertion){
     	Event task = assertion.getTask(), goal = assertion.getGoal();
     	
-    	String concept1 = WordnetProcessor.findRootWord(task.getVerb(),POS.VERB);
-    	String concept2 = WordnetProcessor.findRootWord(goal.getVerb(),POS.VERB);
+    	String concept1 = WordnetModel.findRootWord(task.getVerb(),POS.VERB);
+    	String concept2 = WordnetModel.findRootWord(goal.getVerb(),POS.VERB);
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "event");
     	writeLineToLog("Inserting EventForGoalEvent("+concept1+", "+concept2+")");
@@ -210,7 +210,7 @@ public abstract class SQLiteProcessor {
     public static void insertEventForGoalState(EventForGoalState assertion){
     	Event task = assertion.getEvent();
     	State goal = assertion.getState();
-    	String concept1 = WordnetProcessor.findRootWord(task.getVerb(),POS.VERB);
+    	String concept1 = WordnetModel.findRootWord(task.getVerb(),POS.VERB);
     	String concept2 = goal.toString();
     	int concept1Id = getConceptID(concept1, "event");
     	int concept2Id = getConceptID(concept2, "state");
@@ -226,7 +226,7 @@ public abstract class SQLiteProcessor {
     	insertMetadata(task.getObjects(), "object", concept1Id, assertionId);
     }
     public static void insertHappens(Event event, Time happens){
-    	String concept1 = WordnetProcessor.findRootWord(event.getVerb(),POS.VERB);
+    	String concept1 = WordnetModel.findRootWord(event.getVerb(),POS.VERB);
     	String concept2 = happens.getTimeHappened();
     	
     	int concept1Id = getConceptID(concept1, "event");
@@ -266,11 +266,11 @@ public abstract class SQLiteProcessor {
     		int id = Integer.parseInt(row.get("metadatumId"));
     		String currDatum = row.get("metadatum");
     		if(!currDatum.equals(metadatum)){
-    			if(!ifMetadataSynonymsExist(metadatumId,id)&&WordnetProcessor.areSynonyms(metadatum, currDatum, pos)){
+    			if(!ifMetadataSynonymsExist(metadatumId,id)&&WordnetModel.areSynonyms(metadatum, currDatum, pos)){
 	    			insertMetadataSynonyms(id, metadatumId);
 	    	    	writeLineToLog("Inserted "+metadatum+" and "+currDatum+" as synonyms");
 	    		} else if(pos==POS.NOUN){
-		    		Set<String> generalizations = WordnetProcessor.getGeneralizations(metadatum, currDatum, pos);
+		    		Set<String> generalizations = WordnetModel.getGeneralizations(metadatum, currDatum, pos);
 		    		for(String generalization: generalizations){
 		    			if(insertMetadataGeneralization(id, metadatumId, generalization))
 		    				writeLineToLog("Generalized "+metadatum+" and "+currDatum+" as "+generalization);
@@ -327,11 +327,11 @@ public abstract class SQLiteProcessor {
     		int id =Integer.parseInt(row.get("conceptId"));
     		String currConcept = row.get("concept");
     		if(!currConcept.equals(concept)){
-	    		if(!ifConceptSynonymsExist(conceptId,id)&&WordnetProcessor.areSynonyms(currConcept, concept, pos)){
+	    		if(!ifConceptSynonymsExist(conceptId,id)&&WordnetModel.areSynonyms(currConcept, concept, pos)){
 	    			insertConceptSynonyms(id, conceptId);
 	    	    	writeLineToLog("Inserted "+concept+" and "+currConcept+" as synonyms");
 	    		} else if(pos==POS.VERB){
-		    		Set<String> generalizations = WordnetProcessor.getGeneralizations(concept, currConcept, pos);
+		    		Set<String> generalizations = WordnetModel.getGeneralizations(concept, currConcept, pos);
 		    		for(String generalization: generalizations){
 		    			if(insertConceptGeneralization(id, conceptId, generalization))
 		    				writeLineToLog("Generalized "+concept+" and "+currConcept+" as "+generalization);
@@ -456,6 +456,7 @@ public abstract class SQLiteProcessor {
     	writeLineToLog("Concept "+concept+" added");
     }
     public static void update(String query) {
+    	System.out.println(query);
         Statement stmt = null;
         try {
 
