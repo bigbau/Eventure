@@ -40,6 +40,7 @@ public class EventureController {
 		eventureWindow = new EventureWindow();
 		eventureWindow.updateAssertions(SQLiteModel.getAssertions());
 		eventureWindow.updateConcepts(SQLiteModel.getConcepts());
+		eventureWindow.updateMetadata(SQLiteModel.getMetadata());
 		SQLiteModel.closeConnection();
 		eventureWindow.initialize();
 
@@ -66,6 +67,17 @@ public class EventureController {
 			public void valueChanged(ListSelectionEvent arg0) {
 				// TODO Auto-generated method stub
 				eventureWindow.enableGetGeneralizations();
+			}
+
+			
+		});
+		
+		eventureWindow.addTMetadataActionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				eventureWindow.enableGetMGeneralizations();
 			}
 
 			
@@ -98,6 +110,21 @@ public class EventureController {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						eventureWindow.goBacktoConcepts();
+					}
+				});
+			}
+		});
+		eventureWindow.addBtnGetMGeneralizationsActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SQLiteModel.setConnection();
+				eventureWindow.showMGeneralizations(SQLiteModel.getMGeneralizations(eventureWindow.getSelectedMetadatumId()),
+						SQLiteModel.getMSynonyms(eventureWindow.getSelectedMetadatumId()));
+				SQLiteModel.closeConnection();
+				eventureWindow.addBtnGoBacktoMetadataActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						eventureWindow.goBacktoMetadata();
 					}
 				});
 			}
@@ -163,6 +190,7 @@ public class EventureController {
 					
 					eventureWindow.updateAssertions(SQLiteModel.getAssertions());
 					eventureWindow.updateConcepts(SQLiteModel.getConcepts());
+					eventureWindow.updateMetadata(SQLiteModel.getMetadata());
 					System.out.println("Extraction done!");
 
 					SQLiteModel.closeConnection();

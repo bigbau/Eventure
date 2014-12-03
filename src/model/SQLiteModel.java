@@ -480,6 +480,39 @@ public abstract class SQLiteModel {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
     	return tableData;
+    } public static Object[][] getMGeneralizations(int metadatumID){
+    	String query = "SELECT generalization, ("
+    			+ "SELECT count(metadatumId) "
+    			+ "FROM metadata_generalizations as g2 WHERE g2.generalization=g1.generalization) as frequency "
+    			+ "FROM metadata_generalizations as g1 WHERE metadatumId="+metadatumID;
+    	List<Map<String,String>> data = select(query);
+    	Object[][] tableData=null;
+    	try{
+    		tableData = new Object[data.size()][2];
+            for(int i=0; i<data.size(); i++){
+                   tableData[i][0]= data.get(i).get("generalization");
+                   tableData[i][1]= Integer.parseInt(data.get(i).get("frequency"));
+            }
+    	} catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    	return tableData;
+    }
+    public static Object[][] getMSynonyms(int metadatumID){
+    	String query = "SELECT (SELECT metadatum FROM metadata WHERE metadatum2=metadatumId) as synonym, metadatum2 "
+    			+ "FROM metadata_synonyms WHERE metadatum1="+metadatumID;
+    	List<Map<String,String>> data = select(query);
+    	Object[][] tableData=null;
+    	try{
+    		tableData = new Object[data.size()][2];
+            for(int i=0; i<data.size(); i++){
+                   tableData[i][0]= data.get(i).get("synonym");
+                   tableData[i][1]= Integer.parseInt(data.get(i).get("metadatum2"));
+            }
+    	} catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    	return tableData;
     }
     public static Object[][] getGeneralizations(int conceptID){
     	String query = "SELECT generalization, ("
@@ -525,6 +558,30 @@ public abstract class SQLiteModel {
                    tableData[i][0]= Integer.parseInt(data.get(i).get("conceptId"));
                    tableData[i][1]= data.get(i).get("concept");
                    tableData[i][2]= data.get(i).get("concept_type");
+            }
+    	} catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    	return tableData;
+    }
+    public static Object[][] getMetadata(){
+    	String query = "SELECT metadatumId, metadatum, metadata_type, frequency, ("
+    			+ "SELECT concept "
+    			+ "FROM concepts as c "
+    			+ "WHERE c.conceptId = m.conceptId) as concept,"
+    			+ "assertionId "
+    			+ "FROM  metadata as m";
+    	List<Map<String,String>> data = select(query);
+    	Object[][] tableData=null;
+    	try{
+    		tableData = new Object[data.size()][6];
+            for(int i=0; i<data.size(); i++){
+                   tableData[i][0]= Integer.parseInt(data.get(i).get("metadatumId"));
+                   tableData[i][1]= data.get(i).get("metadatum");
+                   tableData[i][2]= data.get(i).get("metadata_type");
+                   tableData[i][3]= Integer.parseInt(data.get(i).get("frequency"));
+                   tableData[i][4]= data.get(i).get("concept");
+                   tableData[i][5]= Integer.parseInt(data.get(i).get("assertionId"));
             }
     	} catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());

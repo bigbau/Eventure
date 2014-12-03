@@ -40,32 +40,42 @@ public class EventureWindow extends JFrame {
 	private JPanel extractionPanel;
 	private JPanel assertionsPanel;
 	private JPanel conceptsPanel;
+	private JPanel metadataPanel;
 	private JLabel lblOntology;
 	private JLabel lblAssertion;
 	private JLabel lblConcepts;
-	private JLabel lblCAssertions;
 	private JLabel lblGeneralizations;
+	private JLabel lblMGeneralizations;
+	private JLabel lblMetadata;
 	private JTextField inputLocation;
 	private JTextArea messageArea;
 	private JButton btnBrowse;
 	private JButton btnRun;
 	private JButton btnGetMetadata;
+	private JButton btnGetMGeneralizations;
 	private JButton btnGoBack;
 	private JButton btnGoBacktoConcepts;
+	private JButton btnGoBacktoMetadata;
 	private JButton btnGetGeneralizations;
 	private JScrollPane extractionScrollPane;
 	private JScrollPane assertionsScrollPane;
+	private JScrollPane metadataScrollPane;
 	private JScrollPane metadataScrollPane1;
 	private JScrollPane metadataScrollPane2;
 	private JScrollPane conceptsScrollPane;
 	private JScrollPane generalizationsScrollPane;
 	private JScrollPane synonymsScrollPane;
+	private JScrollPane mGeneralizationsScrollPane;
+	private JScrollPane mSynonymsScrollPane;
 	private JTable tAssertions=null;
+	private JTable tMetadata=null;
 	private JTable tMetadata1=null;
 	private JTable tMetadata2=null;
-	private JTable tConcepts;
+	private JTable tConcepts=null;
 	private JTable tGeneralizations;
 	private JTable tSynonyms;
+	private JTable tMGeneralizations;
+	private JTable tMSynonyms;
 
 	
 	
@@ -82,7 +92,7 @@ public class EventureWindow extends JFrame {
 	public EventureWindow() {
 		setResizable(false);
 		setFont(new Font("Arial", Font.PLAIN, 12));
-		setTitle("Eventure Build 1.6");
+		setTitle("Eventure Build 1.7");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 620);
 		extractionPanel = new JPanel();
@@ -93,6 +103,9 @@ public class EventureWindow extends JFrame {
 		
 		conceptsPanel = new JPanel();
 		conceptsPanel.setLayout(null);
+		
+		metadataPanel = new JPanel();
+		metadataPanel.setLayout(null);
 		
 		JLabel lblEventure = new JLabel("EVENTURE: Extraction Module");
 		lblEventure.setBounds(103, 11, 574, 23);
@@ -111,6 +124,12 @@ public class EventureWindow extends JFrame {
 		lblConcepts.setHorizontalAlignment(SwingConstants.CENTER);
 		lblConcepts.setFont(new Font("Arial", Font.PLAIN, 19));
 		conceptsPanel.add(lblConcepts);
+		
+		lblMetadata = new JLabel("EVENTURE Metadata");
+		lblMetadata.setBounds(103, 11, 574, 23);
+		lblMetadata.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMetadata.setFont(new Font("Arial", Font.PLAIN, 19));
+		metadataPanel.add(lblMetadata);
 		
 		inputLocation = new JTextField();
 		inputLocation.setText("Click browse to look for a .txt file");
@@ -148,6 +167,13 @@ public class EventureWindow extends JFrame {
 		btnGetGeneralizations.setEnabled(false);
 		conceptsPanel.add(btnGetGeneralizations);
 		
+		btnGetMGeneralizations = new JButton("Get Generalizations");
+		btnGetMGeneralizations.setFont(new Font("Arial", Font.PLAIN, 14));
+		btnGetMGeneralizations.setBackground(Color.WHITE);
+		btnGetMGeneralizations.setBounds(10, 45, 256, 25);
+		btnGetMGeneralizations.setEnabled(false);
+		metadataPanel.add(btnGetMGeneralizations);
+		
 		extractionScrollPane = new JScrollPane();
 		extractionScrollPane.setBounds(10, 121, 774, 430);
 		extractionPanel.add(extractionScrollPane);
@@ -171,8 +197,41 @@ public class EventureWindow extends JFrame {
 		tabbedPane.addTab("Concepts", null, conceptsPanel,
                 "Presents the concepts in Eventure");
 		tabbedPane.setMnemonicAt(0, KeyEvent.VK_3);
+		
+		tabbedPane.addTab("Metadata", null, metadataPanel,
+                "Presents metadata for concepts in specific assertions in Eventure");
+		tabbedPane.setMnemonicAt(0, KeyEvent.VK_4);
 
 		setContentPane(tabbedPane);
+	}
+	public void updateMetadata(Object[][] data){
+		String[] columnNames = {"Metadatum Id","Metadatum","Type", "Frequency", "Concept", "Assertion ID"};
+		DefaultTableModel tableModel = new DefaultTableModel(data, columnNames) {
+			   @Override
+			   public boolean isCellEditable(int row, int column) {
+			       return false;
+			   }
+			};
+		if(tMetadata==null){
+			metadataScrollPane = new JScrollPane();
+			metadataPanel.add(metadataScrollPane);
+			tMetadata = new JTable(tableModel);
+			tMetadata.setRowSelectionAllowed(true);
+			tMetadata.setColumnSelectionAllowed(false);
+			tMetadata.setFont(new Font("Arial", Font.PLAIN, 13));
+			tMetadata.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			metadataScrollPane.setViewportView(tMetadata);
+
+			metadataScrollPane.setBounds(10, 75, 774, 470);
+			TableRowSorter trs = new TableRowSorter(tableModel);
+
+	        trs.setComparator(0, new IntComparator());
+	        trs.setComparator(3, new IntComparator());
+	        trs.setComparator(5, new IntComparator());
+	        tMetadata.setRowSorter(trs);
+		    
+		} else
+			tMetadata.setModel(tableModel);
 	}
 	public void updateConcepts(Object[][] data){
 		String[] columnNames = {"Concept Id","Concept","Type"};
@@ -223,6 +282,7 @@ public class EventureWindow extends JFrame {
 			TableRowSorter trs = new TableRowSorter(tableModel);
 
 	        trs.setComparator(0, new IntComparator());
+	        trs.setComparator(4, new IntComparator());
 
 	        tAssertions.setRowSorter(trs);
 		} else
@@ -250,6 +310,18 @@ public class EventureWindow extends JFrame {
 		lblConcepts.setVisible(true);
 		btnGetGeneralizations.setEnabled(true);
 		btnGetGeneralizations.setVisible(true);
+		
+	}
+	public void goBacktoMetadata(){
+		mSynonymsScrollPane.setVisible(false);
+		mGeneralizationsScrollPane.setVisible(false);
+		lblMGeneralizations.setVisible(false);
+		btnGoBacktoMetadata.setVisible(false);
+
+		metadataScrollPane.setVisible(true);
+		lblMetadata.setVisible(true);
+		btnGetMGeneralizations.setEnabled(true);
+		btnGetMGeneralizations.setVisible(true);
 		
 	}
 	public void showMetadata(String[][] data1, String[][] data2){
@@ -395,11 +467,81 @@ public class EventureWindow extends JFrame {
 		generalizationsScrollPane.setVisible(true);
 		btnGoBacktoConcepts.setVisible(true);
 	}
+	public void showMGeneralizations(Object[][] generalizations, Object[][] synonyms){
+		String[] gColumns = {"Generalization", "Frequency"};
+		String[] sColumns = {"Synonym", "Metadatum ID"};
+		DefaultTableModel tableModel1 = new DefaultTableModel(generalizations, gColumns) {
+			   @Override
+			   public boolean isCellEditable(int row, int column) {
+			       return false;
+			   }
+			};
+		DefaultTableModel tableModel2 = new DefaultTableModel(synonyms, sColumns) {
+			   @Override
+			   public boolean isCellEditable(int row, int column) {
+			       return false;
+			   }
+			};
+		if(tMGeneralizations==null){
+			tMGeneralizations = new JTable(tableModel1);
+			tMSynonyms = new JTable(tableModel2);
+			tMGeneralizations.setRowSelectionAllowed(true);
+			tMSynonyms.setRowSelectionAllowed(true);
+			tMGeneralizations.setColumnSelectionAllowed(false);
+			tMSynonyms.setColumnSelectionAllowed(false);
+			mGeneralizationsScrollPane = new JScrollPane();
+			mSynonymsScrollPane = new JScrollPane();
+			mGeneralizationsScrollPane.setBounds(10, 75, 385, 470);
+			mSynonymsScrollPane.setBounds(397, 75, 385, 470);
+			tMGeneralizations.setFont(new Font("Arial", Font.PLAIN, 13));
+			tMSynonyms.setFont(new Font("Arial", Font.PLAIN, 13));
+			metadataPanel.add(mGeneralizationsScrollPane);
+			metadataPanel.add(mSynonymsScrollPane);
+			mGeneralizationsScrollPane.setViewportView(tMGeneralizations);
+			mSynonymsScrollPane.setViewportView(tMSynonyms);
+			
+			tMSynonyms.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			tMGeneralizations.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		    
+			lblMGeneralizations = new JLabel();
+			lblMGeneralizations.setBounds(103, 11, 574, 23);
+			lblMGeneralizations.setHorizontalAlignment(SwingConstants.CENTER);
+			lblMGeneralizations.setFont(new Font("Arial", Font.PLAIN, 19));
+			metadataPanel.add(lblMGeneralizations);
+			
+			
+			btnGoBacktoMetadata = new JButton("<-");
+			
+			btnGoBacktoMetadata.setFont(new Font("Arial", Font.PLAIN, 14));
+			btnGoBacktoMetadata.setBackground(Color.WHITE);
+			btnGoBacktoMetadata.setBounds(10, 11, 50, 25);
+			metadataPanel.add(btnGoBacktoMetadata);
+		} 
+		else{
+			tMGeneralizations.setModel(tableModel1);
+			tMSynonyms.setModel(tableModel2);
+		}
+		lblMGeneralizations.setText("Generalizations: "+getSelectedMetadatum()+"["+getSelectedMetadatumId()+"]"+
+		" of "+getSelectedMConcept()+" in Assertion:"+getSelectedMAssertionId());
+		lblMGeneralizations.setVisible(true);
+		lblMetadata.setVisible(false);
+		btnGetMGeneralizations.setEnabled(false);
+		btnGetMGeneralizations.setVisible(false);
+		btnGoBacktoMetadata.setEnabled(true);
+		metadataScrollPane.setVisible(false);
+		mGeneralizationsScrollPane.setVisible(true);
+		mSynonymsScrollPane.setVisible(true);
+		mGeneralizationsScrollPane.setVisible(true);
+		btnGoBacktoMetadata.setVisible(true);
+	}
 	public void enableGetMetadata(){
 		btnGetMetadata.setEnabled(true);
 	}
 	public void enableGetGeneralizations(){
 		btnGetGeneralizations.setEnabled(true);
+	}
+	public void enableGetMGeneralizations(){
+		btnGetMGeneralizations.setEnabled(true);
 	}
 	public String getSelectedRelation(){
 		return (String)tAssertions.getModel().getValueAt(tAssertions.getSelectedRow(), 1);
@@ -419,6 +561,18 @@ public class EventureWindow extends JFrame {
 	public Integer getSelectedAssertionId(){
 		return (Integer)tAssertions.getModel().getValueAt(tAssertions.getSelectedRow(), 0);
 	}
+	public Integer getSelectedMetadatumId(){
+		return (Integer)tMetadata.getModel().getValueAt(tMetadata.getSelectedRow(), 0);
+	}
+	public String getSelectedMetadatum(){
+		return (String)tMetadata.getModel().getValueAt(tMetadata.getSelectedRow(), 1);
+	}
+	public String getSelectedMConcept(){
+		return (String)tMetadata.getModel().getValueAt(tMetadata.getSelectedRow(), 4);
+	}
+	public Integer getSelectedMAssertionId(){
+		return (Integer)tMetadata.getModel().getValueAt(tMetadata.getSelectedRow(), 5);
+	}
 	public void setInputLocation(String inputLocation){
 		this.inputLocation.setText(inputLocation);
 	}
@@ -427,6 +581,9 @@ public class EventureWindow extends JFrame {
 	}
 	public void addTConceptsActionListener(ListSelectionListener ll) {
 		tConcepts.getSelectionModel().addListSelectionListener(ll);
+	}
+	public void addTMetadataActionListener(ListSelectionListener ll) {
+		tMetadata.getSelectionModel().addListSelectionListener(ll);
 	}
 	public void addBtnBrowseActionListener(ActionListener al) {
 		btnBrowse.addActionListener(al);
@@ -440,11 +597,17 @@ public class EventureWindow extends JFrame {
 	public void addBtnGetGeneralizationsActionListener(ActionListener al){
 		btnGetGeneralizations.addActionListener(al);
 	}
+	public void addBtnGetMGeneralizationsActionListener(ActionListener al){
+		btnGetMGeneralizations.addActionListener(al);
+	}
 	public void addBtnGoBackActionListener(ActionListener al){
 		btnGoBack.addActionListener(al);
 	}
 	public void addBtnGoBacktoConceptsActionListener(ActionListener al){
 		btnGoBacktoConcepts.addActionListener(al);
+	}
+	public void addBtnGoBacktoMetadataActionListener(ActionListener al){
+		btnGoBacktoMetadata.addActionListener(al);
 	}
 	public String getInputLocationText() {
 		return inputLocation.getText();
