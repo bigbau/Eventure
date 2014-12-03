@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.JFileChooser;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import concepts.Event;
@@ -43,6 +47,34 @@ public class EventureController {
 			// TODO Auto-generated catch block
 			eventureWindow.setMessageArea("File not found!");
 		}
+		eventureWindow.addTAssertionsActionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				eventureWindow.enableGetMetadata();
+			}
+
+			
+		});
+		eventureWindow.addBtnGetMetadataActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SQLiteModel.setConnection();
+				eventureWindow.showMetadata(SQLiteModel.getFirstMetadata(eventureWindow.getSelectedAssertionId()),
+						SQLiteModel.getSecondMetadata(eventureWindow.getSelectedAssertionId()));
+				SQLiteModel.closeConnection();
+				eventureWindow.addBtnGoBackActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						eventureWindow.goBacktoAssertions();
+					}
+					
+				});
+			}
+			
+		});
+		
 		eventureWindow.addBtnBrowseActionListener(new ActionListener(){
 
 			@Override

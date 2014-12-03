@@ -9378,3 +9378,35 @@ Opened database successfully
 Closed database successfully
 Opened database successfully
 Closed database successfully
+Opened database successfully
+Closed database successfully
+Opened database successfully
+Closed database successfully
+Opened database successfully
+Closed database successfully
+Opened database successfully
+Closed database successfully
+Opened database successfully
+Closed database successfully
+Opened database successfully
+Closed database successfully
+Opened database successfully
+Closed database successfully
+Opened database successfully
+Closed database successfully
+Opened database successfully
+Closed database successfully
+Opened database successfully
+Closed database successfully
+Opened database successfully
+Closed database successfully
+Opened database successfully
+Closed database successfully
+Opened database successfully
+Closed database successfully
+Unsuccessful select query: SELECT metadatum, metadata_type FROM metadata as m WHERE assertionId = 11 AND conceptId = (SELECT concept1Id FROM assertions as a WHERE a.assertionId = m.assertionId);
+Unsuccessful select query: SELECT metadatum, metadata_type FROM metadata as m WHERE assertionId = 11 AND conceptId = (SELECT concept2Id FROM assertions as a WHERE a.assertionId = m.assertionId);
+Unsuccessful select query: SELECT metadatum, metadata_type FROM metadata as m WHERE assertionId = 0 AND conceptId = (SELECT concept1Id FROM assertions as a WHERE a.assertionId = m.assertionId);
+Unsuccessful select query: SELECT metadatum, metadata_type FROM metadata as m WHERE assertionId = 0 AND conceptId = (SELECT concept2Id FROM assertions as a WHERE a.assertionId = m.assertionId);
+Unsuccessful select query: SELECT metadatum, metadata_type FROM metadata as m WHERE assertionId = 0 AND conceptId = (SELECT concept1Id FROM assertions as a WHERE a.assertionId = m.assertionId);
+Unsuccessful select query: SELECT metadatum, metadata_type FROM metadata as m WHERE assertionId = 0 AND conceptId = (SELECT concept2Id FROM assertions as a WHERE a.assertionId = m.assertionId);

@@ -69,7 +69,7 @@ public abstract class SQLiteModel {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        writeLineToLog("Opened database successfully");
+        System.out.println("Opened database successfully");
     }
     public static void closeConnection(){
     	try {
@@ -78,7 +78,7 @@ public abstract class SQLiteModel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        writeLineToLog("Closed database successfully");
+        System.out.println("Closed database successfully");
     }
 
     public static void printTable(List<Map<String, String>> data) {
@@ -97,7 +97,6 @@ public abstract class SQLiteModel {
             }
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
         }
     }
     
@@ -129,7 +128,8 @@ public abstract class SQLiteModel {
             stmt.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+            System.out.println("Unsuccessful select query: "+query);
+            writeLineToLog("Unsuccessful select query: "+query);
         }
         return data;
     }
@@ -435,6 +435,46 @@ public abstract class SQLiteModel {
     	update(query);
     	writeLineToLog("New "+relation+" added");
     }
+    public static String[][] getFirstMetadata(int assertionId){
+    	String query ="SELECT metadatum, metadata_type, frequency FROM metadata as m "
+    			+ "WHERE assertionId = "+assertionId
+    			+ " AND conceptId = ("
+    			+ "SELECT concept1Id FROM assertions as a "
+    			+ "WHERE a.assertionId = m.assertionId);";
+    	List<Map<String, String>>data = select(query);
+    	String[][] tableData =null;
+    	try {
+        	tableData = new String[data.size()][3];
+            for(int i=0; i<data.size(); i++){
+                   tableData[i][0]= data.get(i).get("metadatum");
+                   tableData[i][1]= data.get(i).get("metadata_type");
+                   tableData[i][2]= data.get(i).get("frequency");
+            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    	return tableData;
+    }
+    public static String[][] getSecondMetadata(int assertionId){
+    	String query ="SELECT metadatum, metadata_type, frequency FROM metadata as m "
+    			+ "WHERE assertionId = "+assertionId
+    			+ " AND conceptId = ("
+    			+ "SELECT concept2Id FROM assertions as a "
+    			+ "WHERE a.assertionId = m.assertionId);";
+    	List<Map<String, String>>data = select(query);
+    	String[][] tableData =null;
+    	try {
+        	tableData = new String[data.size()][3];
+            for(int i=0; i<data.size(); i++){
+                   tableData[i][0]= data.get(i).get("metadatum");
+                   tableData[i][1]= data.get(i).get("metadata_type");
+                   tableData[i][2]= data.get(i).get("frequency");
+            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    	return tableData;
+    }
     public static String[][] getAssertions(){
     	String query = "SELECT assertionId, relation, "
     			+ "(SELECT concept FROM concepts WHERE conceptId=concept1Id) as concept1, "
@@ -453,7 +493,6 @@ public abstract class SQLiteModel {
             }
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
         }
         return tableData;
     }
@@ -491,7 +530,8 @@ public abstract class SQLiteModel {
             stmt.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+            System.out.println("Unsuccessful update query: "+query);
+            writeLineToLog("Unsuccessful update query: "+query);
         }
     }
 }
