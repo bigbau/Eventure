@@ -37,7 +37,9 @@ public class EventureController {
 
 	public static void main(String[] args){
 		SQLiteModel.setConnection();
-		eventureWindow = new EventureWindow(SQLiteModel.getAssertions());
+		eventureWindow = new EventureWindow();
+		eventureWindow.updateAssertions(SQLiteModel.getAssertions());
+		eventureWindow.updateConcepts(SQLiteModel.getConcepts());
 		SQLiteModel.closeConnection();
 		eventureWindow.initialize();
 
@@ -57,6 +59,17 @@ public class EventureController {
 
 			
 		});
+		
+		eventureWindow.addTConceptsActionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				eventureWindow.enableGetGeneralizations();
+			}
+
+			
+		});
 		eventureWindow.addBtnGetMetadataActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -69,10 +82,25 @@ public class EventureController {
 					public void actionPerformed(ActionEvent e) {
 						eventureWindow.goBacktoAssertions();
 					}
-					
 				});
 			}
 			
+		});
+		
+		eventureWindow.addBtnGetGeneralizationsActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SQLiteModel.setConnection();
+				eventureWindow.showGeneralizations(SQLiteModel.getGeneralizations(eventureWindow.getSelectedConceptId()),
+						SQLiteModel.getSynonyms(eventureWindow.getSelectedConceptId()));
+				SQLiteModel.closeConnection();
+				eventureWindow.addBtnGoBacktoConceptsActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						eventureWindow.goBacktoConcepts();
+					}
+				});
+			}
 		});
 		
 		eventureWindow.addBtnBrowseActionListener(new ActionListener(){
@@ -133,10 +161,11 @@ public class EventureController {
 					eventureModel.sortTimelines(timelines);
 					eventureModel.insertHappensAssertions(timelines, events);
 					
-					SQLiteModel.closeConnection();
-					
+					eventureWindow.updateAssertions(SQLiteModel.getAssertions());
+					eventureWindow.updateConcepts(SQLiteModel.getConcepts());
 					System.out.println("Extraction done!");
 
+					SQLiteModel.closeConnection();
 				} catch (GateException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

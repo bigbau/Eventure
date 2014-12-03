@@ -436,7 +436,9 @@ public abstract class SQLiteModel {
     	writeLineToLog("New "+relation+" added");
     }
     public static String[][] getFirstMetadata(int assertionId){
-    	String query ="SELECT metadatum, metadata_type, frequency FROM metadata as m "
+    	String query ="SELECT metadatum, metadata_type, frequency,"
+    			+ "(SELECT concept FROM concepts as c WHERE m.conceptId=c.conceptId) AS concept"
+    			+ " FROM metadata as m "
     			+ "WHERE assertionId = "+assertionId
     			+ " AND conceptId = ("
     			+ "SELECT concept1Id FROM assertions as a "
@@ -444,11 +446,12 @@ public abstract class SQLiteModel {
     	List<Map<String, String>>data = select(query);
     	String[][] tableData =null;
     	try {
-        	tableData = new String[data.size()][3];
+        	tableData = new String[data.size()][4];
             for(int i=0; i<data.size(); i++){
-                   tableData[i][0]= data.get(i).get("metadatum");
-                   tableData[i][1]= data.get(i).get("metadata_type");
-                   tableData[i][2]= data.get(i).get("frequency");
+                tableData[i][0]= data.get(i).get("concept");
+                tableData[i][1]= data.get(i).get("metadatum");
+                tableData[i][2]= data.get(i).get("metadata_type");
+                tableData[i][3]= data.get(i).get("frequency");
             }
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -456,7 +459,9 @@ public abstract class SQLiteModel {
     	return tableData;
     }
     public static String[][] getSecondMetadata(int assertionId){
-    	String query ="SELECT metadatum, metadata_type, frequency FROM metadata as m "
+    	String query ="SELECT metadatum, metadata_type, frequency,"
+    			+ "(SELECT concept FROM concepts as c WHERE m.conceptId=c.conceptId) AS concept"
+    			+ " FROM metadata as m "
     			+ "WHERE assertionId = "+assertionId
     			+ " AND conceptId = ("
     			+ "SELECT concept2Id FROM assertions as a "
@@ -464,39 +469,90 @@ public abstract class SQLiteModel {
     	List<Map<String, String>>data = select(query);
     	String[][] tableData =null;
     	try {
-        	tableData = new String[data.size()][3];
+        	tableData = new String[data.size()][4];
             for(int i=0; i<data.size(); i++){
-                   tableData[i][0]= data.get(i).get("metadatum");
-                   tableData[i][1]= data.get(i).get("metadata_type");
-                   tableData[i][2]= data.get(i).get("frequency");
+                   tableData[i][0]= data.get(i).get("concept");
+                   tableData[i][1]= data.get(i).get("metadatum");
+                   tableData[i][2]= data.get(i).get("metadata_type");
+                   tableData[i][3]= data.get(i).get("frequency");
             }
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
     	return tableData;
     }
-    public static String[][] getAssertions(){
+    public static Object[][] getGeneralizations(int conceptID){
+    	String query = "SELECT generalization, ("
+    			+ "SELECT count(conceptId) "
+    			+ "FROM concept_generalizations as g2 WHERE g2.generalization=g1.generalization) as frequency "
+    			+ "FROM concept_generalizations as g1 WHERE conceptId="+conceptID;
+    	List<Map<String,String>> data = select(query);
+    	Object[][] tableData=null;
+    	try{
+    		tableData = new Object[data.size()][2];
+            for(int i=0; i<data.size(); i++){
+                   tableData[i][0]= data.get(i).get("generalization");
+                   tableData[i][1]= Integer.parseInt(data.get(i).get("frequency"));
+            }
+    	} catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    	return tableData;
+    }
+    public static Object[][] getSynonyms(int conceptID){
+    	String query = "SELECT (SELECT concept FROM concepts WHERE concept2Id=conceptId) as synonym, concept2Id "
+    			+ "FROM concept_synonyms WHERE concept1Id="+conceptID;
+    	List<Map<String,String>> data = select(query);
+    	Object[][] tableData=null;
+    	try{
+    		tableData = new Object[data.size()][2];
+            for(int i=0; i<data.size(); i++){
+                   tableData[i][0]= data.get(i).get("synonym");
+                   tableData[i][1]= Integer.parseInt(data.get(i).get("concept2Id"));
+            }
+    	} catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    	return tableData;
+    }
+    public static Object[][] getConcepts(){
+    	String query = "SELECT * FROM concepts";
+    	List<Map<String,String>> data = select(query);
+    	Object[][] tableData=null;
+    	try{
+    		tableData = new Object[data.size()][3];
+            for(int i=0; i<data.size(); i++){
+                   tableData[i][0]= Integer.parseInt(data.get(i).get("conceptId"));
+                   tableData[i][1]= data.get(i).get("concept");
+                   tableData[i][2]= data.get(i).get("concept_type");
+            }
+    	} catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+    	return tableData;
+    }
+    public static Object[][] getAssertions(){
     	String query = "SELECT assertionId, relation, "
     			+ "(SELECT concept FROM concepts WHERE conceptId=concept1Id) as concept1, "
     			+ "(SELECT concept FROM concepts WHERE conceptId=concept2Id) as concept2, "
     			+ "frequency FROM assertions";
     	List<Map<String, String>>data = select(query);
-        String[][] tableData=null;
+        Object[][] tableData=null;
         try {
-        	tableData = new String[data.size()][6];
+        	tableData = new Object[data.size()][5];
             for(int i=0; i<data.size(); i++){
-                   tableData[i][0]= data.get(i).get("assertionId");
+                   tableData[i][0]= new Integer(Integer.parseInt(data.get(i).get("assertionId")));
                    tableData[i][1]= data.get(i).get("relation");
                    tableData[i][2]= data.get(i).get("concept1");
                    tableData[i][3]= data.get(i).get("concept2");
-                   tableData[i][4]= data.get(i).get("frequency");
+                   tableData[i][4]= new Integer(Integer.parseInt(data.get(i).get("frequency")));
             }
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
         return tableData;
     }
-    private static int getConceptID(String concept, String concept_type){
+    public static int getConceptID(String concept, String concept_type){
     	String query =  "SELECT conceptId FROM concepts WHERE concept = '"+concept+
     			"' AND concept_type = '"+concept_type+"'";
     	List<Map<String, String>> data = select(query);

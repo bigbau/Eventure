@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class Concept {
+	public final static String EVENT = "event";
+	public final static String STATE = "state";
+	public final static String TIME = "time";
 	protected String conceptName;
 	protected Concept(String conceptName){
 		this.conceptName = conceptName;

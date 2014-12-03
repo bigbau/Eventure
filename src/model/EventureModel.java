@@ -1,5 +1,7 @@
 package model;
 import java.util.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,6 +28,7 @@ import gate.util.GateException;
 import gate.util.persistence.PersistenceManager;
 
 
+import gui.EventureWindow;
 import relations.CauseOfIsState;
 import relations.EffectOf;
 import relations.EffectOfIsState;
