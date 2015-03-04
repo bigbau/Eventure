@@ -2,7 +2,7 @@ Phase: eventForGoalEvent
 Input: Token Lookup MotivationInd GoalEvent Event
 Options: control = appelt
 
-Rule: EventForGoalEvent1
+/*Rule: EventForGoalEvent1
 (
 	({GoalEvent}):goal
 	({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", !Event})*
@@ -210,7 +210,7 @@ Rule: EventForGoalEvent1
     newFeatures.put("rule","EventForGoalEvent1");
     annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"EventForGoalEvent", newFeatures);
   }
-  
+  */
 Rule: EventForGoalEvent2
 (
 	({Event}):event
