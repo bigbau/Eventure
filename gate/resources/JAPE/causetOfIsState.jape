@@ -354,7 +354,7 @@ Rule: CauseOfIsState4
 	
 	
 	
-	newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("Cause",cause.getFeatures().get("Cause"));
 	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
