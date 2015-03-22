@@ -431,7 +431,7 @@ Rule: EffectOfIsState4
 	}
 	
 	
-	newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("Cause",cause.getFeatures().get("Cause"));
 	newFeatures.put("CauseVerb",causeVerb);
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
@@ -628,7 +628,7 @@ Rule: EffectOfIsState45
 	}
 	
 	
-	newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("Cause",cause.getFeatures().get("Cause"));
 	newFeatures.put("CauseVerb",causeVerb);
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
@@ -1429,11 +1429,13 @@ Rule: EffectOfIsState6
     annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
   }
   
-Rule: EffectOfIsState3
+/*Rule: EffectOfIsState3
+
 (
 	({Event}):cause
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
-	({Token.category == JJ} | {Token.category == VBD} | {Token.category == VBN}):effect
+	({Token.category == JJ} | {Token.category == VBD} | {Token.category == VBN})
+	({Event}):effect
 ):EffectOfIsState3
 -->
 :EffectOfIsState3
@@ -1618,10 +1620,10 @@ Rule: EffectOfIsState3
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
-	newFeatures.put("Effect",effect.getFeatures().get("string"));
+	newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","EffectOfIsState3");
     annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
-  }
+  }*/
