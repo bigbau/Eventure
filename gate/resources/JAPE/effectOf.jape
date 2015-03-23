@@ -99,7 +99,7 @@ Rule: EffectOf1
 				}
 			}
 			
-			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			if(((String)timeAnnot.getFeatures().get("category")).equals("RB")|((String)timeAnnot.getFeatures().get("category")).equals("RBR")|((String)timeAnnot.getFeatures().get("category")).equals("RBS"))
 			{
 				try{
 				 if(noAdverbs>0){
@@ -231,7 +231,7 @@ Rule: EffectOf15
 				}
 			}
 			
-			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			if(((String)timeAnnot.getFeatures().get("category")).equals("RB")|((String)timeAnnot.getFeatures().get("category")).equals("RBR")|((String)timeAnnot.getFeatures().get("category")).equals("RBS"))
 			{
 				try{
 				 if(noAdverbs>0){
@@ -329,7 +329,7 @@ Rule: EffectOf15
 				}
 			}
 			
-			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			if(((String)timeAnnot.getFeatures().get("category")).equals("RB")|((String)timeAnnot.getFeatures().get("category")).equals("RBR")|((String)timeAnnot.getFeatures().get("category")).equals("RBS"))
 			{
 				try{
 				 if(noAdverbs>0){
@@ -460,7 +460,7 @@ Rule: EffectOf2
 				}
 			}
 			
-			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			if(((String)timeAnnot.getFeatures().get("category")).equals("RB")|((String)timeAnnot.getFeatures().get("category")).equals("RBR")|((String)timeAnnot.getFeatures().get("category")).equals("RBS"))
 			{
 				try{
 				 if(noAdverbs>0){
@@ -558,7 +558,7 @@ Rule: EffectOf2
 				}
 			}
 			
-			if(((String)timeAnnot.getFeatures().get("chunk")).equals("I-ADVB"))
+			if(((String)timeAnnot.getFeatures().get("category")).equals("RB")|((String)timeAnnot.getFeatures().get("category")).equals("RBR")|((String)timeAnnot.getFeatures().get("category")).equals("RBS"))
 			{
 				try{
 				 if(noAdverbs>0){
