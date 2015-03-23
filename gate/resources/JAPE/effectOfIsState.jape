@@ -448,7 +448,10 @@ Rule: EffectOfIsState4
   
 Rule: EffectOfIsState45
 (
-	({Token.category == JJ}):effect
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*	
+	(({Token.category == VB} | {Token.category == VBD} | {Token.category == VBG} | {Token.category == VBN} | {Token.category == VBP} | {Token.category == VBZ})
+	(({Token.category == RB} | {Token.category == RBR} | {Token.category == RBS})*)?
+	({Token.category == JJ})):effect
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({Cause}):cause
 ):EffectOfIsState45
@@ -1040,7 +1043,7 @@ Rule: EffectOfIsState2
 	({Event}):cause
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({Token.chunk == O})[1]
-	({Token.string != ".", Token.string != "?", Token.string != "!"})*
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({EffectState}):effect
 ):EffectOfIsState2
 -->
