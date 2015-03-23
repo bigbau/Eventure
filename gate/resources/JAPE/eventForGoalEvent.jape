@@ -210,11 +210,7 @@ Rule: EventForGoalEvent1
     newFeatures.put("rule","EventForGoalEvent1");
     annotations.add(matchedAnns.firstNode(),matchedAnns.lastNode(),"EventForGoalEvent", newFeatures);
   }
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> origin/master
 Rule: EventForGoalEvent2
 (
 	({Event}):event

@@ -625,6 +625,8 @@ Rule: EffectOf3
 	{
 		if(((ArrayList<Integer>) person1.getFeatures().get("matches")).containsAll(((ArrayList<Integer>) person2.getFeatures().get("matches"))))
 		{
+		
+			gate.FeatureMap newFeatures= Factory.newFeatureMap();
 			newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
 			newFeatures.put("CauseObject",cause.getFeatures().get("Objects"));
 			newFeatures.put("CauseObjectAdjectives",cause.getFeatures().get("Adjectives"));
