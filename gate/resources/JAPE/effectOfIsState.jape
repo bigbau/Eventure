@@ -230,7 +230,7 @@ Rule: EffectOfIsState4
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*	
 	(({Token.category == VB} | {Token.category == VBD} | {Token.category == VBG} | {Token.category == VBN} | {Token.category == VBP} | {Token.category == VBZ})
 	(({Token.category == RB} | {Token.category == RBR} | {Token.category == RBS})*)?
-	({Token.category == JJ})):effect
+	({Token.category == JJ} | {Token.category == VBD} | {Token.category == VBN})):effect
 ):EffectOfIsState4
 -->
 :EffectOfIsState4
@@ -448,10 +448,9 @@ Rule: EffectOfIsState4
   
 Rule: EffectOfIsState45
 (
-	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*	
 	(({Token.category == VB} | {Token.category == VBD} | {Token.category == VBG} | {Token.category == VBN} | {Token.category == VBP} | {Token.category == VBZ})
 	(({Token.category == RB} | {Token.category == RBR} | {Token.category == RBS})*)?
-	({Token.category == JJ})):effect
+	({Token.category == JJ} | {Token.category == VBD} | {Token.category == VBN})):effect
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({Cause}):cause
 ):EffectOfIsState45
