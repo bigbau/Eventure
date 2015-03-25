@@ -370,11 +370,11 @@ Rule: CauseOfIsState5
 
 Rule: CauseOfIsState2
 (
-	({EffectState}):effect
+	({EffectState}):cause
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({Token.chunk == O})[1]
 	({Token.string != ".", Token.string != "?", Token.string != "!"})*
-	({Event}):cause
+	({Event}):effect
 ):CauseOfIsState2
 -->
 :CauseOfIsState2
@@ -588,12 +588,12 @@ Rule: CauseOfIsState2
 	}
 	
 	
-	newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
-	newFeatures.put("EffectVerb",effectVerb);
+	newFeatures.put("Cause",cause.getFeatures().get("Effect"));
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
-	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+	newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
+	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);

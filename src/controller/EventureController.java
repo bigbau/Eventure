@@ -24,7 +24,7 @@ import relations.EffectOf;
 import relations.EffectOfIsState;
 import relations.EventForGoalEvent;
 import relations.EventForGoalState;
-import view.EventureWindow;
+import gui.EventureWindow;
 import model.EventureModel;
 import model.SQLiteModel;
 
