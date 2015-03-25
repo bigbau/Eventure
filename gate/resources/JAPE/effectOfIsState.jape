@@ -235,7 +235,7 @@ Rule: EffectOfIsState4
 -->
 :EffectOfIsState4
   {
-	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "",effectText = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
@@ -356,7 +356,7 @@ Rule: EffectOfIsState4
 		while(lookupIter.hasNext())
 		{	
 			timeAnnot = (Annotation) lookupIter.next();
-			
+			effectText += (String)timeAnnot.getFeatures().get("string") + " ";
 			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
 				determiner = true;
 			}
@@ -438,7 +438,7 @@ Rule: EffectOfIsState4
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
-	newFeatures.put("Effect",effect.getFeatures().get("string"));
+	newFeatures.put("Effect",effectText);
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
@@ -457,7 +457,7 @@ Rule: EffectOfIsState45
 -->
 :EffectOfIsState45
   {
-	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "", effectText = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
@@ -566,7 +566,7 @@ Rule: EffectOfIsState45
 		{	
 			timeAnnot = (Annotation) lookupIter.next();
 			
-			
+			effectText += (String)timeAnnot.getFeatures().get("string") + " ";
 			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
 				determiner = true;
 			}
@@ -637,7 +637,7 @@ Rule: EffectOfIsState45
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
-	newFeatures.put("Effect",effect.getFeatures().get("string"));
+	newFeatures.put("Effect",effectText);
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
@@ -1446,7 +1446,7 @@ Rule: EffectOfIsState3
 :EffectOfIsState3
   {
   
-	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "", effectText = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
 	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
@@ -1555,6 +1555,7 @@ Rule: EffectOfIsState3
 		{	
 			timeAnnot = (Annotation) lookupIter.next();
 			
+			effectText += (String)timeAnnot.getFeatures().get("string") + " ";
 			if(((String)timeAnnot.getFeatures().get("category")).equals("DT")){
 				determiner = true;
 			}
@@ -1625,7 +1626,7 @@ Rule: EffectOfIsState3
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
-	newFeatures.put("Effect",effect.getFeatures().get("string"));
+	newFeatures.put("Effect",effectText);
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
