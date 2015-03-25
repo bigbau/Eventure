@@ -60,7 +60,7 @@ Rule: Happens1
   
 Rule: Happens2
 (
-	({Event, Event contains {Lookup.majorType==time_key}}):event
+	({Event, Event contains {Lookup.majorType==time_key}} | {Event, Event contains {Lookup.majorType==times}} | {Event, Event contains {Lookup.majorType==date}}):event
 ):Happens2
 -->
 :Happens2
