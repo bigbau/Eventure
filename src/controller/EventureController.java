@@ -1,7 +1,6 @@
 package controller;
 
 import gate.util.GateException;
-import gui.EventureWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +24,7 @@ import relations.EffectOf;
 import relations.EffectOfIsState;
 import relations.EventForGoalEvent;
 import relations.EventForGoalState;
+import view.EventureWindow;
 import model.EventureModel;
 import model.SQLiteModel;
 
@@ -34,7 +34,8 @@ public class EventureController {
 	private static EventureModel eventureModel = new EventureModel();
 	private static String path ="src/sample story.txt";
 	private static String inputFile = "";
-
+	private static String storyName = "";
+	
 	public static void main(String[] args){
 		SQLiteModel.setConnection();
 		eventureWindow = new EventureWindow();
@@ -145,6 +146,7 @@ public class EventureController {
 			    	inputFile = "";
 			       System.out.println("You chose to open this file: " +
 			            chooser.getSelectedFile().getName());
+			       setStoryName(chooser.getSelectedFile().getName());
 			       path = chooser.getSelectedFile().getPath();
 			       try {
 			    	   inputFile = eventureModel.stringFromFile(path);
@@ -178,6 +180,8 @@ public class EventureController {
 					
 					SQLiteModel.setConnection();
 					
+					SQLiteModel.setStoryName(getStoryName());
+					
 					eventureModel.insertEffectOfAssertions(eo);
 					eventureModel.insertEffectOfIsStateAssertions(eois);
 					eventureModel.insertEventForGoalEventAssertions(efge);
@@ -201,6 +205,12 @@ public class EventureController {
 
 			}
 		});
+	}
+	private static String getStoryName() {
+		return storyName;
+	}
+	public static void setStoryName(String storyName1) {
+		storyName = storyName1;
 	}
 
 }

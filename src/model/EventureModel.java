@@ -28,12 +28,12 @@ import gate.util.GateException;
 import gate.util.persistence.PersistenceManager;
 
 
-import gui.EventureWindow;
 import relations.CauseOfIsState;
 import relations.EffectOf;
 import relations.EffectOfIsState;
 import relations.EventForGoalEvent;
 import relations.EventForGoalState;
+import view.EventureWindow;
 
 
 public class EventureModel {

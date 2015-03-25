@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.sqlite.SQLiteConfig;
 
 import concepts.Event;
@@ -39,6 +40,7 @@ import relations.EventForGoalState;
  * @author RJ
  */
 public abstract class SQLiteModel {
+	private static String storyName = "";
     private static Connection c = null;
     public static final String DB_URL = "jdbc:sqlite:eventure.db";  
     public static final String DRIVER = "org.sqlite.JDBC";  
@@ -101,6 +103,7 @@ public abstract class SQLiteModel {
     }
     
     private static List<Map<String, String>> select(String query) {
+    	//query = StringEscapeUtils.escapeJavaScript(query);
     	//System.out.println(query);
         ResultSet rs = null;
         Statement stmt = null;
@@ -143,6 +146,8 @@ public abstract class SQLiteModel {
     	int concept2Id = getConceptID(concept2, "event");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EffectOf");
     	
+    	insertRawAssertion(assertionId, assertion.getCause().toString(), assertion.getEffect().toString(), getStoryName());
+    	
     	findRelationships(concept1, concept1Id, "event");
     	findRelationships(concept2, concept2Id, "event");
 
@@ -163,6 +168,8 @@ public abstract class SQLiteModel {
     	int concept2Id = getConceptID(concept2, "state");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EffectOfIsState");
     	
+    	insertRawAssertion(assertionId, assertion.getEvent().toString(), assertion.getState().toString(), getStoryName());
+    	
     	findRelationships(concept1, concept1Id, "event");
     	findRelationships(concept2, concept2Id, "state");
 
@@ -180,6 +187,8 @@ public abstract class SQLiteModel {
     	int concept2Id = getConceptID(concept2, "event");
     	writeLineToLog("Inserting CauseOfIsState("+concept1+", "+concept2+")");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "CauseOfIsState");
+
+    	insertRawAssertion(assertionId, assertion.getState().toString(), assertion.getEvent().toString(), getStoryName());
     	
     	findRelationships(concept1, concept1Id, "state");
     	findRelationships(concept2, concept2Id, "event");
@@ -198,6 +207,8 @@ public abstract class SQLiteModel {
     	int concept2Id = getConceptID(concept2, "event");
     	writeLineToLog("Inserting EventForGoalEvent("+concept1+", "+concept2+")");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EventForGoalEvent");
+
+    	insertRawAssertion(assertionId, assertion.getTask().toString(), assertion.getGoal().toString(), getStoryName());
     	
     	findRelationships(concept1, concept1Id, "event");
     	findRelationships(concept2, concept2Id, "event");
@@ -217,6 +228,8 @@ public abstract class SQLiteModel {
     	int concept2Id = getConceptID(concept2, "state");
     	writeLineToLog("Inserting EventForGoalState("+concept1+", "+concept2+")");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "EventForGoalState");
+
+    	insertRawAssertion(assertionId, assertion.getEvent().toString(), assertion.getState().toString(), getStoryName());
     	
     	findRelationships(concept1, concept1Id, "event");
     	findRelationships(concept2, concept2Id, "state");
@@ -234,6 +247,8 @@ public abstract class SQLiteModel {
     	int concept2Id = getConceptID(concept2, "time");
     	writeLineToLog("Inserting Happens("+concept1+", "+concept2+")");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "Happens");
+
+    	insertRawAssertion(assertionId, event.toString(), happens.toString(), getStoryName());
 
     	findRelationships(concept1, concept1Id, "event");
 
@@ -619,6 +634,19 @@ public abstract class SQLiteModel {
     	}
     	return Integer.parseInt(data.get(0).get("conceptId"));
     }
+    private static void insertRawAssertion(int assertionId,String rawConcept1, String rawConcept2, String storyName){
+    	String maxQuery = "SELECT (MAX(rawId)+1) as id FROM raw_assertions";
+    	int id = 0;
+    	List<Map<String, String>> idData = select(maxQuery);
+    	if(idData.get(0).get("id")!=null){
+    		id = Integer.parseInt(idData.get(0).get("id"));
+    	};
+    	String query = "INSERT INTO raw_assertions (rawId, assertionId,concept1Raw,concept2Raw, source_story) "
+    			+ "VALUES("+id+","+assertionId+",\""+rawConcept1+"\",\""
+    			+rawConcept2+"\", '"+storyName+"')";
+    	update(query);
+    	writeLineToLog("Raw Assertion Inserted");
+    }
     private static void insertConcept(String concept, String concept_type){
     	String maxQuery = "SELECT (MAX(conceptId)+1) as id FROM concepts";
     	int id=0;
@@ -631,6 +659,7 @@ public abstract class SQLiteModel {
     	writeLineToLog("Concept "+concept+" added");
     }
     public static void update(String query) {
+    	//query = StringEscapeUtils.escapeJavaScript(query);
     	//System.out.println(query);
         Statement stmt = null;
         try {
@@ -647,4 +676,10 @@ public abstract class SQLiteModel {
             writeLineToLog("Unsuccessful update query: "+query);
         }
     }
+	private static String getStoryName() {
+		return storyName;
+	}
+	public static void setStoryName(String storyName1) {
+		storyName = storyName1;
+	}
 }
