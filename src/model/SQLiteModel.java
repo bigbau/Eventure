@@ -248,7 +248,7 @@ public abstract class SQLiteModel {
     	writeLineToLog("Inserting Happens("+concept1+", "+concept2+")");
     	int assertionId = getAssertionID(concept1Id, concept2Id, "Happens");
 
-    	insertRawAssertion(assertionId, event.toString(), happens.toString(), getStoryName());
+    	insertRawAssertion(assertionId, event.toString(), concept2, getStoryName());
 
     	findRelationships(concept1, concept1Id, "event");
 
