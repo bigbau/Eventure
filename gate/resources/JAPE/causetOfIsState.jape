@@ -598,7 +598,7 @@ Rule: CauseOfIsState2
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","CauseOfIsState2");
-    annotations.add(matchedEffect.firstNode(), matchedCause.lastNode(),"CauseOfIsState", newFeatures);
+    annotations.add(matchedCause.firstNode(), matchedEffect.lastNode(),"CauseOfIsState", newFeatures);
   }
  
 
