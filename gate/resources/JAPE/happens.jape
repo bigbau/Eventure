@@ -3,12 +3,14 @@ Input: Token Lookup Cause EffectState Event GoalInd GoalEvent Person
 Options: control = all
 
 Rule: Happens1
-(
-	({Lookup.majorType==time_key}):time
+(	
+	
+	(({Lookup.majorType==time_modifier})?
+	({Lookup.majorType==time_key} | {Lookup.majorType==date} | {Lookup.majorType==times})):time
 	({Token.chunk != O})*
 	({Token.string == ","})
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event, !GoalEvent})*
-	({Event}):event
+	({Event} | {GoalEvent}):event
 ):Happens1
 -->
 :Happens1
@@ -53,7 +55,7 @@ Rule: Happens1
 	newFeatures.put("Entity2",temp);
 	newFeatures.put("TimeHappened",time);
     newFeatures.put("rule","Happens1");
-    annotations.add(matchedEntity.firstNode(),matchedEntity.lastNode(),"HappensRelation", newFeatures);
+    annotations.add(matchedEntity2.firstNode(),matchedEntity.lastNode(),"HappensRelation", newFeatures);
   }
   
 Rule: Happens2
