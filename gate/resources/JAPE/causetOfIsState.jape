@@ -2,13 +2,13 @@ Phase: CauseOfIsState
 Input: Token Lookup Cause EffectState Event GoalInd GoalEvent Person
 Options: control = appelt
 
-Rule: CauseOfIsState1
+/*Rule: CauseOfIsState1
 (
-	({Event}):cause
+	({Event}):effect
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({Token.chunk == O})[1]
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
-	({EffectState}):effect
+	({EffectState}):cause
 ):CauseOfIsState1
 -->
 :CauseOfIsState1
@@ -123,18 +123,18 @@ Rule: CauseOfIsState1
 	}
 	
 	newFeatures.put("Cause",cause.getFeatures().get("Effect"));
-	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
 	newFeatures.put("EffectObject",effect.getFeatures().get("Objects"));
 	newFeatures.put("EffectObjectAdjectives",effect.getFeatures().get("Adjectives"));
+	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("EffectAdverb",effect.getFeatures().get("Adverbs"));
     newFeatures.put("rule","CauseOfIsState1");
-    annotations.add(matchedCause.firstNode(), matchedEffect.lastNode(),"CauseOfIsState", newFeatures);
+    annotations.add(matchedEffect.firstNode(), matchedCause.lastNode(),"CauseOfIsState", newFeatures);
   }
-  
+ */ 
 Rule: CauseOfIsState5
 (
 	({EffectState}):cause
@@ -355,11 +355,11 @@ Rule: CauseOfIsState5
 	
 	
 	newFeatures.put("Cause",cause.getFeatures().get("Effect"));
-	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
-	newFeatures.put("Effect",effect.getFeatures().get("Cause"));
+	newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
+	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
@@ -370,11 +370,11 @@ Rule: CauseOfIsState5
 
 Rule: CauseOfIsState2
 (
-	({EffectState}):effect
+	({EffectState}):cause
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({Token.chunk == O})[1]
 	({Token.string != ".", Token.string != "?", Token.string != "!"})*
-	({Event}):cause
+	({Event}):effect
 ):CauseOfIsState2
 -->
 :CauseOfIsState2
@@ -588,27 +588,34 @@ Rule: CauseOfIsState2
 	}
 	
 	
-	newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("Cause",cause.getFeatures().get("Effect"));
+<<<<<<< HEAD
 	newFeatures.put("EffectVerb",effectVerb);
+=======
+>>>>>>> origin/master
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
-	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+	newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
+<<<<<<< HEAD
+=======
+	newFeatures.put("EffectVerb",effectVerb);
+>>>>>>> origin/master
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","CauseOfIsState2");
-    annotations.add(matchedEffect.firstNode(), matchedCause.lastNode(),"CauseOfIsState", newFeatures);
+    annotations.add(matchedCause.firstNode(), matchedEffect.lastNode(),"CauseOfIsState", newFeatures);
   }
  
 
 Rule: CauseOfIsState3
 (
-	({Cause}):cause
+	({Cause}):effect
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({Token.chunk == O})[1]
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
-	({EffectState}):effect
+	({EffectState}):cause
 ):CauseOfIsState3
 -->
 :CauseOfIsState3
@@ -822,12 +829,12 @@ Rule: CauseOfIsState3
 	}
 	
 	
-	newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("Cause",cause.getFeatures().get("Effect"));
 	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
-	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+	newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
@@ -839,11 +846,11 @@ Rule: CauseOfIsState3
 
 Rule: CauseOfIsState4
 (
-	({EffectState}):effect
+	({EffectState}):cause
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({Token.chunk == O})[1]
 	({Token.string != ".", Token.string != "?", Token.string != "!"})*
-	({Cause}):cause
+	({Cause}):effect
 ):CauseOfIsState4
 -->
 :CauseOfIsState4
@@ -1057,24 +1064,24 @@ Rule: CauseOfIsState4
 	}
 	
 	
-	newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("Cause",cause.getFeatures().get("Effect"));
 	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
-	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+	newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","CauseOfIsState2");
-    annotations.add(matchedEffect.firstNode(), matchedCause.lastNode(),"CauseOfIsState", newFeatures);
+    annotations.add(matchedCause.firstNode(), matchedEffect.lastNode(),"CauseOfIsState", newFeatures);
   }
   
 Rule: CauseOfIsState6
 (
-	({EffectState}):effect
+	({EffectState}):cause
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
-	({Event}):cause
+	({Event}):effect
 ):CauseOfIsState6
 -->
 :CauseOfIsState6
@@ -1288,16 +1295,16 @@ Rule: CauseOfIsState6
 	}
 	
 	
-	newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+	newFeatures.put("Cause",cause.getFeatures().get("Effect"));
 	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
-	newFeatures.put("Effect",effect.getFeatures().get("Effect"));
+	newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
 	newFeatures.put("EffectObject",effectObject);
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","CauseOfIsState6");
-    annotations.add(matchedEffect.firstNode(), matchedCause.lastNode(),"CauseOfIsState", newFeatures);
+    annotations.add(matchedCause.firstNode(), matchedEffect.lastNode(),"CauseOfIsState", newFeatures);
   }
  
