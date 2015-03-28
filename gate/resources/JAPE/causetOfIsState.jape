@@ -590,7 +590,10 @@ Rule: CauseOfIsState2
 	
 	newFeatures.put("Cause",cause.getFeatures().get("Effect"));
 <<<<<<< HEAD
+<<<<<<< HEAD
 	newFeatures.put("EffectVerb",effectVerb);
+=======
+>>>>>>> origin/master
 =======
 >>>>>>> origin/master
 	newFeatures.put("CauseObject",causeObject);
@@ -598,6 +601,10 @@ Rule: CauseOfIsState2
 	newFeatures.put("CauseAdverb",causeAdverb);
 	newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	newFeatures.put("EffectVerb",effectVerb);
+>>>>>>> origin/master
 =======
 	newFeatures.put("EffectVerb",effectVerb);
 >>>>>>> origin/master
