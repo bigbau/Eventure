@@ -239,7 +239,7 @@ public class EventureModel {
 						, causeAdverb = ((String)timeAnnot.getFeatures().get("CauseAdverb"))
 						, effectAdverb = ((String)timeAnnot.getFeatures().get("EffectAdverb"))
 						, causeEvent = ((String)timeAnnot.getFeatures().get("Cause"))
-						, effectState = ((String)timeAnnot.getFeatures().get("Effect"));
+						, effectState = ((String)timeAnnot.getFeatures().get("EffectObjectAdjectives"));
 				long startNode = ((Long)timeAnnot.getEndNode().getOffset());
 				Event concept1 = new Event(startNode,causeEvent, causeVerb, causeAdverb, causeObject, causeObjectAdjective);
 				State concept2 = new State(effectState, effectAdverb);
