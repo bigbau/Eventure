@@ -493,11 +493,11 @@ public class EventureModel {
 	}
 	public void insertHappensAssertions(List<Time> timelines, List<Event> events){
 		System.out.println(timelines.size()+" timelines for "+events.size()+" events");
-		for(Event event: events){
-			for(int i=0; i<timelines.size(); i++){
+		for(int i=0; i<timelines.size(); i++){
+			for(Event event: events){
 				if(isValid(event)&&isValid(timelines.get(i))){
 					if(event.getStartNode()>=timelines.get(i).getStartNode()){
-						if(timelines.size()==i+1||timelines.get(i+1).getStartNode()>event.getStartNode()){
+						//if(timelines.size()==i+1||timelines.get(i+1).getStartNode()>event.getStartNode()){
 							System.out.println("Current assertion: Happens("+event.getVerb()+", "
 									+timelines.get(i).getTimeHappened()+")");
 							try{
@@ -507,7 +507,8 @@ public class EventureModel {
 								System.err.println("Unsuccessful insertion");
 								SQLiteModel.writeLineToLog("Unsuccessful insertion");
 							}
-						}
+							break;
+						//}
 					}
 				}
 			}
