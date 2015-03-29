@@ -39,7 +39,7 @@ Rule: Happens1
 		{
 			timeAnnot = (Annotation) lookupIter.next();
 			
-			if(((String)timeAnnot.getFeatures().get("majorType")).equals("times")|((String)timeAnnot.getFeatures().get("majorType")).equals("date_key"))
+			if(((String)timeAnnot.getFeatures().get("majorType")).equals("times")|((String)timeAnnot.getFeatures().get("majorType")).equals("date")|((String)timeAnnot.getFeatures().get("majorType")).equals("time_key"))
 			{
 				try{
 					time = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
@@ -52,7 +52,6 @@ Rule: Happens1
 	}
 	
     newFeatures.put("Entity1",entity.getFeatures().get("Entity1"));
-	newFeatures.put("Entity2",temp);
 	newFeatures.put("TimeHappened",time);
     newFeatures.put("rule","Happens1");
     annotations.add(matchedEntity2.firstNode(),matchedEntity.lastNode(),"HappensRelation", newFeatures);
@@ -70,7 +69,7 @@ Rule: Happens2
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("Happens2");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
 	
-	String text = "", text2 = "";
+	String text = "";
 	String textEvent = (String) entity.getFeatures().get("Entity1");
 	AnnotationSet lookups = inputAS.getContained(matchedEntity.firstNode().getOffset(), matchedEntity.lastNode().getOffset()).get("Lookup");
 	if(lookups.size() > 0)
@@ -78,25 +77,17 @@ Rule: Happens2
 		ArrayList lookupsList = new ArrayList(lookups);
 		Collections.sort(lookupsList, new OffsetComparator());
 		Iterator lookupIter = lookupsList.iterator();
-		Annotation temp;
+		Annotation timeAnnot;
 		while(lookupIter.hasNext())
 		{
-			temp = (Annotation) lookupIter.next();
-			if(((String)temp.getFeatures().get("majorType")).equals("time_key"))
+			timeAnnot = (Annotation) lookupIter.next();
+			if(((String)timeAnnot.getFeatures().get("majorType")).equals("times")|((String)timeAnnot.getFeatures().get("majorType")).equals("date")|((String)timeAnnot.getFeatures().get("majorType")).equals("time_key"))
 			{
 				try{
-					text = doc.getContent().getContent(temp.getStartNode().getOffset(),temp.getEndNode().getOffset()).toString();
-					textEvent = doc.getContent().getContent(entity.getStartNode().getOffset(),temp.getStartNode().getOffset()).toString();
+					text = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+					textEvent = doc.getContent().getContent(entity.getStartNode().getOffset(),timeAnnot.getStartNode().getOffset()).toString();
 				} catch(InvalidOffsetException e) {
 				throw new GateRuntimeException(e);
-				}
-			}
-			if(((String)temp.getFeatures().get("majorType")).equals("times")|((String)temp.getFeatures().get("majorType")).equals("date_key"))
-			{
-				try{
-					text2 = doc.getContent().getContent(temp.getStartNode().getOffset(),temp.getEndNode().getOffset()).toString();
-				} catch(InvalidOffsetException e) {
-					throw new GateRuntimeException(e);
 				}
 			}
 			
@@ -104,8 +95,7 @@ Rule: Happens2
 	}
 	
     newFeatures.put("Entity1",textEvent.trim());
-	newFeatures.put("Entity2",text);
-	newFeatures.put("TimeHappened",text2);
+	newFeatures.put("TimeHappened",text);
     newFeatures.put("rule","Happens2");
     annotations.add(matchedEntity.firstNode(),matchedEntity.lastNode(),"HappensRelation", newFeatures);
   }
