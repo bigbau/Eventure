@@ -30,7 +30,7 @@ Rule: Effect2
 	({Token.chunk == O})[1]
 	({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", !Event, !GoalInd})*
 	((({Token.category == RB} | {Token.category == RBR} | {Token.category == RBS})*)?
-    ({Token.category == JJ})):effect
+    ({Token.category == JJ} | {Token.category == VBD} | {Token.category == VBN})):effect
 ):Effect2
 -->
 :Effect2
@@ -49,7 +49,7 @@ Rule: Effect3
 	({Token.string == "made"} | {Token.string == "make"}  | {Token.string == "makes"} | {Token.string == "become"} | {Token.string == "becomes"} | {Token.string == "became"})
 	({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", !Event, !GoalInd})*
 	((({Token.category == RB} | {Token.category == RBR} | {Token.category == RBS})*)?
-    ({Token.category == JJ})):effect
+    ({Token.category == JJ} | {Token.category == VBD} | {Token.category == VBN})):effect
 ):Effect3
 -->
 :Effect3
