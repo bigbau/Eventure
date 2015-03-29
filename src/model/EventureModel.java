@@ -33,7 +33,6 @@ import relations.EffectOf;
 import relations.EffectOfIsState;
 import relations.EventForGoalEvent;
 import relations.EventForGoalState;
-import gui.EventureWindow;
 
 
 public class EventureModel {
@@ -293,7 +292,7 @@ public class EventureModel {
 						, causeAdverb = ((String)timeAnnot.getFeatures().get("CauseAdverb"))
 						, effectEvent = ((String)timeAnnot.getFeatures().get("Effect"));
 				long startNode = ((Long)timeAnnot.getEndNode().getOffset());
-
+				
 				State concept1 = new State(causeState, causeAdverb);
 				Event concept2 = new Event(startNode, effectEvent, effectVerb, effectAdverb, effectObject, effectObjectAdjective);
 				causeOfIsState.add(new CauseOfIsState(concept1, concept2));		

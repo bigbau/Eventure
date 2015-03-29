@@ -16,7 +16,7 @@ public abstract class Concept {
 		return conceptName;
 	}
 	protected List<String> separateValues(String values){
-		if(values.equals("")||values==null){
+		if(values==null||values.equals("")){
 			return new ArrayList<String>();
 		}
 		return new ArrayList<String>(Arrays.asList(values.split(";")));
