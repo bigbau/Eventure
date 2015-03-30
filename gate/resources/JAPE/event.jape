@@ -1,5 +1,5 @@
 Phase: event
-Input: Token GoalInd Lookup
+Input: Token GoalInd Lookup Person
 Options: control = appelt
 
 Rule: Event1
@@ -16,12 +16,13 @@ Rule: Event1
 		{Token.category == VBP, Token.string != "said" , Token.string != "be", Token.string != "been", Token.string != "is", Token.string != "was", Token.string != "has", Token.string != "are", Token.string != "were", Token.string != "have", Token.string != "had", Token.string != "is", Token.string != "'s", Token.category != MD, Token.string != "'re", Token.string != "'m", Token.string != "'ve", Token.string != "'d", !GoalInd} |
 		{Token.category == VBN, Token.string != "said" , Token.string != "be", Token.string != "been", Token.string != "is", Token.string != "was", Token.string != "has", Token.string != "are", Token.string != "were", Token.string != "have", Token.string != "had", Token.string != "is", Token.string != "'s", Token.category != MD, Token.string != "'re", Token.string != "'m", Token.string != "'ve", Token.string != "'d", !GoalInd}
 	)
-	({Token.chunk != O, Token.chunk != B-VP, Token.chunk != B-SBAR})*
+	({Person}|{Token.chunk != O, Token.chunk != B-VP, Token.chunk != B-SBAR})*
 ): entity1
 ):Event1
 -->
 :Event1
   {
+	String person = "";
 	String verb = "", object = "", adjective = "", adverb = "";
     gate.AnnotationSet matchedEntities=(gate.AnnotationSet) bindings.get("entity1");	
 	ArrayList words = new ArrayList(matchedEntities);
@@ -48,11 +49,11 @@ Rule: Event1
 		StringBuilder objects = new StringBuilder();
 		int noAdjectives = 0, noAdverbs = 0, noobjects = 0;
 		boolean determiner = false, prepPhrase = false;
-		while(lookupIter.hasNext())
+		while (lookupIter.hasNext())
 		{	
 			timeAnnot = (Annotation) lookupIter.next();
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			if(verb.equals("")&&((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
 			{
 				try{
 					verb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
@@ -132,8 +133,27 @@ Rule: Event1
 		object = objects.toString();
 		adjective = adjectives.toString();
 		adverb = adverbs.toString();
+		
+	}
+	AnnotationSet persons = inputAS.getContained(matchedAnns.firstNode().getOffset(), matchedAnns.lastNode().getOffset()).get("Person");
+	if(persons.size() > 0)
+	{
+		ArrayList personsList = new ArrayList(persons);
+		Collections.sort(personsList, new OffsetComparator());
+		Iterator personsIter = personsList.iterator();
+		if(personsIter.hasNext())
+		{
+			Annotation timeAnnot = (Annotation) personsIter.next();
+			
+			try{
+				person = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
+			} catch(InvalidOffsetException e) {
+				throw new GateRuntimeException(e);
+			}
+		}
 	}
 	
+	newFeatures.put("Person", person);
     newFeatures.put("Entity1",text);
 	newFeatures.put("Verb",verb);
 	newFeatures.put("Objects",object);
