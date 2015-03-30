@@ -1,5 +1,5 @@
 Phase: eventForGoalEvent
-Input: Token Lookup MotivationInd GoalEvent Event
+Input: Token Person Lookup MotivationInd GoalEvent Event
 Options: control = appelt
 
 Rule: EventForGoalEvent1

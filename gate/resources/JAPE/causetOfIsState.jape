@@ -1,5 +1,5 @@
 Phase: CauseOfIsState
-Input: Token Lookup Cause EffectState Event GoalInd GoalEvent Person
+Input: Token Lookup Cause Effect CauseState Event GoalInd GoalEvent Person
 Options: control = appelt
 
 /*Rule: CauseOfIsState1
@@ -8,7 +8,7 @@ Options: control = appelt
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({Token.chunk == O})[1]
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
-	({EffectState}):cause
+	({CauseState}):cause
 ):CauseOfIsState1
 -->
 :CauseOfIsState1
@@ -137,9 +137,9 @@ Options: control = appelt
  */ 
 Rule: CauseOfIsState5
 (
-	({EffectState}):cause
+	({CauseState}):cause
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
-	({Cause}):effect
+	({Effect}):effect
 ):CauseOfIsState5
 -->
 :CauseOfIsState5
@@ -370,7 +370,7 @@ Rule: CauseOfIsState5
 
 Rule: CauseOfIsState2
 (
-	({EffectState}):cause
+	({CauseState}):cause
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({Token.chunk == O})[1]
 	({Token.string != ".", Token.string != "?", Token.string != "!"})*
@@ -604,11 +604,11 @@ Rule: CauseOfIsState2
 
 Rule: CauseOfIsState3
 (
-	({Cause}):effect
+	({Effect}):effect
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({Token.chunk == O})[1]
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
-	({EffectState}):cause
+	({CauseState}):cause
 ):CauseOfIsState3
 -->
 :CauseOfIsState3
@@ -839,11 +839,11 @@ Rule: CauseOfIsState3
 
 Rule: CauseOfIsState4
 (
-	({EffectState}):cause
+	({CauseState}):cause
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({Token.chunk == O})[1]
 	({Token.string != ".", Token.string != "?", Token.string != "!"})*
-	({Cause}):effect
+	({Effect}):effect
 ):CauseOfIsState4
 -->
 :CauseOfIsState4
@@ -1072,7 +1072,7 @@ Rule: CauseOfIsState4
   
 Rule: CauseOfIsState6
 (
-	({EffectState}):cause
+	({CauseState}):cause
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({Event}):effect
 ):CauseOfIsState6

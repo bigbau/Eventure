@@ -20,3 +20,23 @@ Rule: Cause1
     newFeatures.put("rule","Cause1");
     annotations.add(matchedCause.firstNode(),matchedCause.lastNode(),"Cause", newFeatures);
   }
+Rule: Cause2
+(
+  ({CauseInd})
+  ({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", !Event, !GoalInd})*
+  ({Token.chunk == O})[1]
+  ({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", !Event, !GoalInd})*
+  ((({Token.category == RB} | {Token.category == RBR} | {Token.category == RBS})*)?
+    ({Token.category == JJ} | {Token.category == VBD} | {Token.category == VBN})):cause
+):Cause2
+-->
+:Cause2
+  {
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("Cause2");      
+    gate.FeatureMap newFeatures= Factory.newFeatureMap();
+    newFeatures.put("Cause",cause.getFeatures().get("string"));
+    newFeatures.put("rule","Cause2");
+    annotations.add(matchedCause.firstNode(),matchedCause.lastNode(),"CauseState", newFeatures);
+  }
