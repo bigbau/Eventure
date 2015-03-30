@@ -122,7 +122,7 @@ Options: control = appelt
 		causeAdverb = adverbs.toString();
 	}
 	
-	newFeatures.put("Cause",cause.getFeatures().get("Effect"));
+	newFeatures.put("Cause",cause.getFeatures().get("Cause"));
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
 	newFeatures.put("CauseAdverb",causeAdverb);
@@ -588,7 +588,7 @@ Rule: CauseOfIsState2
 	}
 	
 	
-	newFeatures.put("Cause",cause.getFeatures().get("Effect"));
+	newFeatures.put("Cause",cause.getFeatures().get("Cause"));
 	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
@@ -822,7 +822,7 @@ Rule: CauseOfIsState3
 	}
 	
 	
-	newFeatures.put("Cause",cause.getFeatures().get("Effect"));
+	newFeatures.put("Cause",cause.getFeatures().get("Cause"));
 	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
@@ -1057,7 +1057,7 @@ Rule: CauseOfIsState4
 	}
 	
 	
-	newFeatures.put("Cause",cause.getFeatures().get("Effect"));
+	newFeatures.put("Cause",cause.getFeatures().get("Cause"));
 	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
@@ -1288,7 +1288,7 @@ Rule: CauseOfIsState6
 	}
 	
 	
-	newFeatures.put("Cause",cause.getFeatures().get("Effect"));
+	newFeatures.put("Cause",cause.getFeatures().get("Cause"));
 	newFeatures.put("EffectVerb",effectVerb);
 	newFeatures.put("CauseObject",causeObject);
 	newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
@@ -1538,7 +1538,7 @@ Rule: CauseOfIsState7
 				if(((ArrayList<Integer>) person1.getFeatures().get("matches")).containsAll(((ArrayList<Integer>) person2.getFeatures().get("matches"))))
 				{
 				
-					newFeatures.put("Cause",cause.getFeatures().get("Effect"));
+					newFeatures.put("Cause",cause.getFeatures().get("Cause"));
 					newFeatures.put("EffectVerb",effectVerb);
 					newFeatures.put("CauseObject",causeObject);
 					newFeatures.put("CauseObjectAdjectives",causeObjectAdjective);
