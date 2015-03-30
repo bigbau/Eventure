@@ -430,7 +430,7 @@ Rule: EventForGoalState3
     Annotation state=matchedGoal.iterator().next();
 	gate.AnnotationSet matchedEvent=(gate.AnnotationSet) bindings.get("event");
     Annotation event=matchedEvent.iterator().next();
-    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EventForGoalState1");      
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EventForGoalState3");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
 	
 	
