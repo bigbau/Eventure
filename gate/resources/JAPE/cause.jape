@@ -24,10 +24,9 @@ Rule: Cause2
 (
   ({CauseInd})
   ({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", !Event, !GoalInd})*
-  ({Token.chunk == O})[1]
-  ({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!", !Event, !GoalInd})*
   ((({Token.category == RB} | {Token.category == RBR} | {Token.category == RBS})*)?
     ({Token.category == JJ} | {Token.category == VBD} | {Token.category == VBN})):cause
+  ({Token.chunk == O})[1]
 ):Cause2
 -->
 :Cause2
