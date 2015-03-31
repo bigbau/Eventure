@@ -58,6 +58,7 @@ person_spur.lst:spur
 position.lst:position
 sports.lst:sport
 stop.lst:stop
+stop_state.lst:stop_state
 storyLoc.lst:storyloc
 time_ampm.lst:time:ampm
 time_modifier.lst:time_modifier

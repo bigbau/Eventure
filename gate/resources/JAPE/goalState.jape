@@ -9,14 +9,10 @@ Rule: GoalState1
 ({Token.string == "be"} | {Token.string == "make"} | {Token.string == "become"})+
 ({Token.string != ".", Token.string != ",", Token.string != "?", Token.string != "!"})*
 (
-	{Token.category == JJ} | 
-	{Token.category == NN, !Person, !FirstPerson, !Character} | 
-	{Token.category == NNP, !Person, !FirstPerson, !Character} | 
-	{Token.category == NNPS, !Person, !FirstPerson, !Character} | 
-	{Token.category == NNS, !Person, !FirstPerson, !Character} | 
-	{Token.category == NP, !Person, !FirstPerson, !Character} | 
-	{Token.category == NPS, !Person, !FirstPerson, !Character}
-):entity1
+  {Token.category == JJ, Lookup.majorType != stop_state} | 
+  {Token.category == VBD, Lookup.majorType != stop_state} | 
+  {Token.category == VBN, Lookup.majorType != stop_state}
+ ):entity1
 
 ):GoalState1
 -->
@@ -26,7 +22,7 @@ Rule: GoalState1
     Annotation entity1=matchedEntities.iterator().next();
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("GoalState1");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
-    newFeatures.put("Entity1","be "+entity1.getFeatures().get("string"));
+    newFeatures.put("Entity1",entity1.getFeatures().get("string"));
     newFeatures.put("rule","GoalState1");
     annotations.add(matchedEntities.firstNode(),matchedEntities.lastNode(),"GoalState", newFeatures);
   }

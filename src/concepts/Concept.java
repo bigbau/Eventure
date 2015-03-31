@@ -19,6 +19,6 @@ public abstract class Concept {
 		if(values==null||values.equals("")){
 			return new ArrayList<String>();
 		}
-		return new ArrayList<String>(Arrays.asList(values.split(";")));
+		return new ArrayList<String>(Arrays.asList(values.split("; ")));
 	}
 }

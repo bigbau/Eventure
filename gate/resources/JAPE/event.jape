@@ -69,7 +69,13 @@ Rule: Event1
 				prepPhrase = true;
 			}
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|((String)timeAnnot.getFeatures().get("category")).equals("NNS")|((String)timeAnnot.getFeatures().get("category")).equals("NNP")|((String)timeAnnot.getFeatures().get("category")).equals("NNPS"))
+			if(((String)timeAnnot.getFeatures().get("category")).equals("NN")|
+			((String)timeAnnot.getFeatures().get("category")).equals("NNS")|
+			((String)timeAnnot.getFeatures().get("category")).equals("NNP")|
+			((String)timeAnnot.getFeatures().get("category")).equals("NNPS")|
+			((String)timeAnnot.getFeatures().get("category")).equals("PRP")|
+			((String)timeAnnot.getFeatures().get("category")).equals("PRP$")
+			)
 			{
 				if(!prepPhrase){
 					if(determiner){

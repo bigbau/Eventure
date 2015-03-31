@@ -448,9 +448,13 @@ Rule: EffectOfIsState4
   
 Rule: EffectOfIsState45
 (
-	(({Token.category == VB} | {Token.category == VBD} | {Token.category == VBG} | {Token.category == VBN} | {Token.category == VBP} | {Token.category == VBZ})
+	({Token.category == VB} | {Token.category == VBD} | {Token.category == VBG} | {Token.category == VBN} | {Token.category == VBP} | {Token.category == VBZ})
 	(({Token.category == RB} | {Token.category == RBR} | {Token.category == RBS})*)?
-	({Token.category == JJ} | {Token.category == VBD} | {Token.category == VBN})):effect
+	(
+		{Token.category == JJ, Lookup.majorType!=stop_state} |
+		{Token.category == VBD, Lookup.majorType!=stop_state} | 
+		{Token.category == VBN, Lookup.majorType!=stop_state}
+	):effect
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*
 	({Cause}):cause
 ):EffectOfIsState45
@@ -642,7 +646,7 @@ Rule: EffectOfIsState45
 	newFeatures.put("EffectObjectAdjectives",effectObjectAdjective);
 	newFeatures.put("EffectAdverb",effectAdverb);
     newFeatures.put("rule","EffectOfIsState45");
-    annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOfIsState", newFeatures);
+    annotations.add(matchedEffect.firstNode(),matchedCause.lastNode(),"EffectOfIsState", newFeatures);
   }
   
 Rule: EffectOfIsState5
@@ -1438,9 +1442,13 @@ Rule: EffectOfIsState3
 (
 	({Event}):cause
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event})*	
-	(({Token.string == "is"} | {Token.string == "was"})
+	({Token.string == "is"} | {Token.string == "was"})
 	(({Token.category == RB} | {Token.category == RBR} | {Token.category == RBS})*)?
-	({Token.category == JJ} | {Token.category == VBD} | {Token.category == VBN})):effect
+	(
+		{Token.category == JJ, Lookup.majorType != stop_state} | 
+		{Token.category == VBD, Lookup.majorType != stop_state} | 
+		{Token.category == VBN, Lookup.majorType != stop_state}
+	):effect
 ):EffectOfIsState3
 -->
 :EffectOfIsState3
@@ -1469,7 +1477,7 @@ Rule: EffectOfIsState3
 		{	
 			timeAnnot = (Annotation) lookupIter.next();
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			if(causeVerb.equals("")&&((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
 			{
 				try{
 					causeVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();
@@ -1675,7 +1683,7 @@ Rule: EffectOfIsState7
 		{	
 			timeAnnot = (Annotation) lookupIter.next();
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
+			if(causeVerb.equals("")&&((String)timeAnnot.getFeatures().get("category")).equals("VB")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBG")|((String)timeAnnot.getFeatures().get("category")).equals("VBN")|((String)timeAnnot.getFeatures().get("category")).equals("VBP")|((String)timeAnnot.getFeatures().get("category")).equals("VBZ"))
 			{
 				try{
 					causeVerb = doc.getContent().getContent(timeAnnot.getStartNode().getOffset(),timeAnnot.getEndNode().getOffset()).toString();

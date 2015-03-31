@@ -42,7 +42,7 @@ import relations.EventForGoalState;
 public abstract class SQLiteModel {
 	private static String storyName = "";
     private static Connection c = null;
-    public static final String DB_URL = "jdbc:sqlite:eventure3.db";  
+    public static final String DB_URL = "jdbc:sqlite:eventure.db";  
     public static final String DRIVER = "org.sqlite.JDBC";  
     private static final String  logPath ="eventure_log.txt";
     private static FileWriter writer = null;

@@ -31,7 +31,7 @@ public class Event extends Concept{
 		return objectAdjectives;
 	}
 	@Override
-	public String toString() {
-		return  conceptName;
+	public String toString(){
+		return this.conceptName;
 	}
 }

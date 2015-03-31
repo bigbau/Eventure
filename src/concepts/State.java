@@ -13,8 +13,7 @@ public class State extends Concept {
 		return adverbs;
 	}
 	@Override
-	public String toString() {
-		return conceptName;
+	public String toString(){
+		return this.conceptName;
 	}
-	
 }

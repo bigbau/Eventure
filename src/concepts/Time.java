@@ -17,11 +17,6 @@ public class Time extends Relation {
 	public long getStartNode(){
 		return startNode;
 	}
-
-	@Override
-	public String toString() {
-		return "Time [timeHappened=" + timeHappened + "]";
-	}
 	
 	
 }
