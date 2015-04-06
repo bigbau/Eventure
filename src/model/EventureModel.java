@@ -138,6 +138,8 @@ public class EventureModel {
 			}
 		}
 		
+		results.append("\n");
+		
 		if(effectOfIsState.size()>0){
 			results.append("EffectOfIsState Relations:\n");
 			Iterator temp = effectOfIsState.iterator();
@@ -149,6 +151,7 @@ public class EventureModel {
 				results.append("\n");
 			}
 		}
+
 		
 		if(causeOfIsState.size()>0){
 			results.append("CauseOfIsState Relations:\n");
@@ -161,6 +164,8 @@ public class EventureModel {
 				results.append("\n");
 			}
 		}
+
+		results.append("\n");
 		
 		if(eventForGoalEvent.size()>0){
 			results.append("EventForGoalEvent Relations:\n");
@@ -174,6 +179,8 @@ public class EventureModel {
 			}
 		}
 
+		results.append("\n");
+
 		if(eventForGoalState.size()>0){
 			results.append("EventForGoalState Relations:\n");
 			Iterator temp = eventForGoalState.iterator();
@@ -185,6 +192,9 @@ public class EventureModel {
 				results.append("\n");
 			}
 		}
+
+		results.append("\n");
+		
 		if(happensRelation.size()>0){
 			results.append("HappensRelation Relations:\n");
 			Iterator temp = happensRelation.iterator();
@@ -196,6 +206,8 @@ public class EventureModel {
 				results.append("\n");
 			}
 		}
+
+		results.append("\n");
 		
 		if(sentences.size()>0){
 			results.append("Sentences:\n");

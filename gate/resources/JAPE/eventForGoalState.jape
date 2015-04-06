@@ -70,7 +70,7 @@ Rule: EventForGoalState1
 				}
 			}
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBN"))
 			{
 				try{
 				 if(noAdjectives>0){
@@ -272,7 +272,7 @@ Rule: EventForGoalState2
 				}
 			}
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBN"))
 			{
 				try{
 				 if(noAdjectives>0){
@@ -481,7 +481,7 @@ Rule: EventForGoalState3
 				}
 			}
 			
-			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS"))
+			if(((String)timeAnnot.getFeatures().get("category")).equals("JJ")|((String)timeAnnot.getFeatures().get("category")).equals("JJR")|((String)timeAnnot.getFeatures().get("category")).equals("JJS")|((String)timeAnnot.getFeatures().get("category")).equals("VBD")|((String)timeAnnot.getFeatures().get("category")).equals("VBN"))
 			{
 				try{
 				 if(noAdjectives>0){

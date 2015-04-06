@@ -42,17 +42,18 @@ public class EventureController {
 		SQLiteModel.closeConnection();
 		eventureWindow.initialize();
 		try {
+			eventureWindow.setMessageArea("Initializing pipeline.");
 			eventureModel.initializePipeline();
+			eventureWindow.setMessageArea("Pipeline initialized.");
 		} catch (GateException e3) {
 			// TODO Auto-generated catch block
-			e3.printStackTrace();
+			eventureWindow.setMessageArea("Pipeline file not found!");
 		}
-		try {
-			
+		try {			
 			inputFile = eventureModel.stringFromFile(path);
 		} catch (FileNotFoundException e2) {
 			// TODO Auto-generated catch block
-			eventureWindow.setMessageArea("File not found!");
+			eventureWindow.setMessageArea("No sample story found!");
 		}
 		eventureWindow.addTAssertionsActionListener(new ListSelectionListener(){
 
