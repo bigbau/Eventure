@@ -38,7 +38,6 @@ import relations.EventForGoalState;
 public class EventureModel {
 
 
-	private List extractedAnnotations;
 	private CorpusController application;
 	private String resultsSummary;
 
@@ -52,14 +51,18 @@ public class EventureModel {
 
 	private List<String> sentences;
 	
-	public Iterator runPipeline(String inputFile) throws GateException{
+	public void initializePipeline() throws GateException{
 		Gate.init();
 		try {
-			application = (CorpusController)PersistenceManager.loadObjectFromFile(new File("src/Eventure.gapp"));
+				application = (CorpusController)PersistenceManager.loadObjectFromFile(new File("src/Eventure.gapp"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public Iterator runPipeline(String inputFile) throws GateException{
+		
 		Document testDocu = Factory.newDocument(inputFile);
 		Corpus testCorpus = Factory.newCorpus("Eventure Corpus");
 		testCorpus.add(testDocu);

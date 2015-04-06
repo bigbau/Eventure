@@ -41,8 +41,14 @@ public class EventureController {
 		eventureWindow.updateMetadata(SQLiteModel.getMetadata());
 		SQLiteModel.closeConnection();
 		eventureWindow.initialize();
-
 		try {
+			eventureModel.initializePipeline();
+		} catch (GateException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+		try {
+			
 			inputFile = eventureModel.stringFromFile(path);
 		} catch (FileNotFoundException e2) {
 			// TODO Auto-generated catch block
