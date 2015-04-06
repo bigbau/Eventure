@@ -36,7 +36,7 @@ number_fold.lst:number_fold
 nonspec_date.lst:nonspecdate
 object.lst:object
 oftennearindicator.lst:oftennearindicator
-ordinal.lst:date:ordinal
+ordinal.lst:ordinal
 organization.lst:organization
 organization_nouns.lst:organization
 org_base.lst:org_base

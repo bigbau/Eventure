@@ -598,14 +598,13 @@ Rule: EffectOf3
 	({!GoalEvent, Event contains Person}):cause
 	({Token.chunk == O})[1]
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event, !GoalEvent, !Person})*
-	({Person}):person
+({Person}):person
 	({Token.string != ".", Token.string != "?", Token.string != "!", !Event, !GoalEvent, !Cause})*
 	({Event, !GoalEvent}):effect
 ):EffectOf3
--->
+  -->
 :EffectOf3
-  {
-				
+  {				
 	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
     gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
     Annotation cause=matchedCause.iterator().next();
@@ -615,7 +614,6 @@ Rule: EffectOf3
 	gate.AnnotationSet matchedPerson2=(gate.AnnotationSet) bindings.get("person");
     Annotation person2=matchedPerson2.iterator().next();
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOf3"); 
-	
 	
 	AnnotationSet persons = inputAS.getContained(matchedCause.firstNode().getOffset(), matchedCause.lastNode().getOffset()).get("Person");
 	if(persons.size() > 0)
@@ -653,7 +651,68 @@ Rule: EffectOf3
 	}
     
 	
-  }
+  }/*
+Rule: EffectOf35
+(
+	({!GoalEvent, Event contains Person}):cause
+	({Token.chunk == O})[1]
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event, !GoalEvent, !Person})*
+	({Person}):person
+	({Token.string != ".", Token.string != "?", Token.string != "!", !Event, !GoalEvent, !Cause})*
+	({Event, !GoalEvent}):effect
+):EffectOf35
+-->
+:EffectOf35
+  {
+				
+	String causeVerb = "", causeObject = "", causeObjectAdjective = "", causeAdverb = "", effectVerb = "", effectObject = "", effectObjectAdjective = "", effectAdverb = "";
+    gate.AnnotationSet matchedCause=(gate.AnnotationSet) bindings.get("cause");
+    Annotation cause=matchedCause.iterator().next();
+	gate.AnnotationSet matchedEffect=(gate.AnnotationSet) bindings.get("effect");
+    Annotation effect=matchedEffect.iterator().next();
+	Annotation person1;
+	gate.AnnotationSet matchedPerson2=(gate.AnnotationSet) bindings.get("person");
+    Annotation person2=matchedPerson2.iterator().next();
+    gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("EffectOf35"); 
+	
+	
+	AnnotationSet persons = inputAS.getContained(matchedCause.firstNode().getOffset(), matchedCause.lastNode().getOffset()).get("Person");
+	if(persons.size() > 0)
+	{
+		ArrayList personsList = new ArrayList(persons);
+		Collections.sort(personsList, new OffsetComparator());
+		Iterator personsIter = personsList.iterator();
+		if(personsIter.hasNext())
+		{
+			person1 = (Annotation) personsIter.next();
+			if((ArrayList<Integer>)person1.getFeatures().get("matches") != null && (ArrayList<Integer>)person2.getFeatures().get("matches") != null)
+			{
+				if(((ArrayList<Integer>) person1.getFeatures().get("matches")).containsAll(((ArrayList<Integer>) person2.getFeatures().get("matches"))))
+				{
+				
+					gate.FeatureMap newFeatures= Factory.newFeatureMap();
+					newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
+					newFeatures.put("CauseObject",cause.getFeatures().get("Objects"));
+					newFeatures.put("CauseObjectAdjectives",cause.getFeatures().get("Adjectives"));
+					newFeatures.put("CauseAdverb",cause.getFeatures().get("Adverbs"));
+					newFeatures.put("CauseVerb",cause.getFeatures().get("Verb"));
+					newFeatures.put("Effect",effect.getFeatures().get("Entity1"));
+					newFeatures.put("EffectObject",effect.getFeatures().get("Objects"));
+					newFeatures.put("EffectObjectAdjectives",effect.getFeatures().get("Adjectives"));
+					newFeatures.put("EffectAdverb",effect.getFeatures().get("Adverbs"));
+					newFeatures.put("EffectVerb",effect.getFeatures().get("Verb"));
+					newFeatures.put("rule","EffectOf35");
+					annotations.add(matchedCause.firstNode(),matchedEffect.lastNode(),"EffectOf", newFeatures);
+				
+				}
+			}
+			
+			
+		}
+	}
+    
+	
+  }*/
 
 Rule: EffectOf4
 (
