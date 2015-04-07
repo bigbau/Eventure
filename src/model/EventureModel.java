@@ -136,6 +136,7 @@ public class EventureModel {
 				results.append(id+": "+holder.toString());
 				results.append("\n");
 			}
+			results.append("\n");
 		}
 		
 		results.append("\n");
@@ -150,6 +151,7 @@ public class EventureModel {
 				results.append(id+": "+holder.toString());
 				results.append("\n");
 			}
+			results.append("\n");
 		}
 
 		
@@ -163,9 +165,10 @@ public class EventureModel {
 				results.append(id+": "+holder.toString());
 				results.append("\n");
 			}
+			results.append("\n");
 		}
 
-		results.append("\n");
+		
 		
 		if(eventForGoalEvent.size()>0){
 			results.append("EventForGoalEvent Relations:\n");
@@ -177,9 +180,9 @@ public class EventureModel {
 				results.append(id+": "+holder.toString());
 				results.append("\n");
 			}
+			results.append("\n");
 		}
 
-		results.append("\n");
 
 		if(eventForGoalState.size()>0){
 			results.append("EventForGoalState Relations:\n");
@@ -191,9 +194,9 @@ public class EventureModel {
 				results.append(id+": "+holder.toString());
 				results.append("\n");
 			}
+			results.append("\n");
 		}
 
-		results.append("\n");
 		
 		if(happensRelation.size()>0){
 			results.append("HappensRelation Relations:\n");
@@ -205,9 +208,9 @@ public class EventureModel {
 				results.append(id+": "+holder.toString());
 				results.append("\n");
 			}
+			results.append("\n");
 		}
 
-		results.append("\n");
 		
 		if(sentences.size()>0){
 			results.append("Sentences:\n");
