@@ -16,7 +16,7 @@ Rule: Cause1
     Annotation cause=matchedCause.iterator().next();
     gate.AnnotationSet matchedAnns= (gate.AnnotationSet) bindings.get("Cause1");      
     gate.FeatureMap newFeatures= Factory.newFeatureMap();
-    newFeatures.put("Cause",cause.getFeatures().get("cause"));
+    newFeatures.put("Cause",cause.getFeatures().get("Entity1"));
     newFeatures.put("rule","Cause1");
     annotations.add(matchedCause.firstNode(),matchedCause.lastNode(),"Cause", newFeatures);
   }
